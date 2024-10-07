@@ -1,11 +1,19 @@
 "use client"
 
+import { Menu } from "lucide-react";
+import Image from 'next/image'
 
-export default function Home() {
+export default function Play() {
   return (
-	<main className="flex justify-center items-center h-screen flex-col"> 
-    <h1 className="font-bold">Hrajes</h1>
+	<main className=""> 
     
+    <Image className="cursor-pointer"
+      src="/menu-btn.png"
+      width={"128"}
+      height={"128"}
+      alt="menu button"
+      
+    />
 	</main>
   );
 }
