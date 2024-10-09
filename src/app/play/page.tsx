@@ -1,19 +1,22 @@
-"use client"
+"use client";
 
-import { useSpring, animated } from '@react-spring/web';
-import Image from 'next/image';
-import React, { useEffect, useRef, useState } from 'react';
+import { useSpring, animated } from "@react-spring/web";
+import Image from "next/image";
+import React, { useEffect, useState } from "react";
 
 interface FlyingChickenProps {
   id: number;
   begin: number;
   end: number;
-  mode: 'vertical' | 'horizontal';
+  mode: "vertical" | "horizontal";
   onRemove?: (id: number) => void;
 }
 
-const FlyingChicken = ({begin, end, mode = 'horizontal', id}: FlyingChickenProps) => {
-
+const FlyingChicken = ({
+  begin,
+  end,
+  mode = "horizontal",
+}: FlyingChickenProps) => {
   const [screenWidth, setScreenWidth] = useState(0);
   const [screenHeight, setScreenHeight] = useState(0);
   const [activated, setActivated] = useState(false);
@@ -25,26 +28,31 @@ const FlyingChicken = ({begin, end, mode = 'horizontal', id}: FlyingChickenProps
 
   const springs = useSpring({
     from: {
-      left: mode === 'horizontal' ? 0 : begin,
-      top: mode === 'horizontal' ? begin : 0,
+      left: mode === "horizontal" ? 0 : begin,
+      top: mode === "horizontal" ? begin : 0,
     },
     to: {
-      left: mode === 'horizontal' ? screenWidth : end,
-      top: mode === 'horizontal' ? end : screenHeight,
+      left: mode === "horizontal" ? screenWidth : end,
+      top: mode === "horizontal" ? end : screenHeight,
     },
     config: {
-      duration: mode === 'horizontal' ? randomBetween(2000, 5000) : randomBetween(1000, 3000),
-    }
-  })
+      duration:
+        mode === "horizontal"
+          ? randomBetween(2000, 5000)
+          : randomBetween(1000, 3000),
+    },
+  });
 
   return (
-    <animated.div 
+    <animated.div
       style={springs}
       onClick={() => setActivated(true)}
-      className={`absolute w-24 h-24 cursor-crosshair border ${activated && 'bg-red-500'}`}>
-    </animated.div>
+      className={`absolute w-24 h-24 cursor-crosshair border ${
+        activated && "bg-red-500"
+      }`}
+    ></animated.div>
   );
-}
+};
 
 export default function Play() {
   const [clicked, setClicked] = useState(false);
@@ -64,30 +72,49 @@ export default function Play() {
     }, 1000);
 
     return () => clearInterval(interval);
-  })
+  });
 
   const appendChick = () => {
     const id = chickens.length;
-    const mode = decideBetween('horizontal', 'vertical');
-    setChickens([...chickens, <FlyingChicken id={id} mode={mode} begin={mode === 'horizontal' ? randomInt(window.innerHeight) : randomInt(window.innerWidth)}
-      end={mode === 'horizontal' ? randomInt(window.innerHeight) : randomInt(window.innerWidth)} />])
-  }
+    const mode = decideBetween("horizontal", "vertical");
+    setChickens([
+      ...chickens,
+      <FlyingChicken
+        key={Math.random()}
+        id={id}
+        mode={mode}
+        begin={
+          mode === "horizontal"
+            ? randomInt(window.innerHeight)
+            : randomInt(window.innerWidth)
+        }
+        end={
+          mode === "horizontal"
+            ? randomInt(window.innerHeight)
+            : randomInt(window.innerWidth)
+        }
+      />,
+    ]);
+  };
 
   return (
-	<main>
-    <Image className={`cursor-pointer ${clicked ? 'scale-110' : 'hover:scale-105'} w-[5vw] h-[5vw] transition-transform`}
-      src="/menu-btn.png"
-      onClick={(e) => {
-        setClicked(true);
-        appendChick();
-      }}
-      width={"512"}
-      height={"512"}
-      alt="ERR:FNF"
-    />
-    <h1>{chickens.length}</h1>
-    {...chickens}
-	</main>
+    <main>
+      <Image
+        className={`cursor-pointer ${
+          clicked ? "scale-110" : "hover:scale-105"
+        } w-[5vw] h-[5vw] transition-transform`}
+        src="/menu-btn.png"
+        onClick={() => {
+          setClicked(true);
+          appendChick();
+        }}
+        width={"512"}
+        height={"512"}
+        alt="ERR:FNF"
+      />
+      <h1>{chickens.length}</h1>
+      {...chickens}
+    </main>
   );
 }
 
