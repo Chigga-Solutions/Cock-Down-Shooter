@@ -9,6 +9,7 @@ interface FlyingChickenProps {
   begin: number;
   end: number;
   mode: "vertical" | "horizontal";
+  size: number;
   onRemove?: (id: number) => void;
 }
 
@@ -16,6 +17,7 @@ const FlyingChicken = ({
   begin,
   end,
   mode = "horizontal",
+  size,
 }: FlyingChickenProps) => {
   const [screenWidth, setScreenWidth] = useState(0);
   const [screenHeight, setScreenHeight] = useState(0);
@@ -38,14 +40,18 @@ const FlyingChicken = ({
     config: {
       duration:
         mode === "horizontal"
-          ? randomBetween(2000, 5000)
-          : randomBetween(1000, 3000),
+          ? randomBetween(3000, 5000)
+          : randomBetween(3000, 5000),
     },
   });
 
   return (
     <animated.div
-      style={springs}
+    style={{
+      ...springs,
+      width: `${size}px`, 
+      height: `${size}px`,
+    }}
       onClick={() => setActivated(true)}
       className={`absolute w-24 h-24 cursor-crosshair border ${
         activated && "bg-red-500"
@@ -77,6 +83,7 @@ export default function Play() {
   const appendChick = () => {
     const id = chickens.length;
     const mode = decideBetween("horizontal", "vertical");
+    const size = randomBetween(30, 100);
     setChickens([
       ...chickens,
       <FlyingChicken
@@ -93,6 +100,7 @@ export default function Play() {
             ? randomInt(window.innerHeight)
             : randomInt(window.innerWidth)
         }
+        size={size}
       />,
     ]);
   };
