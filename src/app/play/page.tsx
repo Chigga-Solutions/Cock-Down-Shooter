@@ -49,14 +49,28 @@ const FlyingChicken = ({
     <animated.div
     style={{
       ...springs,
-      width: `${size}px`, 
-      height: `${size}px`,
+      //width: `${size}px`, 
+      //height: `${size}px`,
     }}
       onClick={() => setActivated(true)}
-      className={`absolute w-24 h-24 cursor-crosshair border ${
-        activated && "bg-red-500"
+      className={`absolute w-[size] h-[size] cursor-crosshair bg-cover ${
+        activated && "bg-[url(/chick.png)]"
       }`}
-    ></animated.div>
+      
+    >
+      <Image
+        src="/normalChick.png"
+        alt="Flying chicken"
+        width={size}
+        height={size}
+        draggable={false}
+        style={{
+          userSelect: "none",             
+          pointerEvents: "none",        
+        }}
+        
+      />
+    </animated.div>
   );
 };
 
@@ -114,7 +128,7 @@ export default function Play() {
         src="/menu-btn.png"
         onClick={() => {
           setClicked(true);
-          appendChick();
+          //appendChick();
         }}
         width={"512"}
         height={"512"}
