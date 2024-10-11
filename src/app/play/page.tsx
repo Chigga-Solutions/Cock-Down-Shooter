@@ -22,7 +22,7 @@ const FlyingChicken = ({
 }: FlyingChickenProps) => {
   const [screenWidth, setScreenWidth] = useState(0);
   const [screenHeight, setScreenHeight] = useState(0);
-  const [activated, setActivated] = useState(false);
+  const [imageSource, setImageSource] = useState("/normalChick.png");
 
   useEffect(() => {
     setScreenWidth(window.innerWidth + 1);
@@ -48,28 +48,24 @@ const FlyingChicken = ({
 
   return (
     <animated.div
-    style={{
-      ...springs,
-      //width: `${size}px`, 
-      //height: `${size}px`,
-    }}
-      onClick={() => setActivated(true)}
-      className={`absolute w-[size] h-[size] bg-cover ${
-        activated && "bg-[url(/chick.png)]"
-      }`}
-      
+      style={{
+        ...springs,
+      }}
+      onClick={() => {
+        setImageSource("/chick.png");
+      }}
+      className={`absolute w-[size] h-[size] bg-cover`}
     >
       <Image
-        src="/normalChick.png"
+        src={imageSource}
         alt="Flying chicken"
         width={size}
         height={size}
         draggable={false}
         style={{
-          userSelect: "none",             
-          pointerEvents: "none",        
+          userSelect: "none",
+          pointerEvents: "none",
         }}
-        
       />
     </animated.div>
   );
