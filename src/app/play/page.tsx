@@ -41,8 +41,8 @@ const FlyingChicken = ({
     config: {
       duration:
         mode === "horizontal"
-          ? randomBetween(3000, 5000)
-          : randomBetween(3000, 5000),
+          ? randomBetween(5000, 7000)
+          : randomBetween(5000, 7000),
     },
   });
 
