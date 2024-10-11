@@ -3,6 +3,7 @@
 import { useSpring, animated } from "@react-spring/web";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import { randomBetween, randomInt, decideBetween } from "@/lib/utils";
 
 interface FlyingChickenProps {
   id: number;
@@ -53,7 +54,7 @@ const FlyingChicken = ({
       //height: `${size}px`,
     }}
       onClick={() => setActivated(true)}
-      className={`absolute w-[size] h-[size] cursor-crosshair bg-cover ${
+      className={`absolute w-[size] h-[size] bg-cover ${
         activated && "bg-[url(/chick.png)]"
       }`}
       
@@ -120,7 +121,7 @@ export default function Play() {
   };
 
   return (
-    <main>
+    <main className="cursor-crosshair h-screen">
       <Image
         className={`cursor-pointer ${
           clicked ? "scale-110" : "hover:scale-105"
@@ -128,7 +129,6 @@ export default function Play() {
         src="/menu-btn.png"
         onClick={() => {
           setClicked(true);
-          //appendChick();
         }}
         width={"512"}
         height={"512"}
@@ -138,16 +138,4 @@ export default function Play() {
       {...chickens}
     </main>
   );
-}
-
-function randomInt(max: number) {
-  return Math.floor(Math.random() * max);
-}
-
-function randomBetween(min: number, max: number) {
-  return Math.random() * (max - min) + min;
-}
-
-function decideBetween<T>(a: T, b: T): T {
-  return Math.random() > 0.5 ? a : b;
 }
