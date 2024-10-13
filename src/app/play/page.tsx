@@ -23,6 +23,7 @@ const FlyingChicken = ({
   const [screenWidth, setScreenWidth] = useState(0);
   const [screenHeight, setScreenHeight] = useState(0);
   const [imageSource, setImageSource] = useState("/normalChick.png");
+  const [done, setDone] = useState(false);
 
   useEffect(() => {
     setScreenWidth(window.innerWidth + 1);
@@ -44,6 +45,9 @@ const FlyingChicken = ({
           ? randomBetween(5000, 7000)
           : randomBetween(5000, 7000),
     },
+    onRest: () => {
+      setDone(true);
+    }
   });
 
   return (
@@ -54,7 +58,7 @@ const FlyingChicken = ({
       onClick={() => {
         setImageSource("/chick.png");
       }}
-      className={`absolute w-[size] h-[size] bg-cover`}
+      className={`absolute w-[size] h-[size] bg-cover ${done && "hidden"}`}
     >
       <Image
         src={imageSource}
@@ -74,6 +78,7 @@ const FlyingChicken = ({
 export default function Play() {
   const [clicked, setClicked] = useState(false);
   const [chickens, setChickens] = useState<React.ReactNode[]>([]);
+  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
     if (clicked) {
@@ -85,11 +90,25 @@ export default function Play() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      appendChick();
+      if (!paused) {
+        appendChick();
+      }
     }, 1000);
 
     return () => clearInterval(interval);
   });
+
+  useEffect(() => {
+    document.addEventListener('visibilitychange', (e) => {
+      if (document.hidden) {
+        console.log('[CDS] Pausing game...');
+        setPaused(true);
+      } else {
+        console.log('[CDS] Unpausing game...');
+        setPaused(false);
+      }
+    });
+  }, []);
 
   const appendChick = () => {
     const id = chickens.length;
