@@ -33,3 +33,15 @@ body {
     1px -1px 0 black,
     -1px -1px 0 black;
 }
+
+.text-shadow-main-menu {
+  text-shadow: 
+    1px 1px 0 black,
+    -8px 8px 0 black,
+    1px -1px 0 black,
+    -2px -2px 0 black;
+}
+
+.irregular-button {
+  clip-path: polygon(0% 0%, 100% 5%, 95% 100%, 5% 95%);
+}
