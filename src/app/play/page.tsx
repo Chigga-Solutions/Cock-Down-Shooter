@@ -14,11 +14,11 @@ export default function Play() {
       {
         paused && 
           <>
-            <PauseMenu />
-            <div className='pointer-events-all bg-[#000000d9] fixed top-0 w-full h-full' />
+            <div className='pointer-events-all z-10 bg-[#000000d9] fixed top-0 w-full h-full' />
+            <PauseMenu onResume={() => setPaused(false)} />
           </>
       }
-      <PauseButton />
+      <PauseButton onClick={() => setPaused(true)} />
     </main>
   )
 }
