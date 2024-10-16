@@ -32,8 +32,8 @@ const FlyingChicken = ({
 
   const springs = useSpring({
     from: {
-      left: mode === "horizontal" ? 0 : begin,
-      top: mode === "horizontal" ? begin : 0,
+      left: mode === "horizontal" ? -size : begin,
+      top: mode === "horizontal" ? begin : -size,
     },
     to: {
       left: mode === "horizontal" ? screenWidth : end,
@@ -58,7 +58,7 @@ const FlyingChicken = ({
       onClick={() => {
         setImageSource("/chick.png");
       }}
-      className={`absolute w-[size] h-[size] bg-cover ${done && "hidden"}`}
+      className={`absolute chicken w-[size] h-[size] bg-cover ${done && "hidden"}`}
     >
       <Image
         src={imageSource}
@@ -99,7 +99,7 @@ export default function Play() {
   });
 
   useEffect(() => {
-    document.addEventListener('visibilitychange', (e) => {
+    const visibilityChangeEvent = (e: Event) => {
       if (document.hidden) {
         console.log('[CDS] Pausing game...');
         setPaused(true);
@@ -107,13 +107,31 @@ export default function Play() {
         console.log('[CDS] Unpausing game...');
         setPaused(false);
       }
-    });
+    }
+
+    const clickEvent = (e: MouseEvent) => {
+      e.preventDefault();
+      document.elementsFromPoint(e.clientX, e.clientY).forEach((element) => {
+        if (element instanceof HTMLElement && element.classList.contains('chicken')) {
+          console.log('[CDS] Clicked on element:', element);
+          element.click();
+        }
+      });
+    }
+
+    document.addEventListener('click', clickEvent);
+    document.addEventListener('visibilitychange', visibilityChangeEvent);
+
+    return () => {
+      document.removeEventListener('visibilitychange', visibilityChangeEvent);
+      document.removeEventListener('click', clickEvent);
+    };
   }, []);
 
   const appendChick = () => {
     const id = chickens.length;
     const mode = decideBetween("horizontal", "vertical");
-    const size = randomBetween(30, 100);
+    const size = randomBetween(60, 120);
     setChickens([
       ...chickens,
       <FlyingChicken

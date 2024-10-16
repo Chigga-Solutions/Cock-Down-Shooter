@@ -41,7 +41,11 @@ export function SettingsMenu({ onDone }: SettingsMenuProps) {
       >
         Settings
       </h1>
-      <button onClick={onDone} className="border mb-2 mt-auto self-center w-[20%] hover:scale-105 transition text-2xl p-2 bg-gradient-to-b from-green-500 to-green-600 rounded-md">
+      <button onClick={() => {
+        api.start({ from: { top: '50%' }, top: '-50%', onRest: () => {
+          onDone?.();
+        }});
+      }} className="border mb-2 mt-auto self-center w-[20%] hover:scale-105 transition text-2xl p-2 bg-gradient-to-b from-green-500 to-green-600 rounded-md">
         Done
       </button>
     </animated.div>
