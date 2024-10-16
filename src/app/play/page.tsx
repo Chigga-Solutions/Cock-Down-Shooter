@@ -4,6 +4,7 @@ import { useSpring, animated } from "@react-spring/web";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { randomBetween, randomInt, decideBetween } from "@/lib/utils";
+import { PauseMenu } from "@/components/pause-menu";
 
 interface FlyingChickenProps {
   id: number;
@@ -12,6 +13,7 @@ interface FlyingChickenProps {
   mode: "vertical" | "horizontal";
   size: number;
   onRemove?: (id: number) => void;
+  paused?: boolean;
 }
 
 const FlyingChicken = ({
@@ -19,6 +21,7 @@ const FlyingChicken = ({
   end,
   mode = "horizontal",
   size,
+  paused
 }: FlyingChickenProps) => {
   const [screenWidth, setScreenWidth] = useState(0);
   const [screenHeight, setScreenHeight] = useState(0);
@@ -30,11 +33,14 @@ const FlyingChicken = ({
     setScreenHeight(window.innerHeight + 1);
   }, []);
 
-  const springs = useSpring({
+  const [springs, api] = useSpring(() => ({
     from: {
       left: mode === "horizontal" ? -size : begin,
       top: mode === "horizontal" ? begin : -size,
-    },
+    }
+  }), []);
+
+  api.start({
     to: {
       left: mode === "horizontal" ? screenWidth : end,
       top: mode === "horizontal" ? end : screenHeight,
@@ -48,13 +54,21 @@ const FlyingChicken = ({
     onRest: () => {
       setDone(true);
     }
-  });
+  })
+
+  useEffect(() => {
+    if (paused) {
+      console.log('[CDS] Pausing chicken...');
+      api.pause();
+    } else {
+      console.log('[CDS] Unpausing chicken...');
+      api.resume();
+    }
+  }, [paused, api]);
 
   return (
     <animated.div
-      style={{
-        ...springs,
-      }}
+      style={springs}
       onClick={() => {
         setImageSource("/chick.png");
       }}
@@ -105,7 +119,6 @@ export default function Play() {
         setPaused(true);
       } else {
         console.log('[CDS] Unpausing game...');
-        setPaused(false);
       }
     }
 
@@ -135,7 +148,7 @@ export default function Play() {
     setChickens([
       ...chickens,
       <FlyingChicken
-        key={Math.random()}
+        key={`${id}-${paused}`}
         id={id}
         mode={mode}
         begin={
@@ -148,6 +161,7 @@ export default function Play() {
             ? randomInt(window.innerHeight)
             : randomInt(window.innerWidth)
         }
+        paused={paused}
         size={size}
       />,
     ]);
@@ -155,6 +169,7 @@ export default function Play() {
 
   return (
     <main className="cursor-crosshair h-screen">
+      {paused && <><PauseMenu /><div className='pointer-events-all bg-[#000000d9] fixed top-0 w-full h-full' /></>}
       <Image
         className={`cursor-pointer ${
           clicked ? "scale-110" : "hover:scale-105"
@@ -162,6 +177,7 @@ export default function Play() {
         src="/menu-btn.png"
         onClick={() => {
           setClicked(true);
+          setPaused(true);
         }}
         width={"512"}
         height={"512"}
