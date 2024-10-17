@@ -1,22 +1,24 @@
-import { useEffect } from "react";
-import { luckiestGuy } from "./settings-menu";
-import { useSpring, animated } from "@react-spring/web";
+import { useEffect } from 'react';
+import { luckiestGuy } from './settings-menu';
+import { useSpring, animated } from '@react-spring/web';
 
 export interface PauseMenuProps {
   onResume?: () => void;
 }
 
 export function PauseMenu({ onResume }: PauseMenuProps) {
-  const [spring, api] = useSpring(() => ({
-    from: {
-      top: '0%'
-    },
-    config: {
-      duration: 500,
-      friction: 10,
-    }
-  }), []);
-
+  const [spring, api] = useSpring(
+    () => ({
+      from: {
+        top: '0%',
+      },
+      config: {
+        duration: 500,
+        friction: 10,
+      },
+    }),
+    [],
+  );
 
   useEffect(() => {
     api.start({ top: '50%' });
@@ -32,13 +34,21 @@ export function PauseMenu({ onResume }: PauseMenuProps) {
       >
         Pause Menu
       </h1>
-      <button onClick={() => {
-        api.start({ from: { top: '50%' }, top: '-50%', config: {
-          duration: 200,
-        }, onRest: () => {
-          onResume?.();
-        }});
-      }} className="border mb-2 mt-auto self-center min-w-fit w-[20%] hover:scale-105 transition text-2xl p-2 bg-gradient-to-b from-green-500 to-green-600 rounded-md">
+      <button
+        onClick={() => {
+          api.start({
+            from: { top: '50%' },
+            top: '-50%',
+            config: {
+              duration: 200,
+            },
+            onRest: () => {
+              onResume?.();
+            },
+          });
+        }}
+        className="border mb-2 mt-auto self-center min-w-fit w-[20%] hover:scale-105 transition text-2xl p-2 bg-gradient-to-b from-green-500 to-green-600 rounded-md"
+      >
         Resume
       </button>
     </animated.div>
