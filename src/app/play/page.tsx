@@ -4,6 +4,7 @@ import { Chicken } from '@/components/chicken';
 import { PauseButton } from '@/components/pause-button';
 import { PauseMenu } from '@/components/pause-menu';
 import { luckiestGuy } from '@/components/settings-menu';
+import { generateChickenCoords } from '@/lib/utils';
 import React, { useEffect, useState } from 'react';
 
 export default function Play() {
@@ -13,6 +14,9 @@ export default function Play() {
 
   function createSelfDestroyingChicken() {
     // DO NOT TOUCH THIS
+    const coords = generateChickenCoords();
+    console.log(coords);
+    
     setChickens([
       <Chicken
         key={Math.max(chicken.length - 1, 0)}
@@ -23,14 +27,12 @@ export default function Play() {
             }),
           );
         }}
+        posStart={coords[0]}
+        posEnd={coords[1]}
         move={!paused}
       />,
     ]);
   }
-
-  useEffect(() => {
-    createSelfDestroyingChicken();
-  }, [paused]);
 
   useEffect(() => {
     window.addEventListener('resize', () => {
@@ -40,6 +42,7 @@ export default function Play() {
         setPaused(false);
       }
     });
+    createSelfDestroyingChicken();
   }, []);
 
   return (

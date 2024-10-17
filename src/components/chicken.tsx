@@ -6,28 +6,34 @@ import { useEffect } from 'react';
 interface ChickenProps {
   move: boolean;
   onFinished?: () => void;
-  pos?: [left: number, down: number];
+  posStart?: [left: number, down: number];
+  posEnd?: [left: number, down: number];
 }
 
 export function Chicken({
   move,
   onFinished,
-  pos = [0, 0],
+  posStart = [0, 0],
+  posEnd = [0, 0],
 }: ChickenProps) {
+  console.log(posStart, posEnd);
+  
   const [spring, api] = useSpring(
     () => ({
       from: {
-        left: '0%',
+        left: `${posStart[0]}%`,
+        bottom: `${posStart[1]}%`
       },
     }),
-    [],
+    [posStart],
   );
 
   useEffect(() => {
     api.start({
-      left: '50%',
+      left: `${posEnd[0]}%`,
+      bottom: `${posEnd[1]}%`,
       config: {
-        duration: 1000,
+        velocity: 0.5,
       },
       onRest: (a) => {
         if (a.finished) {
@@ -35,7 +41,7 @@ export function Chicken({
         }
       },
     });
-  }, []);
+  }, [posEnd]);
 
   useEffect(() => {
     if (move) {
@@ -48,7 +54,9 @@ export function Chicken({
   return (
     <animated.div
       style={spring}
-      className={`absolute border top-24 w-4 h-4`}
-    ></animated.div>
+      className={`absolute border w-4 h-4`}
+    >
+      🐔
+    </animated.div>
   );
 }
