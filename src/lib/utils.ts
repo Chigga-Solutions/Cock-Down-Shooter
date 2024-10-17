@@ -23,10 +23,7 @@ export function decideBetweenDir<T>(a: T, b: T, c: T, d: T): T {
 export type Direction = 'up' | 'down' | 'left' | 'right';
 export type Coord = [number, number]; // x, y (%)
 
-export function generateChickenCoords(
-  width: number,
-  height: number,
-): [Coord, Coord, Direction, Direction] {
+export function generateChickenCoords(): [Coord, Coord, Direction, Direction] {
   let startSide: Direction = decideBetweenDir('up', 'down', 'left', 'right');
   let endSide: Direction = decideBetweenDir('up', 'down', 'left', 'right');
   if (startSide === endSide) {
