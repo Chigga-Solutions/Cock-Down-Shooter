@@ -3,13 +3,17 @@
 import { useSpring, animated } from '@react-spring/web';
 import { useEffect } from 'react';
 
+interface ChickenProps {
+  move: boolean;
+  onFinished?: () => void;
+  pos?: [left: number, down: number];
+}
+
 export function Chicken({
   move,
   onFinished,
-}: {
-  move: boolean;
-  onFinished?: () => void;
-}) {
+  pos = [0, 0],
+}: ChickenProps) {
   const [spring, api] = useSpring(
     () => ({
       from: {
