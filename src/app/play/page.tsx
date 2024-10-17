@@ -16,7 +16,7 @@ export default function Play() {
     // DO NOT TOUCH THIS
     const coords = generateChickenCoords();
     console.log(coords);
-    
+    //todo: chicken speed based on lenght of coords - jakub
     setChickens([
       <Chicken
         key={Math.max(chicken.length - 1, 0)}

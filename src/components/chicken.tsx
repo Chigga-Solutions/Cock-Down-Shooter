@@ -16,7 +16,7 @@ export function Chicken({
   posStart = [0, 0],
   posEnd = [0, 0],
 }: ChickenProps) {
-  console.log(posStart, posEnd);
+  //console.log(posStart, posEnd);
   
   const [spring, api] = useSpring(
     () => ({
@@ -33,7 +33,7 @@ export function Chicken({
       left: `${posEnd[0]}%`,
       bottom: `${posEnd[1]}%`,
       config: {
-        velocity: 0.5,
+        duration: 5000,
       },
       onRest: (a) => {
         if (a.finished) {

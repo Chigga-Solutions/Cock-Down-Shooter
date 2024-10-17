@@ -26,33 +26,32 @@ export type Coord = [number, number]; // x, y (%)
 export function generateChickenCoords(): [Coord, Coord, Direction, Direction] {
   let startSide: Direction = decideBetweenDir('up', 'down', 'left', 'right');
   let endSide: Direction = decideBetweenDir('up', 'down', 'left', 'right');
-  if (startSide === endSide) {
+  while (startSide === endSide) {
     endSide = decideBetweenDir('up', 'down', 'left', 'right');
   }
-
   let coordXs, coordYs, coordXe, coordYe;
   switch (startSide) {
     case 'up':
       {
         coordYs = 100;
-        coordXs = randomBetween(0, 100);
+        coordXs = randomBetween(30, 70);
       }
       break;
     case 'down':
       {
         coordYs = 0;
-        coordXs = randomBetween(0, 100);
+        coordXs = randomBetween(30, 70);
       }
       break;
     case 'left':
       {
-        coordYs = randomBetween(0, 100);
+        coordYs = randomBetween(30, 70);
         coordXs = 0;
       }
       break;
     case 'right':
       {
-        coordYs = randomBetween(0, 100);
+        coordYs = randomBetween(30, 70);
         coordXs = 100;
       }
       break;
@@ -71,8 +70,7 @@ export function generateChickenCoords(): [Coord, Coord, Direction, Direction] {
       {
         coordYe = 0;
         if (startSide === 'right') coordXe = randomBetween(0, coordYs);
-        else if (startSide === 'left')
-          coordXe = randomBetween(0, 100 - coordYs);
+        else if (startSide === 'left')coordXe = randomBetween(coordYs, 100);    
         else coordXe = randomBetween(0, 100);
       }
       break;
@@ -80,7 +78,7 @@ export function generateChickenCoords(): [Coord, Coord, Direction, Direction] {
       {
         coordXe = 0;
         if (startSide === 'up') coordYe = randomBetween(0, 100 - coordXs);
-        else if (startSide === 'down') coordYe = randomBetween(coordXs, 100);
+        else if (startSide === 'down') coordYe = randomBetween(50, 100);
         else coordYe = randomBetween(0, 100);
       }
       break;
@@ -88,10 +86,17 @@ export function generateChickenCoords(): [Coord, Coord, Direction, Direction] {
       {
         coordXe = 100;
         if (startSide === 'up') coordYe = randomBetween(0, 100 - coordXs);
-        else if (startSide === 'down') coordYe = randomBetween(coordYs, 100);
+        else if (startSide === 'down') coordYe = randomBetween(coordXs, 100);
         else coordYe = randomBetween(0, 100);
       }
       break;
   }
+  /*console.log("start:" + startSide);
+  console.log("end:" + endSide);
+  console.log("x1:" + coordXs);
+  console.log("y1:" + coordYs);
+  console.log("x2:" + coordXe);
+  console.log("y2:" + coordYe);*/
   return [[coordXs, coordYs], [coordXe, coordYe], startSide, endSide];
+
 }
