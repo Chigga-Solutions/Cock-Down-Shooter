@@ -21,38 +21,46 @@ export default function Play() {
     if (paused) {
       setChickens((prev) =>
         prev.map((chicken) => {
-          return React.cloneElement((chicken as ReactElement), { move: false });
+          return React.cloneElement(chicken as ReactElement, { move: false });
         }),
       );
     } else {
       setChickens((prev) =>
         prev.map((chicken) => {
-          return React.cloneElement((chicken as ReactElement), { move: true });
+          return React.cloneElement(chicken as ReactElement, { move: true });
         }),
       );
     }
+
+    const interval = setInterval(() => {
+      if (!paused) createSelfDestroyingChicken();
+    }, 1000);
+
+    return () => clearInterval(interval);
   }, [paused]);
 
   function createSelfDestroyingChicken() {
     // DO NOT TOUCH THIS
     const coords = generateChickenCoords();
-    console.log(coords);
     //todo: chicken speed based on lenght of coords - jakub
-    setChickens([
-      <Chicken
-        key={Math.max(chicken.length - 1, 0)}
-        onFinished={() => {
-          setChickens((prev) =>
-            prev.filter((_, i) => {
-              return i !== Math.max(chicken.length - 1, 0);
-            }),
-          );
-        }}
-        posStart={coords[0]}
-        posEnd={coords[1]}
-        move={!paused}
-      />,
-    ]);
+    setChickens((prev) => {
+      return [
+        ...prev,
+        <Chicken
+          key={Math.random()}
+          onFinished={() => {
+            setChickens((prev) =>
+              prev.filter((_, i) => {
+                return i !== Math.max(chicken.length - 1, 0);
+              }),
+            );
+          }}
+          posStart={coords[0]}
+          posEnd={coords[1]}
+          move={!paused}
+        />,
+      ];
+    });
   }
 
   useEffect(() => {
@@ -63,7 +71,6 @@ export default function Play() {
         setPaused(false);
       }
     });
-    createSelfDestroyingChicken();
   }, []);
 
   return (

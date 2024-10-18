@@ -17,12 +17,12 @@ export function Chicken({
   posEnd = [0, 0],
 }: ChickenProps) {
   //console.log(posStart, posEnd);
-  
+
   const [spring, api] = useSpring(
     () => ({
       from: {
         left: `${posStart[0]}%`,
-        bottom: `${posStart[1]}%`
+        bottom: `${posStart[1]}%`,
       },
     }),
     [posStart],
@@ -45,7 +45,7 @@ export function Chicken({
 
   useEffect(() => {
     console.log('move changed', move);
-    
+
     if (move) {
       api.resume();
     } else {
@@ -54,10 +54,7 @@ export function Chicken({
   }, [move, api]);
 
   return (
-    <animated.div
-      style={spring}
-      className={`absolute border w-4 h-4`}
-    >
+    <animated.div style={spring} className={`absolute border w-4 h-4`}>
       🐔
     </animated.div>
   );

@@ -21,7 +21,7 @@ export function decideBetweenDir<T>(a: T, b: T, c: T, d: T): T {
 }
 
 export type Direction = 'up' | 'down' | 'left' | 'right';
-export type Coord = [number, number]; // x, y (%)
+export type Coord = [x: number, y: number]; // x, y (%)
 
 export function generateChickenCoords(): [Coord, Coord, Direction, Direction] {
   const startSide: Direction = decideBetweenDir('up', 'down', 'left', 'right');
@@ -70,7 +70,7 @@ export function generateChickenCoords(): [Coord, Coord, Direction, Direction] {
       {
         coordYe = 0;
         if (startSide === 'right') coordXe = randomBetween(0, coordYs);
-        else if (startSide === 'left')coordXe = randomBetween(coordYs, 100);    
+        else if (startSide === 'left') coordXe = randomBetween(coordYs, 100);
         else coordXe = randomBetween(0, 100);
       }
       break;
@@ -98,5 +98,4 @@ export function generateChickenCoords(): [Coord, Coord, Direction, Direction] {
   console.log("x2:" + coordXe);
   console.log("y2:" + coordYe);*/
   return [[coordXs, coordYs], [coordXe, coordYe], startSide, endSide];
-
 }
