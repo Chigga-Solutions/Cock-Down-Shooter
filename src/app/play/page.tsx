@@ -5,12 +5,33 @@ import { PauseButton } from '@/components/pause-button';
 import { PauseMenu } from '@/components/pause-menu';
 import { luckiestGuy } from '@/components/settings-menu';
 import { generateChickenCoords } from '@/lib/utils';
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 
 export default function Play() {
   /* Game-global states */
   const [paused, setPaused] = useState(false);
   const [chicken, setChickens] = useState<React.ReactNode[]>([]);
+
+  function pauseGame() {
+    setPaused(true);
+    console.log('[Game] Paused');
+  }
+
+  useEffect(() => {
+    if (paused) {
+      setChickens((prev) =>
+        prev.map((chicken) => {
+          return React.cloneElement((chicken as ReactElement), { move: false });
+        }),
+      );
+    } else {
+      setChickens((prev) =>
+        prev.map((chicken) => {
+          return React.cloneElement((chicken as ReactElement), { move: true });
+        }),
+      );
+    }
+  }, [paused]);
 
   function createSelfDestroyingChicken() {
     // DO NOT TOUCH THIS
@@ -37,7 +58,7 @@ export default function Play() {
   useEffect(() => {
     window.addEventListener('resize', () => {
       if (window.innerWidth < window.innerHeight) {
-        setPaused(true);
+        pauseGame();
       } else {
         setPaused(false);
       }
@@ -53,7 +74,7 @@ export default function Play() {
           <PauseMenu onResume={() => setPaused(false)} />
         </>
       )}
-      <PauseButton onClick={() => setPaused(true)} />
+      <PauseButton onClick={() => pauseGame()} />
       <div className="pl-2">
         <h1>Number of chicken: {chicken.length}</h1>
       </div>

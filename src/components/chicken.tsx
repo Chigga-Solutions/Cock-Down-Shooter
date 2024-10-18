@@ -41,15 +41,17 @@ export function Chicken({
         }
       },
     });
-  }, [posEnd]);
+  }, [posEnd, api, onFinished]);
 
   useEffect(() => {
+    console.log('move changed', move);
+    
     if (move) {
       api.resume();
     } else {
       api.pause();
     }
-  }, [move]);
+  }, [move, api]);
 
   return (
     <animated.div

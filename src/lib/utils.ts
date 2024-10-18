@@ -24,7 +24,7 @@ export type Direction = 'up' | 'down' | 'left' | 'right';
 export type Coord = [number, number]; // x, y (%)
 
 export function generateChickenCoords(): [Coord, Coord, Direction, Direction] {
-  let startSide: Direction = decideBetweenDir('up', 'down', 'left', 'right');
+  const startSide: Direction = decideBetweenDir('up', 'down', 'left', 'right');
   let endSide: Direction = decideBetweenDir('up', 'down', 'left', 'right');
   while (startSide === endSide) {
     endSide = decideBetweenDir('up', 'down', 'left', 'right');
