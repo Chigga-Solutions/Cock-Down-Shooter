@@ -71,6 +71,22 @@ export default function Play() {
         setPaused(false);
       }
     });
+
+    document.addEventListener('visibilitychange', (e) => {
+      if (document.hidden) {
+        pauseGame();
+      }
+    });
+
+    window.addEventListener('blur', () => {
+      pauseGame();
+    });
+
+    return () => {
+      window.removeEventListener('resize', () => {});
+      document.removeEventListener('visibilitychange', () => {});
+      window.removeEventListener('blur', () => {});
+    }
   }, []);
 
   return (
