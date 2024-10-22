@@ -90,7 +90,7 @@ export default function Play() {
       }
     });
 
-    document.addEventListener('visibilitychange', (e) => {
+    document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
         pauseGame();
       }
