@@ -7,10 +7,15 @@ import { luckiestGuy } from '@/components/settings-menu';
 import { generateChickenCoords } from '@/lib/utils';
 import React, { ReactElement, useEffect, useState } from 'react';
 
+interface LivingChicken {
+  id: string;
+  chicken: React.ReactNode;
+}
+
 export default function Play() {
   /* Game-global states */
   const [paused, setPaused] = useState(false);
-  const [chicken, setChickens] = useState<React.ReactNode[]>([]);
+  const [chicken, setChickens] = useState<LivingChicken[]>([]);
 
   function pauseGame() {
     setPaused(true);
@@ -20,17 +25,24 @@ export default function Play() {
   useEffect(() => {
     if (paused) {
       setChickens((prev) =>
-        prev.map((chicken) => {
-          return React.cloneElement(chicken as ReactElement, { move: false });
-        }),
+        prev.map((c) => {
+          return {
+            ...c,
+            chicken: React.cloneElement(c.chicken as ReactElement, { move: false }),
+          };
+        })
       );
     } else {
       setChickens((prev) =>
-        prev.map((chicken) => {
-          return React.cloneElement(chicken as ReactElement, { move: true });
-        }),
+        prev.map((c) => {
+          return {
+            ...c,
+            chicken: React.cloneElement(c.chicken as ReactElement, { move: true }),
+          };
+        })
       );
     }
+    
 
     const interval = setInterval(() => {
       if (!paused) createSelfDestroyingChicken();
@@ -41,24 +53,30 @@ export default function Play() {
 
   function createSelfDestroyingChicken() {
     // DO NOT TOUCH THIS
-    const coords = generateChickenCoords();
     //todo: chicken speed based on lenght of coords - jakub
     setChickens((prev) => {
+      // Create a unique id for the chicken
+      const coords = generateChickenCoords();
+      const id = Math.random().toString(36).substring(2, 9);
+    
       return [
         ...prev,
-        <Chicken
-          key={Math.random()}
-          onFinished={() => {
-            setChickens((prev) =>
-              prev.filter((_, i) => {
-                return i !== Math.max(chicken.length - 1, 0);
-              }),
-            );
-          }}
-          posStart={coords[0]}
-          posEnd={coords[1]}
-          move={!paused}
-        />,
+        {
+          id,
+          chicken: (
+            <Chicken
+              key={id}
+              onFinished={() => {
+                setChickens((prev) =>
+                  prev.filter((chicken) => chicken.id !== id) // Remove the chicken by id
+                );
+              }}
+              posStart={coords[0]}
+              posEnd={coords[1]}
+              move={!paused}
+            />
+          ),
+        } as LivingChicken,
       ];
     });
   }
@@ -101,7 +119,7 @@ export default function Play() {
       <div className="pl-2">
         <h1>Number of chicken: {chicken.length}</h1>
       </div>
-      {chicken}
+      {chicken.map((c) => c.chicken)}
     </main>
   );
 }

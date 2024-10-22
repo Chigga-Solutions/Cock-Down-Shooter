@@ -1,7 +1,7 @@
 'use client';
 
 import { useSpring, animated } from '@react-spring/web';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 interface ChickenProps {
   move: boolean;
@@ -16,7 +16,7 @@ export function Chicken({
   posStart = [0, 0],
   posEnd = [0, 0],
 }: ChickenProps) {
-  //console.log(posStart, posEnd);
+  const [debugState, setDebug] = useState(false);
 
   const [spring, api] = useSpring(
     () => ({
@@ -37,6 +37,8 @@ export function Chicken({
       },
       onRest: (a) => {
         if (a.finished) {
+          setDebug(true);
+          
           onFinished?.();
         }
       },
@@ -54,7 +56,7 @@ export function Chicken({
   }, [move, api]);
 
   return (
-    <animated.div style={spring} className={`absolute border w-4 h-4`}>
+    <animated.div style={spring} className={`absolute ${debugState && 'bg-red-500'} border w-4 h-4`}>
       🐔
     </animated.div>
   );
