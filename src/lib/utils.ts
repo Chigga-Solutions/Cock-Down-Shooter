@@ -91,6 +91,8 @@ export function generateChickenCoords(): [Coord, Coord, Direction, Direction] {
       }
       break;
   }
+
+  
   /*console.log("start:" + startSide);
   console.log("end:" + endSide);
   console.log("x1:" + coordXs);

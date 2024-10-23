@@ -8,6 +8,7 @@ interface ChickenProps {
   onFinished?: () => void;
   posStart?: [left: number, down: number];
   posEnd?: [left: number, down: number];
+  speed: number;
 }
 
 export function Chicken({
@@ -15,6 +16,7 @@ export function Chicken({
   onFinished,
   posStart = [0, 0],
   posEnd = [0, 0],
+  speed = 0,
 }: ChickenProps) {
   const [debugState, setDebug] = useState(false);
 
@@ -33,7 +35,7 @@ export function Chicken({
       left: `${posEnd[0]}%`,
       bottom: `${posEnd[1]}%`,
       config: {
-        duration: 5000,
+        duration: speed,
       },
       onRest: (a) => {
         if (a.finished) {

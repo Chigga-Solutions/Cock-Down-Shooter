@@ -53,10 +53,10 @@ export default function Play() {
 
   function createSelfDestroyingChicken() {
     // DO NOT TOUCH THIS
-    //todo: chicken speed based on lenght of coords - jakub
     setChickens((prev) => {
       // Create a unique id for the chicken
       const coords = generateChickenCoords();
+      const lenght = Math.sqrt(Math.pow((coords[1][0] - coords[0][0]),2) + Math.pow((coords[1][1] - coords[0][1]),2));
       const id = Math.random().toString(36).substring(2, 9);
     
       return [
@@ -74,6 +74,7 @@ export default function Play() {
               posStart={coords[0]}
               posEnd={coords[1]}
               move={!paused}
+              speed={lenght < 70 ? 6000 : 4000}
             />
           ),
         } as LivingChicken,
