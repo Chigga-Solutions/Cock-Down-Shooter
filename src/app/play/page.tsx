@@ -4,7 +4,7 @@ import { Chicken } from '@/components/chicken';
 import { PauseButton } from '@/components/pause-button';
 import { PauseMenu } from '@/components/pause-menu';
 import { luckiestGuy } from '@/components/settings-menu';
-import { generateChickenCoords } from '@/lib/utils';
+import { areOverlapped, CLICK_RANGE, generateChickenCoords } from '@/lib/utils';
 import React, { ReactElement, useEffect, useState } from 'react';
 
 interface LivingChicken {
@@ -100,6 +100,15 @@ export default function Play() {
     window.addEventListener('blur', () => {
       pauseGame();
     });
+
+    document.addEventListener('click', e => {
+      const clientRect = new DOMRect(e.clientX - (CLICK_RANGE / 2), e.clientY - (CLICK_RANGE / 2), CLICK_RANGE, CLICK_RANGE);
+      for (const element of document.getElementsByClassName('cocked')) {
+        if (areOverlapped(clientRect, element.getBoundingClientRect())) {
+          element.classList.add('bg-red-500');
+        }
+      }
+    })
 
     return () => {
       window.removeEventListener('resize', () => {});
