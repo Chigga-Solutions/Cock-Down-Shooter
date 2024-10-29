@@ -28,21 +28,24 @@ export default function Play() {
         prev.map((c) => {
           return {
             ...c,
-            chicken: React.cloneElement(c.chicken as ReactElement, { move: false }),
+            chicken: React.cloneElement(c.chicken as ReactElement, {
+              move: false,
+            }),
           };
-        })
+        }),
       );
     } else {
       setChickens((prev) =>
         prev.map((c) => {
           return {
             ...c,
-            chicken: React.cloneElement(c.chicken as ReactElement, { move: true }),
+            chicken: React.cloneElement(c.chicken as ReactElement, {
+              move: true,
+            }),
           };
-        })
+        }),
       );
     }
-    
 
     const interval = setInterval(() => {
       if (!paused) createSelfDestroyingChicken();
@@ -56,9 +59,12 @@ export default function Play() {
     setChickens((prev) => {
       // Create a unique id for the chicken
       const coords = generateChickenCoords();
-      const lenght = Math.sqrt(Math.pow((coords[1][0] - coords[0][0]),2) + Math.pow((coords[1][1] - coords[0][1]),2));
+      const lenght = Math.sqrt(
+        Math.pow(coords[1][0] - coords[0][0], 2) +
+          Math.pow(coords[1][1] - coords[0][1], 2),
+      );
       const id = Math.random().toString(36).substring(2, 9);
-    
+
       return [
         ...prev,
         {
@@ -67,8 +73,8 @@ export default function Play() {
             <Chicken
               key={id}
               onFinished={() => {
-                setChickens((prev) =>
-                  prev.filter((chicken) => chicken.id !== id) // Remove the chicken by id
+                setChickens(
+                  (prev) => prev.filter((chicken) => chicken.id !== id), // Remove the chicken by id
                 );
               }}
               posStart={coords[0]}
@@ -101,16 +107,16 @@ export default function Play() {
       pauseGame();
     });
 
-    document.addEventListener('click', e => {
-      setBullets(prevBullets => {
-        if(prevBullets > 0) {
+    document.addEventListener('click', (e) => {
+      setBullets((prevBullets) => {
+        if (prevBullets > 0) {
           const clientRect = new DOMRect(
-            e.clientX - (CLICK_RANGE / 2),
-            e.clientY - (CLICK_RANGE / 2),
+            e.clientX - CLICK_RANGE / 2,
+            e.clientY - CLICK_RANGE / 2,
             CLICK_RANGE,
-            CLICK_RANGE
+            CLICK_RANGE,
           );
-          
+
           for (const element of document.getElementsByClassName('cocked')) {
             if (areOverlapped(clientRect, element.getBoundingClientRect())) {
               element.classList.add('bg-red-500');
@@ -135,7 +141,7 @@ export default function Play() {
       window.removeEventListener('resize', () => {});
       document.removeEventListener('visibilitychange', () => {});
       window.removeEventListener('blur', () => {});
-    }
+    };
   }, []);
 
   return (
@@ -154,9 +160,12 @@ export default function Play() {
       <div className="fixed bottom-4 left-0 w-full flex justify-center">
         <div className="flex space-x-2">
           {Array.from({ length: bullets / 2 }).map((_, index) => (
-            <div key={`filled-${index}`} className="w-4 h-4  bg-red-800 rounded-full" />
+            <div
+              key={`filled-${index}`}
+              className="w-4 h-4  bg-red-800 rounded-full"
+            />
           ))}
-          {Array.from({ length: 5 - bullets/2 }).map((_, index) => (
+          {Array.from({ length: 5 - bullets / 2 }).map((_, index) => (
             <div key={`empty-${index}`} className="w-4 h-4 rounded-full" />
           ))}
         </div>

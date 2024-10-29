@@ -6,36 +6,42 @@ import { useState } from 'react';
 
 import './globals.css';
 import { CircleAlert, User } from 'lucide-react';
+import { LoginPage } from '@/components/login-page';
 
 export default function Home() {
   const router = useRouter();
   const [isSettingsOpened, setSettingsOpened] = useState(false);
+  const [isLoginPageOpened, setLoginPageOpened] = useState(false);
 
   const handleClick = () => {
     setSettingsOpened(true);
   };
 
   return (
-    <main
-      className={`${luckiestGuy} text-shadow bg-[url(/bg.webp)] bg-cover`}
-    >
+    <main className={`${luckiestGuy} text-shadow bg-[url(/bg.webp)] bg-cover`}>
       {isSettingsOpened && (
         <SettingsMenu onDone={() => setSettingsOpened(false)} />
       )}
-      <div className='gap-x-4 flex justify-center items-center p-8'>
-        <button className='border-4 p-0.5 rounded-md hover:animate-shake hover:scale-105 transition-all bg-blue-500'>
+      {isLoginPageOpened && (
+        <LoginPage onDone={() => setLoginPageOpened(false)} />
+      )}
+      <div className="gap-x-4 flex justify-center items-center p-8">
+        <button
+          onClick={() => setLoginPageOpened(true)}
+          className="border-4 p-0.5 rounded-md hover:animate-shake hover:scale-105 transition-all bg-blue-500"
+        >
           <User />
         </button>
-        <h1 className='text-2xl translate-y-0.5'>Logged-in as:</h1>
-        <div className='flex justify-center items-center gap-x-2'>
-          <h1 className='translate-y-0.5 text-2xl'>Anonymous</h1>
-          <div className='flex justify-center items-center gap-x-2 text-yellow-300'>
+        <h1 className="text-2xl translate-y-0.5">Logged-in as:</h1>
+        <div className="flex justify-center items-center gap-x-2">
+          <h1 className="translate-y-0.5 text-2xl">Anonymous</h1>
+          <div className="flex justify-center items-center gap-x-2 text-yellow-300">
             <CircleAlert strokeWidth={3} />
             Score will not be saved
           </div>
         </div>
       </div>
-      <div className='flex justify-center items-center h-screen flex-col'>
+      <div className="flex justify-center items-center h-screen flex-col">
         <h1
           className={`${luckiestGuy} text-shadow-main-menu mb-32 font-bold text-[5vw]`}
         >

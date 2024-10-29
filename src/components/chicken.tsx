@@ -40,7 +40,7 @@ export function Chicken({
       onRest: (a) => {
         if (a.finished) {
           setDebug(true);
-          
+
           onFinished?.();
         }
       },
@@ -58,7 +58,10 @@ export function Chicken({
   }, [move, api]);
 
   return (
-    <animated.div style={spring} className={`absolute cocked ${debugState && 'bg-red-500'} border w-4 h-4`}>
+    <animated.div
+      style={spring}
+      className={`absolute cocked ${debugState && 'bg-red-500'} border w-4 h-4`}
+    >
       🐔
     </animated.div>
   );
