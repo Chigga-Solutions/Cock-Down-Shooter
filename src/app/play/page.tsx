@@ -16,7 +16,7 @@ export default function Play() {
   /* Game-global states */
   const [paused, setPaused] = useState(false);
   const [chicken, setChickens] = useState<LivingChicken[]>([]);
-
+  const [bullets, setBullets] = useState(10);
   function pauseGame() {
     setPaused(true);
     console.log('[Game] Paused');
@@ -102,13 +102,34 @@ export default function Play() {
     });
 
     document.addEventListener('click', e => {
-      const clientRect = new DOMRect(e.clientX - (CLICK_RANGE / 2), e.clientY - (CLICK_RANGE / 2), CLICK_RANGE, CLICK_RANGE);
-      for (const element of document.getElementsByClassName('cocked')) {
-        if (areOverlapped(clientRect, element.getBoundingClientRect())) {
-          element.classList.add('bg-red-500');
+      setBullets(prevBullets => {
+        if(prevBullets > 0) {
+          const clientRect = new DOMRect(
+            e.clientX - (CLICK_RANGE / 2),
+            e.clientY - (CLICK_RANGE / 2),
+            CLICK_RANGE,
+            CLICK_RANGE
+          );
+          
+          for (const element of document.getElementsByClassName('cocked')) {
+            if (areOverlapped(clientRect, element.getBoundingClientRect())) {
+              element.classList.add('bg-red-500');
+            }
+          }
+          return prevBullets - 1;
+        } else {
+          //console.log('out of ammo');
+          return prevBullets;
         }
+      });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        setBullets(10);
+        //console.log("reloaded");
       }
-    })
+    });
 
     return () => {
       window.removeEventListener('resize', () => {});
@@ -130,6 +151,16 @@ export default function Play() {
         <h1>Number of chicken: {chicken.length}</h1>
       </div>
       {chicken.map((c) => c.chicken)}
+      <div className="fixed bottom-4 left-0 w-full flex justify-center">
+        <div className="flex space-x-2">
+          {Array.from({ length: bullets / 2 }).map((_, index) => (
+            <div key={`filled-${index}`} className="w-4 h-4  bg-red-800 rounded-full" />
+          ))}
+          {Array.from({ length: 5 - bullets/2 }).map((_, index) => (
+            <div key={`empty-${index}`} className="w-4 h-4 rounded-full" />
+          ))}
+        </div>
+      </div>
     </main>
   );
 }
