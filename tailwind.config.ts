@@ -14,7 +14,16 @@ const config: Config = {
       },
       ringWidth: {
         16: "16px",
-      }
+      },
+      keyframes: {
+        shake: {
+          from: { transform: 'rotate(-15deg)' },
+          to:   { transform: 'rotate(15deg)' }
+        }
+      },
+      animation: {
+        shake: 'shake 1s linear infinite alternate',
+      },
     },
   },
   plugins: [],
