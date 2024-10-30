@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 import './globals.css';
 import { CircleAlert, User } from 'lucide-react';
-import { LoginPage } from '@/components/login-page';
+import { LoginFrame } from '@/components/login-menu';
 
 export default function Home() {
   const router = useRouter();
@@ -23,7 +23,7 @@ export default function Home() {
         <SettingsMenu onDone={() => setSettingsOpened(false)} />
       )}
       {isLoginPageOpened && (
-        <LoginPage onDone={() => setLoginPageOpened(false)} />
+        <LoginFrame onDone={() => setLoginPageOpened(false)} />
       )}
       <div className="gap-x-4 flex justify-center items-center p-8">
         <button
