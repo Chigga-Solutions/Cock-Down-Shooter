@@ -33,7 +33,7 @@ export function LoginFrame({ onDone }: LoginFrameProps) {
       style={spring}
       className={`bg-[#BE945A] ${luckiestGuy} z-10 flex flex-col border-2 shadow-xl border-[#997946] rounded-xl absolute max-w-fit p-4 max-h-fit left-1/2 -translate-x-1/2 -translate-y-1/2`}
     >
-      {loginError && <div className='border bg-red-500 rounded border-red-600 p-2 mb-2'>We couldn't sign you right now: {loginError}</div>}
+      {loginError && <div className='border bg-red-500 rounded border-red-600 p-2 mb-2'>We couldn&lsquo;t sign you right now: {loginError}</div>}
       <form className="flex flex-col gap-y-4">
         <label className="flex flex-col gap-y-1 font-semibold">
           Username:
