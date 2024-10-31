@@ -62,6 +62,7 @@ export function LoginFrame({ onDone, onRegisterClick }: LoginFrameProps) {
             formAction={async (e) => {
               const res = await login(e);
               if (res) setLoginError(res);
+              else onDone();
             }}
           >
             Login

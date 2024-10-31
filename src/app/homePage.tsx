@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 
 import './globals.css';
-import { CircleAlert, User as LucideUser } from 'lucide-react';
+import { CircleAlert, LogOut, User as LucideUser } from 'lucide-react';
 import { LoginFrame } from '@/components/login-menu';
 import { createClient } from '@/lib/supabase/client';
 import { SignUpFrame } from '@/components/signup-menu';
@@ -25,21 +25,22 @@ export default function Home({ user }: { user: User | null }) {
 
   const fetchProfile = useCallback(async () => {
     if (!user) return;
-    
+
+    setUsername('Loading...');
     const usr = await supabase
       .from('profiles')
       .select(`username`)
       .eq('id', user.id)
       .single();
-    
+
     if (usr.data) {
       setUsername(usr.data.username);
-    }
+    } else setUsername(null);
   }, [supabase, user]);
 
   useEffect(() => {
     fetchProfile();
-  }, [user, fetchProfile])
+  }, [user, fetchProfile]);
 
   return (
     <main className={`${luckiestGuy} text-shadow bg-[url(/bg.webp)] bg-cover`}>
@@ -64,12 +65,27 @@ export default function Home({ user }: { user: User | null }) {
         <SignUpFrame onDone={() => setSignupPageOpened(false)} />
       )}
       <div className="gap-x-4 flex justify-center items-center p-8">
-        <button
-          onClick={() => setLoginPageOpened(true)}
-          className="border-4 p-0.5 w-12 h-12 rounded-md hover:-rotate-6 hover:scale-110 flex justify-center items-center transition-all bg-blue-500"
-        >
-          <LucideUser />
-        </button>
+        {!user ? (
+          <button
+            onClick={() => setLoginPageOpened(true)}
+            className="border-4 p-0.5 w-12 h-12 rounded-md hover:-rotate-6 hover:scale-110 flex justify-center items-center transition-all bg-blue-500"
+          >
+            <LucideUser width={48} strokeWidth={3} height={48} />
+          </button>
+        ) : (
+          <form action={'/auth/signout'} method='post'>
+            <button
+              formAction={async () => {
+                await fetch('/auth/signout', { method: 'POST' });
+                router.refresh();
+                await fetchProfile();
+              }}
+              className="border-4 p-0.5 w-12 h-12 rounded-md hover:-rotate-6 hover:scale-110 flex justify-center items-center transition-all bg-red-500"
+            >
+              <LogOut width={48} strokeWidth={3} height={48} />
+            </button>
+          </form>
+        )}
         <h1 className="text-2xl translate-y-0.5">Logged-in as:</h1>
         <div className="flex justify-center items-center gap-x-2">
           <h1 className="translate-y-0.5 text-2xl">
