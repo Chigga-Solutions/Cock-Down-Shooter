@@ -13,6 +13,8 @@ export async function login(e: FormData) {
     password: e.get('password') as string,
   };
 
+  if (!data.email || !data.password) return 'Please fill in all fields';
+
   const { error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
@@ -35,6 +37,8 @@ export async function signup(e: FormData) {
       },
     },
   };
+  if (!data.email || !data.password || !data.options.data.username)
+    return 'Please fill in all fields';
 
   const { error } = await supabase.auth.signUp(data);
 

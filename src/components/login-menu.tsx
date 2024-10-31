@@ -34,6 +34,7 @@ export function LoginFrame({ onDone, onRegisterClick }: LoginFrameProps) {
       style={spring}
       className={`bg-[#BE945A] ${luckiestGuy} z-10 flex flex-col border-2 shadow-xl border-[#997946] rounded-xl absolute max-w-fit py-7 p-4 max-h-fit left-1/2 -translate-x-1/2 -translate-y-1/2`}
     >
+      <h1 className="text-2xl font-bold absolute left-1/2 -translate-x-1/2 top-2 -translate-y-1/2">Login</h1>
       {loginError && (
         <div className="border bg-red-500 rounded border-red-600 p-2 mb-2">
           We couldn&lsquo;t sign you right now: {loginError}
@@ -43,17 +44,19 @@ export function LoginFrame({ onDone, onRegisterClick }: LoginFrameProps) {
         <label className="flex flex-col gap-y-1 font-semibold">
           Email Address:
           <input
+            required
             type="text"
             name="email"
-            className="rounded px-2 py-1 text-gray-800"
+            className="rounded px-2 py-1 text-gray-800 font-sans focus:outline-none"
           />
         </label>
         <label className="flex flex-col gap-y-1 font-semibold">
           Password:
           <input
+            required
             type="password"
             name="password"
-            className="rounded px-2 py-1 text-gray-800"
+            className="rounded px-2 py-1 text-gray-800 font-sans focus:outline-none"
           />
         </label>
         <div className="flex w-full gap-x-2">
@@ -82,8 +85,8 @@ export function LoginFrame({ onDone, onRegisterClick }: LoginFrameProps) {
           >
             Cancel
           </button>
-          <button
-            onClick={() => {
+        </div>
+        <h3 onClick={() => {
               api.start({
                 from: { top: '50%' },
                 top: '-50%',
@@ -91,13 +94,7 @@ export function LoginFrame({ onDone, onRegisterClick }: LoginFrameProps) {
                   onRegisterClick();
                 },
               });
-            }}
-            type="button"
-            className="mt-auto flex-1 from-yellow-500 rounded py-2 to-yellow-600 bg-gradient-to-b"
-          >
-            Register
-          </button>
-        </div>
+        }} className='text-center transition-transform cursor-pointer hover:scale-105 text-blue-400'>New to the game?</h3>
       </form>
     </animated.div>
   );
