@@ -7,11 +7,15 @@ import { useState } from 'react';
 import './globals.css';
 import { CircleAlert, User } from 'lucide-react';
 import { LoginFrame } from '@/components/login-menu';
+import { createClient } from '@/lib/supabase/client';
+import { SignUpFrame } from '@/components/signup-menu';
 
 export default function Home() {
   const router = useRouter();
+  const supabase = createClient();
   const [isSettingsOpened, setSettingsOpened] = useState(false);
   const [isLoginPageOpened, setLoginPageOpened] = useState(false);
+  const [isSignupPageOpened, setSignupPageOpened] = useState(false);
 
   const handleClick = () => {
     setSettingsOpened(true);
@@ -19,16 +23,24 @@ export default function Home() {
 
   return (
     <main className={`${luckiestGuy} text-shadow bg-[url(/bg.webp)] bg-cover`}>
+      {(isSettingsOpened || isLoginPageOpened || isSignupPageOpened) && (
+        <>
+          <div className="pointer-events-all z-10 bg-[#000000d9] fixed top-0 w-full h-full" />
+        </>
+      )}
       {isSettingsOpened && (
         <SettingsMenu onDone={() => setSettingsOpened(false)} />
       )}
       {isLoginPageOpened && (
-        <LoginFrame onDone={() => setLoginPageOpened(false)} />
+        <LoginFrame onRegisterClick={() => {setSignupPageOpened(true); setLoginPageOpened(false)}} onDone={() => setLoginPageOpened(false)} />
+      )}
+      {isSignupPageOpened && (
+        <SignUpFrame onDone={() => setSignupPageOpened(false)} />
       )}
       <div className="gap-x-4 flex justify-center items-center p-8">
         <button
           onClick={() => setLoginPageOpened(true)}
-          className="border-4 p-0.5 rounded-md hover:animate-shake hover:scale-105 transition-all bg-blue-500"
+          className="border-4 p-0.5 w-12 h-12 rounded-md hover:-rotate-6 hover:scale-110 flex justify-center items-center transition-all bg-blue-500"
         >
           <User />
         </button>
