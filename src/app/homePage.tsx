@@ -45,9 +45,7 @@ export default function Home({ user }: { user: User | null }) {
   return (
     <main className={`${luckiestGuy} text-shadow bg-[url(/bg.webp)] bg-cover`}>
       {(isSettingsOpened || isLoginPageOpened || isSignupPageOpened) && (
-        <>
-          <div className="pointer-events-all z-10 bg-[#0000006b] fixed top-0 w-full h-full" />
-        </>
+        <div className="pointer-events-all z-10 bg-[#0000006b] fixed top-0 w-full h-full" />
       )}
       {isSettingsOpened && (
         <SettingsMenu onDone={() => setSettingsOpened(false)} />
@@ -75,6 +73,7 @@ export default function Home({ user }: { user: User | null }) {
         ) : (
           <form action={'/auth/signout'} method='post'>
             <button
+              title='Sign out'
               formAction={async () => {
                 await fetch('/auth/signout', { method: 'POST' });
                 router.refresh();
