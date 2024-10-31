@@ -29,7 +29,11 @@ export async function signup(e: FormData) {
   const data = {
     email: e.get('email') as string,
     password: e.get('password') as string,
-    username: e.get('username') as string
+    options: {
+      data: {
+        username: e.get('username') as string
+      }
+    }
   }
   
   const { error } = await supabase.auth.signUp(data);

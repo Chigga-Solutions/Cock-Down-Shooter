@@ -25,7 +25,7 @@ export default function Home() {
     <main className={`${luckiestGuy} text-shadow bg-[url(/bg.webp)] bg-cover`}>
       {(isSettingsOpened || isLoginPageOpened || isSignupPageOpened) && (
         <>
-          <div className="pointer-events-all z-10 bg-[#000000d9] fixed top-0 w-full h-full" />
+          <div className="pointer-events-all z-10 bg-[#0000006b] fixed top-0 w-full h-full" />
         </>
       )}
       {isSettingsOpened && (

@@ -53,9 +53,10 @@ export function SignUpFrame({ onDone }: LoginFrameProps) {
             formAction={async e => {
               const res = await signup(e)
               if (res) setLoginError(res)
+              else onDone()
             }}
           >
-            Login
+            Register
           </button>
           <button
             onClick={() => {
@@ -63,8 +64,6 @@ export function SignUpFrame({ onDone }: LoginFrameProps) {
                 from: { top: '50%' },
                 top: '-50%',
                 onRest: () => {
-                  console.log('done');
-                  
                   onDone();
                 },
               });
