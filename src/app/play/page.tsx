@@ -7,6 +7,7 @@ import { luckiestGuy } from '@/components/settings-menu';
 import { areOverlapped, CLICK_RANGE, generateChickenCoords } from '@/lib/utils';
 import React, { ReactElement, useEffect, useState } from 'react';
 
+
 interface LivingChicken {
   id: string;
   chicken: React.ReactNode;
@@ -16,7 +17,7 @@ export default function Play() {
   /* Game-global states */
   const [paused, setPaused] = useState(false);
   const [chicken, setChickens] = useState<LivingChicken[]>([]);
-  const [bullets, setBullets] = useState(10);
+  const [bullets, setBullets] = useState(5);
   function pauseGame() {
     setPaused(true);
     console.log('[Game] Paused');
@@ -132,7 +133,7 @@ export default function Play() {
 
     document.addEventListener('keydown', (e) => {
       if (e.code === 'Space') {
-        setBullets(10);
+        setBullets(5);
         //console.log("reloaded");
       }
     });
@@ -157,16 +158,10 @@ export default function Play() {
         <h1>Number of chicken: {chicken.length}</h1>
       </div>
       {chicken.map((c) => c.chicken)}
-      <div className="fixed bottom-4 left-0 w-full flex justify-center">
+      <div className="fixed top-6 right-6 w-full flex justify-end">
         <div className="flex space-x-2">
-          {Array.from({ length: bullets / 2 }).map((_, index) => (
-            <div
-              key={`filled-${index}`}
-              className="w-4 h-4  bg-red-800 rounded-full"
-            />
-          ))}
-          {Array.from({ length: 5 - bullets / 2 }).map((_, index) => (
-            <div key={`empty-${index}`} className="w-4 h-4 rounded-full" />
+          {Array.from({ length: bullets}).map((_, index) => (
+            <div key={`filled-${index}`} className="w-12 h-12 bg-[url('/bullet.png')] bg-cover" />
           ))}
         </div>
       </div>
