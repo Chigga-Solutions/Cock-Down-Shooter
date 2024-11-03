@@ -17,6 +17,7 @@ export default function Play() {
   const [paused, setPaused] = useState(false);
   const [chicken, setChickens] = useState<LivingChicken[]>([]);
   const [bullets, setBullets] = useState(5);
+  const [showRotateMessage, setShowRotateMessage] = useState(false);
   function pauseGame() {
     setPaused(true);
     console.log('[Game] Paused');
@@ -91,8 +92,11 @@ export default function Play() {
   useEffect(() => {
     const resizeEvent = () => {
       if (window.innerWidth < window.innerHeight) {
-        pauseGame();
+        setShowRotateMessage(true); 
+        pauseGame(); 
+        setChickens([]);
       } else {
+        setShowRotateMessage(false);
         setPaused(false);
       }
     };
@@ -153,11 +157,16 @@ export default function Play() {
 
   return (
     <main className={`${luckiestGuy} cursor-crosshair h-screen`}>
-      {paused && (
+      {paused && !showRotateMessage && ( 
         <>
           <div className='pointer-events-all z-10 bg-[#000000d9] fixed top-0 w-full h-full' />
           <PauseMenu onResume={() => setPaused(false)} />
         </>
+      )}
+      {showRotateMessage && ( 
+        <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 bg-black p-4 rounded shadow-lg text-2xl'>
+          <h2 className='text-center'>Rotate your display to continue playing</h2>
+        </div>
       )}
       <PauseButton onClick={() => pauseGame()} />
       <div className='pl-2'>
