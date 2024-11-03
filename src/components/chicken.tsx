@@ -2,6 +2,7 @@
 
 import { useSpring, animated } from '@react-spring/web';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 interface ChickenProps {
   move: boolean;
@@ -60,9 +61,17 @@ export function Chicken({
   return (
     <animated.div
       style={spring}
-      className={`absolute cocked ${debugState && 'bg-red-500'} border w-4 h-4`}
+      className={`absolute cocked ${debugState && 'bg-red-500'}  w-18 h-18`}
     >
-      🐔
+      <Image 
+      src="/Cocks/1.gif" 
+      alt="chicken" 
+      className=""
+      width={'128'}
+      height={'128'}
+      draggable="false"
+      unoptimized
+    />
     </animated.div>
   );
 }
