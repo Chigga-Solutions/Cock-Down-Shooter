@@ -1,12 +1,14 @@
 import { useEffect } from 'react';
 import { luckiestGuy } from './settings-menu';
 import { useSpring, animated } from '@react-spring/web';
+import { useRouter } from 'next/navigation';
 
 export interface PauseMenuProps {
   onResume?: () => void;
 }
 
 export function PauseMenu({ onResume }: PauseMenuProps) {
+  const router = useRouter();
   const [spring, api] = useSpring(
     () => ({
       from: {
@@ -34,23 +36,39 @@ export function PauseMenu({ onResume }: PauseMenuProps) {
       >
         Pause Menu
       </h1>
-      <button
-        onClick={() => {
-          api.start({
-            from: { top: '50%' },
-            top: '-50%',
-            config: {
-              duration: 200,
-            },
-            onRest: () => {
-              onResume?.();
-            },
-          });
-        }}
-        className='border mb-2 mt-auto self-center min-w-fit w-[20%] hover:scale-105 transition text-2xl p-2 bg-gradient-to-b from-green-500 to-green-600 rounded-md'
-      >
-        Resume
-      </button>
+
+      <div className="text-2xl mt-16 mb-4">
+        idk what put there
+      </div>
+
+      <div className="flex justify-center mt-auto mb-4 gap-4">
+        <button
+          onClick={() => {
+            router.push('../');
+          }}
+          className='border min-w-fit w-[45%] hover:scale-105 transition text-2xl p-2 bg-gradient-to-b from-red-500 to-red-600 rounded-md'
+        >
+          Exit
+        </button>
+
+        <button
+          onClick={() => {
+            api.start({
+              from: { top: '50%' },
+              top: '-50%',
+              config: {
+                duration: 200,
+              },
+              onRest: () => {
+                onResume?.();
+              },
+            });
+          }}
+          className='border min-w-fit w-[45%] hover:scale-105 transition text-2xl p-2 bg-gradient-to-b from-green-500 to-green-600 rounded-md'
+        >
+          Resume
+        </button>
+      </div>
     </animated.div>
   );
 }
