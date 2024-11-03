@@ -3,9 +3,8 @@
 import { luckiestGuy } from "@/components/settings-menu";
 import '@/app/globals.css';
 import { Crown, LogOut } from "lucide-react";
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { errorToJSON } from "next/dist/server/render";
 
 export interface LeaderboardEntry {
   name: string;
@@ -35,14 +34,9 @@ const EntryWrapped = ({ lbEntry, position }: { lbEntry: LeaderboardEntry, positi
   )
 }
 
-export function LbClient() {
+export function LbClient({ entries = [] }: { entries?: LeaderboardEntry[] }) {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(0);
-
-  let entries: LeaderboardEntry[] = [];
-  for (let i = 0; i < 10; i++) {
-    entries.push({name: 'Negus', score: 69});
-  }
 
   const chunked = chunkionize(entries);
 
@@ -85,7 +79,7 @@ export function LbClient() {
         </div>
         <div className="flex justify-center items-center gap-x-2 mb-2">
           <button disabled={currentPage === 0} onClick={() => decrementPage()} className={`hover:scale-105 p-2 transition-transform bg-gradient-to-br from-blue-500 border-blue-600 border rounded to-blue-600 ${currentPage === 0 && 'opacity-80'}`}>Previous</button>
-          <button disabled={currentPage === chunked.length - 1} onClick={() => incrementPage()} className={`hover:scale-105 p-2 transition-transform bg-gradient-to-br from-blue-500 border-blue-600 border rounded to-blue-600 ${currentPage === chunked.length - 1 && 'opacity-80'}`}>Next page</button>
+          <button disabled={currentPage >= chunked.length - 1} onClick={() => incrementPage()} className={`hover:scale-105 p-2 transition-transform bg-gradient-to-br from-blue-500 border-blue-600 border rounded to-blue-600 ${currentPage >= chunked.length - 1 && 'opacity-80'}`}>Next page</button>
         </div>
       </div>
     </main>
