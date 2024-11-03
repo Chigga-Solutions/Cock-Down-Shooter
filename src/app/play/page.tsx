@@ -90,25 +90,26 @@ export default function Play() {
   }
 
   useEffect(() => {
-    window.addEventListener('resize', () => {
+
+    const resizeEvent = () => {
       if (window.innerWidth < window.innerHeight) {
         pauseGame();
       } else {
         setPaused(false);
       }
-    });
+    }
 
-    document.addEventListener('visibilitychange', () => {
+    const visibilityChange = () => {
       if (document.hidden) {
         pauseGame();
       }
-    });
+    }
 
-    window.addEventListener('blur', () => {
+    const blurEvent = () => {
       pauseGame();
-    });
+    }
 
-    document.addEventListener('click', (e) => {
+    const clickEvent = (e: MouseEvent) => {
       setBullets((prevBullets) => {
         if (prevBullets > 0) {
           const clientRect = new DOMRect(
@@ -129,19 +130,26 @@ export default function Play() {
           return prevBullets;
         }
       });
-    });
-
-    document.addEventListener('keydown', (e) => {
+    }
+    
+    const keyDown = (e: KeyboardEvent) => {
       if (e.code === 'Space') {
         setBullets(5);
-        //console.log("reloaded");
       }
-    });
+    }
+
+    document.addEventListener('click', clickEvent);
+    window.addEventListener('resize', resizeEvent);
+    document.addEventListener('keydown', keyDown);
+    document.addEventListener('visibilitychange', visibilityChange);
+    window.addEventListener('blur', blurEvent);
 
     return () => {
-      window.removeEventListener('resize', () => {});
-      document.removeEventListener('visibilitychange', () => {});
-      window.removeEventListener('blur', () => {});
+      window.removeEventListener('resize', resizeEvent);
+      document.removeEventListener('visibilitychange', visibilityChange);
+      document.removeEventListener('click', clickEvent);
+      document.removeEventListener('keydown', keyDown);
+      window.removeEventListener('blur', blurEvent);
     };
   }, []);
 
