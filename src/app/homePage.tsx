@@ -45,7 +45,7 @@ export default function Home({ user }: { user: User | null }) {
   return (
     <main className={`${luckiestGuy} text-shadow bg-[url(/bg.webp)] bg-cover`}>
       {(isSettingsOpened || isLoginPageOpened || isSignupPageOpened) && (
-        <div className="pointer-events-all z-10 bg-[#0000006b] fixed top-0 w-full h-full" />
+        <div className='pointer-events-all z-10 bg-[#0000006b] fixed top-0 w-full h-full' />
       )}
       {isSettingsOpened && (
         <SettingsMenu onDone={() => setSettingsOpened(false)} />
@@ -62,11 +62,11 @@ export default function Home({ user }: { user: User | null }) {
       {isSignupPageOpened && (
         <SignUpFrame onDone={() => setSignupPageOpened(false)} />
       )}
-      <div className="gap-x-4 flex justify-center items-center p-8">
+      <div className='gap-x-4 flex justify-center items-center p-8'>
         {!user ? (
           <button
             onClick={() => setLoginPageOpened(true)}
-            className="border-4 p-0.5 w-12 h-12 rounded-md hover:-rotate-6 hover:scale-110 flex justify-center items-center transition-all bg-blue-500"
+            className='border-4 p-0.5 w-12 h-12 rounded-md hover:-rotate-6 hover:scale-110 flex justify-center items-center transition-all bg-blue-500'
           >
             <LucideUser width={48} strokeWidth={3} height={48} />
           </button>
@@ -79,26 +79,26 @@ export default function Home({ user }: { user: User | null }) {
                 router.refresh();
                 await fetchProfile();
               }}
-              className="border-4 p-0.5 w-12 h-12 rounded-md hover:-rotate-6 hover:scale-110 flex justify-center items-center transition-all bg-red-500"
+              className='border-4 p-0.5 w-12 h-12 rounded-md hover:-rotate-6 hover:scale-110 flex justify-center items-center transition-all bg-red-500'
             >
               <LogOut width={48} strokeWidth={3} height={48} />
             </button>
           </form>
         )}
-        <h1 className="text-2xl translate-y-0.5">Logged-in as:</h1>
-        <div className="flex justify-center items-center gap-x-2">
-          <h1 className="translate-y-0.5 text-2xl">
+        <h1 className='text-2xl translate-y-0.5'>Logged-in as:</h1>
+        <div className='flex justify-center items-center gap-x-2'>
+          <h1 className='translate-y-0.5 text-2xl'>
             {username || 'Anonymous'}
           </h1>
           {!username && (
-            <div className="flex justify-center items-center gap-x-2 text-yellow-300">
+            <div className='flex justify-center items-center gap-x-2 text-yellow-300'>
               <CircleAlert strokeWidth={3} />
               Score will not be saved
             </div>
           )}
         </div>
       </div>
-      <div className="flex justify-center items-center h-screen flex-col">
+      <div className='flex justify-center items-center h-screen flex-col'>
         <h1
           className={`${luckiestGuy} text-shadow-main-menu mb-32 font-bold text-[5vw]`}
         >
@@ -109,7 +109,7 @@ export default function Home({ user }: { user: User | null }) {
             router.push('/play');
           }}
           disabled={isSettingsOpened}
-          className="hover:scale-110 transition-all irregular-button rounded-[0.6vw] w-[15vw] h-[6vw] text-[3vw] bg-gradient-to-b from-green-500 to-green-600 font-bold"
+          className='hover:scale-110 transition-all irregular-button rounded-[0.6vw] w-[15vw] h-[6vw] text-[3vw] bg-gradient-to-b from-green-500 to-green-600 font-bold'
         >
           Play
         </button>

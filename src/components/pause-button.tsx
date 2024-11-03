@@ -1,10 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import { MouseEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export interface PauseButtonProps {
-  onClick?: (e: MouseEvent) => void;
+  onClick?: () => void;
 }
 
 export function PauseButton({ onClick }: PauseButtonProps) {
@@ -23,13 +23,13 @@ export function PauseButton({ onClick }: PauseButtonProps) {
       className={`cursor-pointer ${
         clicked ? 'scale-110' : 'hover:scale-105'
       } w-[5vw] h-[5vw] transition-transform`}
-      src="/menu-btn.png"
+      src='/menu-btn.png'
       width={'512'}
       height={'512'}
-      alt="ERR:FNF"
-      onClick={(e) => {
+      alt='ERR:FNF'
+      onClick={() => {
         setClicked(true);
-        onClick?.(e);
+        onClick?.();
       }}
     />
   );

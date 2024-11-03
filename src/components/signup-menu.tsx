@@ -33,43 +33,45 @@ export function SignUpFrame({ onDone }: LoginFrameProps) {
       style={spring}
       className={`bg-[#BE945A] ${luckiestGuy} z-10 flex flex-col border-2 shadow-xl border-[#997946] rounded-xl absolute max-w-fit p-4 max-h-fit left-1/2 -translate-x-1/2 -translate-y-1/2`}
     >
-      <h1 className="text-2xl font-bold absolute left-1/2 -translate-x-1/2 top-2 -translate-y-1/2">Register</h1>
+      <h1 className='text-2xl font-bold absolute left-1/2 -translate-x-1/2 top-2 -translate-y-1/2'>
+        Register
+      </h1>
       {loginError && (
-        <div className="border bg-red-500 rounded border-red-600 p-2 mb-2">
+        <div className='border bg-red-500 rounded border-red-600 p-2 mb-2'>
           We couldn&lsquo;t sign you right now: {loginError}
         </div>
       )}
-      <form className="flex flex-col gap-y-4">
-        <label className="flex flex-col gap-y-1 font-semibold">
+      <form className='flex flex-col gap-y-4'>
+        <label className='flex flex-col gap-y-1 font-semibold'>
           Username:
           <input
             required
-            type="text"
-            name="username"
-            className="rounded px-2 py-1 text-gray-800 font-sans focus:outline-none"
+            type='text'
+            name='username'
+            className='rounded px-2 py-1 text-gray-800 font-sans focus:outline-none'
           />
         </label>
-        <label className="flex flex-col gap-y-1 font-semibold">
+        <label className='flex flex-col gap-y-1 font-semibold'>
           Email Address:
           <input
             required
-            type="text"
-            name="email"
-            className="rounded px-2 py-1 text-gray-800 font-sans focus:outline-none"
+            type='text'
+            name='email'
+            className='rounded px-2 py-1 text-gray-800 font-sans focus:outline-none'
           />
         </label>
-        <label className="flex flex-col gap-y-1 font-semibold">
+        <label className='flex flex-col gap-y-1 font-semibold'>
           Password:
           <input
             required
-            type="password"
-            name="password"
-            className="rounded px-2 py-1 text-gray-800 font-sans focus:outline-none"
+            type='password'
+            name='password'
+            className='rounded px-2 py-1 text-gray-800 font-sans focus:outline-none'
           />
         </label>
-        <div className="flex w-full gap-x-2">
+        <div className='flex w-full gap-x-2'>
           <button
-            className="mt-auto flex-1 from-green-500 rounded py-2 to-green-600 bg-gradient-to-b"
+            className='mt-auto flex-1 from-green-500 rounded py-2 to-green-600 bg-gradient-to-b'
             formAction={async (e) => {
               const res = await signup(e);
               if (res) setLoginError(res);
@@ -88,8 +90,8 @@ export function SignUpFrame({ onDone }: LoginFrameProps) {
                 },
               });
             }}
-            type="button"
-            className="mt-auto flex-1 from-red-500 rounded py-2 to-red-600 bg-gradient-to-b"
+            type='button'
+            className='mt-auto flex-1 from-red-500 rounded py-2 to-red-600 bg-gradient-to-b'
           >
             Cancel
           </button>

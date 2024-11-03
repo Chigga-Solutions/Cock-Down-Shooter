@@ -53,7 +53,7 @@ export function SettingsMenu({ onDone }: SettingsMenuProps) {
             },
           });
         }}
-        className="border mb-2 mt-auto self-center w-[20%] hover:scale-105 transition text-2xl p-2 bg-gradient-to-b from-green-500 to-green-600 rounded-md"
+        className='border mb-2 mt-auto self-center w-[20%] hover:scale-105 transition text-2xl p-2 bg-gradient-to-b from-green-500 to-green-600 rounded-md'
       >
         Done
       </button>

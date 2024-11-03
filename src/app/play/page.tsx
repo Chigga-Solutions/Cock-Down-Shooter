@@ -7,7 +7,6 @@ import { luckiestGuy } from '@/components/settings-menu';
 import { areOverlapped, CLICK_RANGE, generateChickenCoords } from '@/lib/utils';
 import React, { ReactElement, useEffect, useState } from 'react';
 
-
 interface LivingChicken {
   id: string;
   chicken: React.ReactNode;
@@ -90,24 +89,23 @@ export default function Play() {
   }
 
   useEffect(() => {
-
     const resizeEvent = () => {
       if (window.innerWidth < window.innerHeight) {
         pauseGame();
       } else {
         setPaused(false);
       }
-    }
+    };
 
     const visibilityChange = () => {
       if (document.hidden) {
         pauseGame();
       }
-    }
+    };
 
     const blurEvent = () => {
       pauseGame();
-    }
+    };
 
     const clickEvent = (e: MouseEvent) => {
       setBullets((prevBullets) => {
@@ -130,13 +128,13 @@ export default function Play() {
           return prevBullets;
         }
       });
-    }
-    
+    };
+
     const keyDown = (e: KeyboardEvent) => {
       if (e.code === 'Space') {
         setBullets(5);
       }
-    }
+    };
 
     document.addEventListener('click', clickEvent);
     window.addEventListener('resize', resizeEvent);
@@ -157,19 +155,22 @@ export default function Play() {
     <main className={`${luckiestGuy} cursor-crosshair h-screen`}>
       {paused && (
         <>
-          <div className="pointer-events-all z-10 bg-[#000000d9] fixed top-0 w-full h-full" />
+          <div className='pointer-events-all z-10 bg-[#000000d9] fixed top-0 w-full h-full' />
           <PauseMenu onResume={() => setPaused(false)} />
         </>
       )}
       <PauseButton onClick={() => pauseGame()} />
-      <div className="pl-2">
+      <div className='pl-2'>
         <h1>Number of chicken: {chicken.length}</h1>
       </div>
       {chicken.map((c) => c.chicken)}
-      <div className="fixed top-6 right-6 w-full flex justify-end">
-        <div className="flex space-x-2">
-          {Array.from({ length: bullets}).map((_, index) => (
-            <div key={`filled-${index}`} className="w-12 h-12 bg-[url('/bullet.png')] bg-cover" />
+      <div className='fixed top-6 right-6 w-full flex justify-end'>
+        <div className='flex space-x-2'>
+          {Array.from({ length: bullets }).map((_, index) => (
+            <div
+              key={`filled-${index}`}
+              className="w-12 h-12 bg-[url('/bullet.png')] bg-cover"
+            />
           ))}
         </div>
       </div>

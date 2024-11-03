@@ -47,7 +47,7 @@ export function PauseMenu({ onResume }: PauseMenuProps) {
             },
           });
         }}
-        className="border mb-2 mt-auto self-center min-w-fit w-[20%] hover:scale-105 transition text-2xl p-2 bg-gradient-to-b from-green-500 to-green-600 rounded-md"
+        className='border mb-2 mt-auto self-center min-w-fit w-[20%] hover:scale-105 transition text-2xl p-2 bg-gradient-to-b from-green-500 to-green-600 rounded-md'
       >
         Resume
       </button>
