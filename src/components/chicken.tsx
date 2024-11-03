@@ -61,7 +61,7 @@ export function Chicken({
   return (
     <animated.div
       style={spring}
-      className={`absolute cocked ${debugState && 'bg-red-500'}  w-18 h-18`}
+      className={`absolute cocked rotate-[] ${debugState && 'bg-red-500'}  w-18 h-18`}
     >
       <Image 
       src="/Cocks/1.gif" 

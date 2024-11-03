@@ -4,8 +4,9 @@ import { Chicken } from '@/components/chicken';
 import { PauseButton } from '@/components/pause-button';
 import { PauseMenu } from '@/components/pause-menu';
 import { luckiestGuy } from '@/components/settings-menu';
+import { ReloadSound, ShotSound } from '@/lib/sounds';
 import { areOverlapped, CLICK_RANGE, generateChickenCoords } from '@/lib/utils';
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useRef, useState } from 'react';
 
 interface LivingChicken {
   id: string;
@@ -18,6 +19,8 @@ export default function Play() {
   const [chicken, setChickens] = useState<LivingChicken[]>([]);
   const [bullets, setBullets] = useState(5);
   const [showRotateMessage, setShowRotateMessage] = useState(false);
+  const playStateRef = useRef(paused);
+
   function pauseGame() {
     setPaused(true);
     console.log('[Game] Paused');
@@ -51,6 +54,8 @@ export default function Play() {
     const interval = setInterval(() => {
       if (!paused) createSelfDestroyingChicken();
     }, 1000);
+
+    playStateRef.current = paused;
 
     return () => clearInterval(interval);
   }, [paused]);
@@ -113,13 +118,15 @@ export default function Play() {
 
     const clickEvent = (e: MouseEvent) => {
       setBullets((prevBullets) => {
-        if (prevBullets > 0) {
+        if (prevBullets > 0 && playStateRef.current === false) {
           const clientRect = new DOMRect(
             e.clientX - CLICK_RANGE / 2,
             e.clientY - CLICK_RANGE / 2,
             CLICK_RANGE,
             CLICK_RANGE,
           );
+
+          ShotSound().play();
 
           for (const element of document.getElementsByClassName('cocked')) {
             if (areOverlapped(clientRect, element.getBoundingClientRect())) {
@@ -136,7 +143,10 @@ export default function Play() {
 
     const keyDown = (e: KeyboardEvent) => {
       if (e.code === 'Space') {
+        ReloadSound().play();
         setBullets(5);
+      } else if (e.code === 'Escape') {
+        pauseGame();
       }
     };
 
@@ -156,7 +166,7 @@ export default function Play() {
   }, []);
 
   return (
-    <main className={`${luckiestGuy} cursor-crosshair h-screen`}>
+    <main className={`${luckiestGuy} select-none cursor-crosshair h-screen`}>
       {paused && !showRotateMessage && ( 
         <>
           <div className='pointer-events-all z-10 bg-[#000000d9] fixed top-0 w-full h-full' />
