@@ -43,7 +43,7 @@ export default function Home({ user }: { user: User | null }) {
   }, [user, fetchProfile]);
 
   return (
-    <main className={`${luckiestGuy} text-shadow bg-[url(/bg.webp)] bg-cover`}>
+    <main className={`${luckiestGuy} text-shadow bg-[url(/title_screen.png)] bg-cover`}>
       {(isSettingsOpened || isLoginPageOpened || isSignupPageOpened) && (
         <div className='pointer-events-all z-10 bg-[#0000006b] fixed top-0 w-full h-full' />
       )}
@@ -74,11 +74,7 @@ export default function Home({ user }: { user: User | null }) {
           <form action={'/auth/signout'} method='post'>
             <button
               title='Sign out'
-              formAction={async () => {
-                await fetch('/auth/signout', { method: 'POST' });
-                router.refresh();
-                await fetchProfile();
-              }}
+              type='submit'
               className='border-4 p-0.5 w-12 h-12 rounded-md hover:-rotate-6 hover:scale-110 flex justify-center items-center transition-all bg-red-500'
             >
               <LogOut width={48} strokeWidth={3} height={48} />
