@@ -19,6 +19,7 @@ export default function Play() {
   const [chicken, setChickens] = useState<LivingChicken[]>([]);
   const [bullets, setBullets] = useState(5);
   const [showRotateMessage, setShowRotateMessage] = useState(false);
+  const [score, setScore] = useState(0);
   const playStateRef = useRef(paused);
 
   function pauseGame() {
@@ -79,6 +80,8 @@ export default function Play() {
             <Chicken
               key={id}
               onFinished={() => {
+                
+                //setScore((prev) => prev - 1);decrease only if its shoted
                 setChickens(
                   (prev) => prev.filter((chicken) => chicken.id !== id), // Remove the chicken by id
                 );
@@ -127,12 +130,15 @@ export default function Play() {
           );
 
           ShotSound().play();
-
+          
           for (const element of document.getElementsByClassName('cocked')) {
             if (areOverlapped(clientRect, element.getBoundingClientRect())) {
+              setScore((prev) => prev + 1);
               element.classList.add('bg-red-500');
+              // => delete chicken when shoted
             }
           }
+      
           return prevBullets - 1;
         } else {
           //console.log('out of ammo');
@@ -181,6 +187,7 @@ export default function Play() {
       <PauseButton onClick={() => pauseGame()} />
       <div className='pl-2'>
         <h1>Number of chicken: {chicken.length}</h1>
+        <h1>Score: {score}</h1>
       </div>
       {chicken.map((c) => c.chicken)}
       <div className='fixed top-6 right-6 w-full flex justify-end'>

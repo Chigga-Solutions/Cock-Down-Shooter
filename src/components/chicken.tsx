@@ -10,6 +10,7 @@ interface ChickenProps {
   posStart?: [left: number, down: number];
   posEnd?: [left: number, down: number];
   speed: number;
+  shot?: boolean;
 }
 
 export function Chicken({
