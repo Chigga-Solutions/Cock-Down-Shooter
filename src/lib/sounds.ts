@@ -1,17 +1,23 @@
 'use client';
+
 export const AudioConfiguration = {
-  volume: parseFloat(localStorage.getItem('volume') || '0.3') || 0.3,
+  volume: -1,
+}
+
+function getVolume() {
+  if (AudioConfiguration.volume === -1)
+    AudioConfiguration.volume = parseFloat(localStorage.getItem('volume') || '30') / 100 || 0.3;
+  return AudioConfiguration.volume;
 }
 
 export const ShotSound = (): HTMLAudioElement => {
   const audio = new Audio('sounds/shot2.mp3');
-  audio.volume = AudioConfiguration.volume / 100;
-  console.log(audio.volume);
+  audio.volume = getVolume()
   return audio
 }
 
 export const ReloadSound = (): HTMLAudioElement => {
   const audio = new Audio('sounds/reload1.mp3');
-  audio.volume = AudioConfiguration.volume / 100;
+  audio.volume = getVolume()
   return audio
 }

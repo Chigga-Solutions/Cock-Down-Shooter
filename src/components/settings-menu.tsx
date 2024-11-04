@@ -1,6 +1,7 @@
 'use client';
 
 import '@/app/globals.css';
+import { AudioConfiguration } from '@/lib/sounds';
 import { useSpring, animated } from '@react-spring/web';
 import { Luckiest_Guy } from 'next/font/google';
 import { useEffect, useState } from 'react';
@@ -36,7 +37,7 @@ export function SettingsMenu({ onDone }: SettingsMenuProps) {
 
   const [volume, setVolume] = useState(() => {
     const savedVolume = localStorage.getItem('volume');
-    return savedVolume ? savedVolume : 50;
+    return savedVolume ? (parseFloat(savedVolume)) : 0.5;
   });
 
   const handleDifficultyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,7 +48,8 @@ export function SettingsMenu({ onDone }: SettingsMenuProps) {
 
   const handleVolumeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newVolume = event.target.value;
-    setVolume(newVolume);
+    setVolume(parseFloat(newVolume));
+    AudioConfiguration.volume = parseFloat(newVolume) / 100;
     localStorage.setItem('volume', newVolume);
   };
  
