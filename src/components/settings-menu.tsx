@@ -29,6 +29,18 @@ export function SettingsMenu({ onDone }: SettingsMenuProps) {
     [],
   );
 
+  const [difficulty, setDifficulty] = useState(() => {
+    // Check localStorage for saved difficulty or default to 'easy'
+    const savedDifficulty = localStorage.getItem('difficulty');
+    return savedDifficulty ? savedDifficulty : 'easy';
+  });
+
+  const handleDifficultyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newDifficulty = event.target.value;
+    setDifficulty(newDifficulty);
+    localStorage.setItem('difficulty', newDifficulty); // Save difficulty to localStorage
+  };
+
   const [volume, setVolume] = useState(50);
 
   useEffect(() => {
@@ -37,7 +49,6 @@ export function SettingsMenu({ onDone }: SettingsMenuProps) {
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setVolume(Number(e.target.value));
-    
   };
 
   return (
@@ -62,6 +73,39 @@ export function SettingsMenu({ onDone }: SettingsMenuProps) {
           onChange={handleVolumeChange}
           className="w-[80%] accent-[#59ff00]"
         />
+      </div>
+
+      <div className="flex flex-col items-center mt-8 mb-4">
+        <label className="text-2xl mb-2">Difficulty</label>
+        <div>
+          <label className="block mb-2">
+            <input
+              type="radio"
+              value="easy"
+              checked={difficulty === 'easy'}
+              onChange={handleDifficultyChange}
+            />
+            Easy
+          </label>
+          <label className="block mb-2">
+            <input
+              type="radio"
+              value="medium"
+              checked={difficulty === 'medium'}
+              onChange={handleDifficultyChange}
+            />
+            Medium
+          </label>
+          <label className="block mb-2">
+            <input
+              type="radio"
+              value="hard"
+              checked={difficulty === 'hard'}
+              onChange={handleDifficultyChange}
+            />
+            Hard
+          </label>
+        </div>
       </div>
 
       <button
