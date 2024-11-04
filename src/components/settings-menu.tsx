@@ -30,26 +30,33 @@ export function SettingsMenu({ onDone }: SettingsMenuProps) {
   );
 
   const [difficulty, setDifficulty] = useState(() => {
-    // Check localStorage for saved difficulty or default to 'easy'
     const savedDifficulty = localStorage.getItem('difficulty');
     return savedDifficulty ? savedDifficulty : 'easy';
+  });
+
+  const [volume, setVolume] = useState(() => {
+    const savedVolume = localStorage.getItem('volume');
+    return savedVolume ? savedVolume : 50;
   });
 
   const handleDifficultyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newDifficulty = event.target.value;
     setDifficulty(newDifficulty);
-    localStorage.setItem('difficulty', newDifficulty); // Save difficulty to localStorage
+    localStorage.setItem('difficulty', newDifficulty);
   };
 
-  const [volume, setVolume] = useState(50);
+  const handleVolumeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newVolume = event.target.value;
+    setVolume(newVolume);
+    localStorage.setItem('volume', newVolume);
+  };
+ 
 
   useEffect(() => {
     api.start({ top: '50%' });
   }, [api]);
 
-  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setVolume(Number(e.target.value));
-  };
+  
 
   return (
     <animated.div
