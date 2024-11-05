@@ -29,7 +29,7 @@ export default function Play() {
   }
 
   function generateSpeed(min: number) {
-    return Math.random() > 0.66 ? min : Math.random() > 0.33 ? min + 500 : min + 1000;
+    return Math.random() > 0.75 ? min + 250 : Math.random() > 0.50 ? min + 500 : Math.random() > 0.25 ? min + 750 : min + 1000;
   }
 
   useEffect(() => {
@@ -59,7 +59,7 @@ export default function Play() {
 
     const interval = setInterval(() => {
       if (!paused) createSelfDestroyingChicken();
-    }, 1000);
+    }, difficulty == "easy" ? 1000 : difficulty == "medium" ? 750 : 500);
 
     playStateRef.current = paused;
 
@@ -94,7 +94,7 @@ export default function Play() {
               posStart={coords[0]}
               posEnd={coords[1]}
               move={!paused}
-              speed={difficulty == "easy" ? generateSpeed(3000) : difficulty == "medium" ? generateSpeed(2000) : generateSpeed(1000)}
+              speed={difficulty == "easy" ? generateSpeed(2500) : difficulty == "medium" ? generateSpeed(2000) : generateSpeed(1000)}
             />
           ),
         } as LivingChicken,
