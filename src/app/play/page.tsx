@@ -189,7 +189,13 @@ export default function Play() {
 
   return (
     <main className={`${luckiestGuy} select-none cursor-crosshair h-screen`}>
-      <GameStarter />
+      <GameStarter 
+        onGameReady={() => {
+        setTimeout(() => {
+        pauseGame();//add end-menu.tsx(same as pause menu, but show your best score, actual score and buttons exit n restart) and endGame() 
+      }, 60000);
+      }} 
+      />
       {paused && !showRotateMessage && ( 
         <>
           <div className='pointer-events-all z-10 bg-[#000000d9] fixed top-0 w-full h-full' />
