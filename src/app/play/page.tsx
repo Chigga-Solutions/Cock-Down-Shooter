@@ -22,7 +22,7 @@ export default function Play() {
   const [showRotateMessage, setShowRotateMessage] = useState(false);
   const [score, setScore] = useState(0);
   const playStateRef = useRef(paused);
-  const difficulty = localStorage.getItem('difficulty');
+  const [difficulty, setDifficulty] = useState<string | null>(null);
   const [chickensSpawned, setChickensSpawned] = useState(0);
   const [chickensShoted, setChickensShoted] = useState(0);
  
@@ -76,10 +76,6 @@ export default function Play() {
     setChickens((prev) => {
       // Create a unique id for the chicken
       const coords = generateChickenCoords();
-      const length = Math.sqrt(
-        Math.pow(coords[1][0] - coords[0][0], 2) +
-          Math.pow(coords[1][1] - coords[0][1], 2),
-      );
       const id = Math.random().toString(36).substring(2, 9);
 
       return [
@@ -108,6 +104,8 @@ export default function Play() {
   }
 
   useEffect(() => {
+    setDifficulty(localStorage.getItem('difficulty'));
+
     const resizeEvent = () => {
       if (window.innerWidth < window.innerHeight) {
         setShowRotateMessage(true); 
