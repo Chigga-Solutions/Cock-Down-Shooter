@@ -22,6 +22,8 @@ export default function Play() {
   const [score, setScore] = useState(0);
   const playStateRef = useRef(paused);
   const difficulty = localStorage.getItem('difficulty');
+  const [chickensSpawned, setChickensSpawned] = useState(0);
+  const [chickensShoted, setChickensShoted] = useState(0);
   
   function pauseGame() {
     setPaused(true);
@@ -67,6 +69,7 @@ export default function Play() {
   }, [paused]);
 
   function createSelfDestroyingChicken() {
+    setChickensSpawned((prevCount) => prevCount + 1);
     // DO NOT TOUCH THIS
     setChickens((prev) => {
       // Create a unique id for the chicken
@@ -138,6 +141,7 @@ export default function Play() {
           
           for (const element of document.getElementsByClassName('cocked')) {
             if (areOverlapped(clientRect, element.getBoundingClientRect())) {
+              setChickensShoted((prevCount) => prevCount + 1);
               setScore((prev) => prev + 1);
               element.classList.add('bg-red-500');
               // => delete chicken when shoted
@@ -155,7 +159,12 @@ export default function Play() {
     const keyDown = (e: KeyboardEvent) => {
       if (e.code === 'Space') {
         ReloadSound().play();
-        setBullets(5);
+        const timer = setInterval(() => {
+          setBullets(5);
+          clearInterval(timer);
+        }, 600);
+        
+        
       } else if (e.code === 'Escape') {
         pauseGame();
       }
@@ -193,6 +202,7 @@ export default function Play() {
       <div className='pl-2'>
         <h1>Number of chicken: {chicken.length}</h1>
         <h1>Score: {score}</h1>
+        <h1>Chickens shoted: {chickensShoted} / {chickensSpawned}</h1>
       </div>
       {chicken.map((c) => c.chicken)}
       <div className='fixed top-6 right-6 w-full flex justify-end'>
