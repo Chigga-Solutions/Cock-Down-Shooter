@@ -7,6 +7,7 @@ import { luckiestGuy } from '@/components/settings-menu';
 import { ReloadSound, ShotSound } from '@/lib/sounds';
 import { areOverlapped, CLICK_RANGE, generateChickenCoords } from '@/lib/utils';
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
+import { GameStarter } from '@/components/game-starter';
 
 interface LivingChicken {
   id: string;
@@ -24,6 +25,7 @@ export default function Play() {
   const difficulty = localStorage.getItem('difficulty');
   const [chickensSpawned, setChickensSpawned] = useState(0);
   const [chickensShoted, setChickensShoted] = useState(0);
+ 
   
   function pauseGame() {
     setPaused(true);
@@ -187,6 +189,7 @@ export default function Play() {
 
   return (
     <main className={`${luckiestGuy} select-none cursor-crosshair h-screen`}>
+      <GameStarter />
       {paused && !showRotateMessage && ( 
         <>
           <div className='pointer-events-all z-10 bg-[#000000d9] fixed top-0 w-full h-full' />

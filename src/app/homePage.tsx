@@ -10,7 +10,7 @@ import { LoginFrame } from '@/components/login-menu';
 import { createClient } from '@/lib/supabase/client';
 import { SignUpFrame } from '@/components/signup-menu';
 import { User } from '@supabase/supabase-js';
-import { GameStarter } from '@/components/game-starter';
+
 
 export default function Home({ user }: { user: User | null }) {
   const router = useRouter();
@@ -45,7 +45,6 @@ export default function Home({ user }: { user: User | null }) {
 
   return (
     <main className={`${luckiestGuy} text-shadow bg-[url(/title_screen.png)] bg-cover`}>
-      <GameStarter />
       {(isSettingsOpened || isLoginPageOpened || isSignupPageOpened) && (
         <div className='pointer-events-all z-10 bg-[#0000006b] fixed top-0 w-full h-full' />
       )}
