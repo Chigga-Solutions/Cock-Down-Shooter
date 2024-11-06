@@ -27,10 +27,9 @@ export default function Play() {
   const playStateRef = useRef(paused);
   const [difficulty, setDifficulty] = useState<string | null>(null);
   const [chickensSpawned, setChickensSpawned] = useState(0);
-  const [timer, setTimer] = useState(60);
+  const [timer, setTimer] = useState(30);
   const [timerRunning, setTimerRunning] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
-
  
   
   function pauseGame() {
@@ -40,8 +39,8 @@ export default function Play() {
   }
 
   function endGame() {
-    setEnded(true);
     setTimerRunning(false);
+      setEnded(true);
     console.log('[Game] Ended');
   }
 
@@ -49,18 +48,6 @@ export default function Play() {
     setGameStarted(true);
     setTimerRunning(true); 
     console.log('[Game] Started');
-  }
-
-  function resetGame() {//not working!!!
-    setTimer(60);
-    setScore(0);
-    setBullets(5);
-    setChickens([]);
-    setEnded(false);
-    setPaused(false);
-    setChickensSpawned(0);
-    setTimerRunning(false);
-    setGameStarted(false);
   }
 
   function generateSpeed(min: number) {
@@ -93,7 +80,10 @@ export default function Play() {
     }
 
     const interval = setInterval(() => {
-      if (!paused && !ended && gameStarted) createSelfDestroyingChicken();
+      if (!paused && !ended && gameStarted) {
+        setChickensSpawned((prevCount) => prevCount + 1);
+        createSelfDestroyingChicken();
+      } 
     }, difficulty == "easy" ? 1000 : difficulty == "medium" ? 750 : 500);
 
     playStateRef.current = paused;
@@ -129,7 +119,7 @@ export default function Play() {
 
 
   function createSelfDestroyingChicken() {
-    setChickensSpawned((prevCount) => prevCount + 1);
+    
     // DO NOT TOUCH THIS
     setChickens((prev) => {
       // Create a unique id for the chicken
@@ -248,7 +238,6 @@ export default function Play() {
         <>
           <div className='pointer-events-all z-10 bg-[#000000d9] fixed top-0 w-full h-full' />
           <EndMenu 
-            onRetry={resetGame} 
             score={score} 
             allChick={chickensSpawned}
           />
