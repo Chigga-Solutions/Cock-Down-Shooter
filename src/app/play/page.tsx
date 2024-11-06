@@ -244,7 +244,7 @@ export default function Play() {
           />
         </>
       )}
-      {paused && !showRotateMessage && ( 
+      {paused && !showRotateMessage && !ended && ( 
         <>
           <div className='pointer-events-all z-10 bg-[#000000d9] fixed top-0 w-full h-full' />
           <PauseMenu

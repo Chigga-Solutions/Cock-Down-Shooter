@@ -1,7 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { luckiestGuy } from './settings-menu';
 import { useSpring, animated } from '@react-spring/web';
 import { useRouter } from 'next/navigation';
+import { createClient } from '@/lib/supabase/client';
 
 export interface EndMenuProps {
   score: number;
@@ -10,6 +11,7 @@ export interface EndMenuProps {
 
 export function EndMenu({ score, allChick }: EndMenuProps) {
   const router = useRouter();
+
   const [spring, api] = useSpring(
     () => ({
       from: {
@@ -26,6 +28,30 @@ export function EndMenu({ score, allChick }: EndMenuProps) {
   useEffect(() => {
     api.start({ top: '50%' });
   }, [api]);
+
+  useEffect(() => {
+    const supabase = createClient();
+
+    async function updateScore() {
+      console.log('[CDS] Updating score...');
+      
+      const user = await supabase.auth.getUser();
+
+      if (user.data.user) {
+        console.log('[CDS] User found:', user.data.user.id);
+        
+        const resp = await supabase.from('leadeboard').insert({
+          "score": score,
+          "user_id": user.data.user?.id,
+        }).select();
+
+        if (resp.error) {
+          console.error(resp.error);
+        }
+      }
+    }
+    updateScore();
+  }, []);
 
   return (
     <animated.div
