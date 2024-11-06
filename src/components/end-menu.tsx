@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { luckiestGuy } from './settings-menu';
 import { useSpring, animated } from '@react-spring/web';
 import { useRouter } from 'next/navigation';
