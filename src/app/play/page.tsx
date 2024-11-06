@@ -27,21 +27,40 @@ export default function Play() {
   const playStateRef = useRef(paused);
   const [difficulty, setDifficulty] = useState<string | null>(null);
   const [chickensSpawned, setChickensSpawned] = useState(0);
+  const [timer, setTimer] = useState(60);
+  const [timerRunning, setTimerRunning] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false);
 
  
   
   function pauseGame() {
     setPaused(true);
+    setTimerRunning(false);
     console.log('[Game] Paused');
   }
 
   function endGame() {
     setEnded(true);
+    setTimerRunning(false);
     console.log('[Game] Ended');
   }
 
-  function resetGame() {
-    
+  function startGame() {
+    setGameStarted(true);
+    setTimerRunning(true); 
+    console.log('[Game] Started');
+  }
+
+  function resetGame() {//not working!!!
+    setTimer(60);
+    setScore(0);
+    setBullets(5);
+    setChickens([]);
+    setEnded(false);
+    setPaused(false);
+    setChickensSpawned(0);
+    setTimerRunning(false);
+    setGameStarted(false);
   }
 
   function generateSpeed(min: number) {
@@ -74,13 +93,40 @@ export default function Play() {
     }
 
     const interval = setInterval(() => {
-      if (!paused && !ended) createSelfDestroyingChicken();
+      if (!paused && !ended && gameStarted) createSelfDestroyingChicken();
     }, difficulty == "easy" ? 1000 : difficulty == "medium" ? 750 : 500);
 
     playStateRef.current = paused;
 
     return () => clearInterval(interval);
-  }, [paused, ended]);
+  }, [paused, ended, gameStarted]);
+
+  useEffect(() => {
+    const gameStartTimeout = setTimeout(() => {
+      startGame();
+    }, 4000); 
+
+    return () => {
+      clearTimeout(gameStartTimeout);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (timerRunning && !paused && !ended) {
+      const countdown = setInterval(() => {
+        setTimer((prevTimer) => {
+          if (prevTimer <= 0) {
+            clearInterval(countdown);
+            endGame();
+            return 0;
+          }
+          return prevTimer - 1;
+        });
+      }, 1000);
+      return () => clearInterval(countdown); 
+    }
+  }, [timerRunning, paused, ended]);
+
 
   function createSelfDestroyingChicken() {
     setChickensSpawned((prevCount) => prevCount + 1);
@@ -177,7 +223,7 @@ export default function Play() {
           return currentBullets;
         });
       } else if (e.code === 'Escape') {
-        pauseGame();
+      pauseGame();
       }
     };
 
@@ -198,13 +244,7 @@ export default function Play() {
 
   return (
     <main className={`${luckiestGuy} select-none cursor-crosshair h-screen`}>
-      <GameStarter 
-        onGameReady={() => {
-        setTimeout(() => {
-        endGame();
-      }, 600);
-      }} 
-      />
+      <GameStarter/>
       {ended && !showRotateMessage && ( 
         <>
           <div className='pointer-events-all z-10 bg-[#000000d9] fixed top-0 w-full h-full' />
@@ -218,7 +258,12 @@ export default function Play() {
       {paused && !showRotateMessage && ( 
         <>
           <div className='pointer-events-all z-10 bg-[#000000d9] fixed top-0 w-full h-full' />
-          <PauseMenu onResume={() => setPaused(false)} />
+          <PauseMenu
+            onResume={() => {
+              setPaused(false);
+              setTimerRunning(true); 
+            }}
+          />
         </>
       )}
       {showRotateMessage && ( 
@@ -230,6 +275,7 @@ export default function Play() {
       <div className='pl-2'>
         <h1>Number of chicken: {chicken.length}</h1>
         <h1>Score: {score}</h1>
+        <h1>Time Remaining: {timer}s</h1>
       </div>
       {chicken.map((c) => c.chicken)}
       <div className='fixed top-6 right-6 w-full flex justify-end'>
