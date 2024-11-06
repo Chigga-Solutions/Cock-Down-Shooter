@@ -243,7 +243,7 @@ export default function Play() {
   }, []);
 
   return (
-    <main className={`${luckiestGuy} select-none cursor-crosshair h-screen`}>
+    <main className={`${luckiestGuy} select-none cursor-cross h-screen bg-[url(/background.webp)] bg-cover`}>
       <GameStarter/>
       {ended && !showRotateMessage && ( 
         <>
@@ -273,9 +273,8 @@ export default function Play() {
       )}
       <PauseButton onClick={() => pauseGame()} />
       <div className='pl-2'>
-        <h1>Number of chicken: {chicken.length}</h1>
-        <h1>Score: {score}</h1>
-        <h1>Time Remaining: {timer}s</h1>
+        <h1 className='text-2xl text-red-600'>Score: {score}</h1>
+        <h1 className='text-2xl text-red-600'>Time Remaining: {timer}s</h1>
       </div>
       {chicken.map((c) => c.chicken)}
       <div className='fixed top-6 right-6 w-full flex justify-end'>

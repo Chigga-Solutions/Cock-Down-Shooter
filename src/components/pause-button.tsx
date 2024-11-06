@@ -22,7 +22,7 @@ export function PauseButton({ onClick }: PauseButtonProps) {
     <Image
       className={`cursor-pointer ${
         clicked ? 'scale-110' : 'hover:scale-105'
-      } w-[5vw] h-[5vw] transition-transform`}
+      } w-[6vw] h-[6vw] transition-transform`}
       src='/menu-btn.png'
       width={'512'}
       height={'512'}

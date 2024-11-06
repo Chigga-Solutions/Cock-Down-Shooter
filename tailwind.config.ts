@@ -24,6 +24,9 @@ const config: Config = {
       animation: {
         shake: 'shake 1s linear infinite alternate',
       },
+      cursor: {
+        'cross': 'url(/public/cursor.svg), crosshair',
+      }
     },
   },
   plugins: [],
