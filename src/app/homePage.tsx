@@ -108,14 +108,22 @@ export default function Home({ user }: { user: User | null }) {
             router.push('/play');
           }}
           disabled={isSettingsOpened}
-          className='hover:scale-110 transition-all irregular-button rounded-[0.6vw] w-[15vw] h-[6vw] text-[3vw] bg-gradient-to-b from-green-500 to-green-600 font-bold'
+          className='hover:scale-110 transition-all irregular-button rounded-[0.6vw] w-[18vw] h-[6vw] text-[3vw] bg-gradient-to-b from-green-500 to-green-600 font-bold'
         >
           Play
         </button>
         <button
+          onClick={() => {
+            router.push('/leaderboards');
+          }}
+          className={`hover:scale-110 transition-transform rounded-[0.6vw] w-[15vw] h-[4vw] text-[2vw] mt-[1vw] bg-gradient-to-b from-red-500 to-red-600 font-bold`}
+        >
+          Leaderboard
+        </button>
+        <button
           onClick={handleClick}
           disabled={isSettingsOpened}
-          className={`hover:scale-105 transition-transform rounded-[0.6vw] w-[12.5vw] h-[4vw] text-[2vw] mt-[1vw] bg-gradient-to-b from-cyan-500 to-blue-500 font-bold`}
+          className={`hover:scale-110 transition-transform rounded-[0.6vw] w-[12.5vw] h-[4vw] text-[2vw] mt-[1vw] bg-gradient-to-b from-cyan-500 to-blue-600 font-bold`}
         >
           Settings
         </button>
