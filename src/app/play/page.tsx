@@ -27,12 +27,13 @@ export default function Play() {
   const playStateRef = useRef(paused);
   const [difficulty, setDifficulty] = useState<string | null>(null);
   const [chickensSpawned, setChickensSpawned] = useState(0);
-  const [timer, setTimer] = useState(30);
+  const [timer, setTimer] = useState(process.env.NODE_ENV === 'development' ? 10 : 60);
   const [timerRunning, setTimerRunning] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
  
   
   function pauseGame() {
+    if (ended) return;
     setPaused(true);
     setTimerRunning(false);
     console.log('[Game] Paused');
@@ -183,9 +184,9 @@ export default function Play() {
             CLICK_RANGE,
             CLICK_RANGE,
           );
-
-          ShotSound().play();
           
+          ShotSound().play();
+
           for (const element of document.getElementsByClassName('cocked')) {
             if (areOverlapped(clientRect, element.getBoundingClientRect())) {
               setScore((prev) => prev + 1);

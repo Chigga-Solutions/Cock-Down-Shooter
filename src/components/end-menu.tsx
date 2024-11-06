@@ -55,15 +55,15 @@ export function EndMenu({ score, allChick }: EndMenuProps) {
         >
           Exit
         </button>
-
-        <button
-          onClick={() => {
-            router.refresh();
-          }}
-          className='border min-w-fit w-[45%] hover:scale-105 transition text-2xl p-2 bg-gradient-to-b from-green-500 to-green-600 rounded-md'
-        >
-          Retry
-        </button>
+        {/* Fuck it we ball */}
+        <form className='min-w-fit justify-center items-center flex w-[45%]' action={'/play'} method='GET'>
+          <button
+            type='submit'
+            className='border hover:scale-105 flex-1 h-full transition text-2xl bg-gradient-to-b from-green-500 to-green-600 rounded-md'
+          >
+            Retry
+          </button>
+        </form>
       </div>
     </animated.div>
   );

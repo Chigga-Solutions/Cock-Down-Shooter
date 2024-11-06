@@ -24,6 +24,7 @@ export function PauseButton({ onClick }: PauseButtonProps) {
         clicked ? 'scale-110' : 'hover:scale-105'
       } w-[6vw] h-[6vw] transition-transform`}
       src='/menu-btn.png'
+      id='pause-butt'
       width={'512'}
       height={'512'}
       alt='ERR:FNF'

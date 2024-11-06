@@ -1,5 +1,6 @@
 # Cock Down Shooter  
 
+![Website](https://img.shields.io/website?url=https%3A%2F%2Fcds.7f454c46.xyz%2F&up_message=Cock%20Down%20Shooter)
 ![Static Badge](https://img.shields.io/badge/coolify.io-8A2BE2?link=https%3A%2F%2Fcds.7f454c46.xyz%2F)
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Chigga-Solutions/Cock-Down-Shooter/node.js.yml)
 

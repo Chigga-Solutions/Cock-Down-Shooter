@@ -1,7 +1,7 @@
 'use client';
 
 import { useSpring, animated } from '@react-spring/web';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Image from 'next/image';
 
 interface ChickenProps {
