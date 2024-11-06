@@ -19,6 +19,8 @@ export default function Home({ user }: { user: User | null }) {
   const [isLoginPageOpened, setLoginPageOpened] = useState(false);
   const [isSignupPageOpened, setSignupPageOpened] = useState(false);
   const [username, setUsername] = useState<string | null>(null);
+  
+  
 
   const handleClick = () => {
     setSettingsOpened(true);
@@ -44,7 +46,7 @@ export default function Home({ user }: { user: User | null }) {
   }, [user, fetchProfile]);
 
   return (
-    <main className={`${luckiestGuy} text-shadow bg-[url(/title_screen.png)] bg-cover`}>
+    <main className={`${luckiestGuy} text-shadow bg-[url(/bg.webp)] bg-cover`}>
       {(isSettingsOpened || isLoginPageOpened || isSignupPageOpened) && (
         <div className='pointer-events-all z-10 bg-[#0000006b] fixed top-0 w-full h-full' />
       )}

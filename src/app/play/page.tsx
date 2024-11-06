@@ -10,6 +10,7 @@ import { areOverlapped, CLICK_RANGE, generateChickenCoords } from '@/lib/utils';
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { GameStarter } from '@/components/game-starter';
 
+
 interface LivingChicken {
   id: string;
   chicken: React.ReactNode;
@@ -26,7 +27,7 @@ export default function Play() {
   const playStateRef = useRef(paused);
   const [difficulty, setDifficulty] = useState<string | null>(null);
   const [chickensSpawned, setChickensSpawned] = useState(0);
-  const [chickensShoted, setChickensShoted] = useState(0);
+
  
   
   function pauseGame() {
@@ -37,6 +38,10 @@ export default function Play() {
   function endGame() {
     setEnded(true);
     console.log('[Game] Ended');
+  }
+
+  function resetGame() {
+    
   }
 
   function generateSpeed(min: number) {
@@ -101,7 +106,7 @@ export default function Play() {
               posStart={coords[0]}
               posEnd={coords[1]}
               move={!paused && !ended}
-              speed={difficulty == "easy" ? generateSpeed(3000) : difficulty == "medium" ? generateSpeed(2500) : generateSpeed(1500)}
+              speed={difficulty == "easy" ? generateSpeed(4000) : difficulty == "medium" ? generateSpeed(3000) : generateSpeed(2000)}
             />
           ),
         } as LivingChicken,
@@ -147,7 +152,6 @@ export default function Play() {
           
           for (const element of document.getElementsByClassName('cocked')) {
             if (areOverlapped(clientRect, element.getBoundingClientRect())) {
-              setChickensShoted((prevCount) => prevCount + 1);
               setScore((prev) => prev + 1);
               element.classList.add('bg-red-500');
               // => delete chicken when shoted
@@ -205,7 +209,7 @@ export default function Play() {
         <>
           <div className='pointer-events-all z-10 bg-[#000000d9] fixed top-0 w-full h-full' />
           <EndMenu 
-            onRetry={() => setEnded(false)} 
+            onRetry={() => {resetGame}} 
             score={score} 
             allChick={chickensSpawned}
           />
@@ -226,7 +230,6 @@ export default function Play() {
       <div className='pl-2'>
         <h1>Number of chicken: {chicken.length}</h1>
         <h1>Score: {score}</h1>
-        <h1>Chickens shoted: {chickensShoted} / {chickensSpawned}</h1>
       </div>
       {chicken.map((c) => c.chicken)}
       <div className='fixed top-6 right-6 w-full flex justify-end'>
