@@ -4,12 +4,11 @@ import { useSpring, animated } from '@react-spring/web';
 import { useRouter } from 'next/navigation';
 
 export interface EndMenuProps {
-  onRetry?: () => void;
   score: number;
   allChick: number;
 }
 
-export function EndMenu({ onRetry, score, allChick }: EndMenuProps) {
+export function EndMenu({ score, allChick }: EndMenuProps) {
   const router = useRouter();
   const [spring, api] = useSpring(
     () => ({
@@ -50,7 +49,7 @@ export function EndMenu({ onRetry, score, allChick }: EndMenuProps) {
       <div className="flex justify-center mt-auto mb-4 gap-4">
         <button
           onClick={() => {
-            router.push('../');
+            router.push('/');
           }}
           className='border min-w-fit w-[45%] hover:scale-105 transition text-2xl p-2 bg-gradient-to-b from-red-500 to-red-600 rounded-md'
         >
@@ -59,16 +58,7 @@ export function EndMenu({ onRetry, score, allChick }: EndMenuProps) {
 
         <button
           onClick={() => {
-            api.start({
-              from: { top: '50%' },
-              top: '-50%',
-              config: {
-                duration: 200,
-              },
-              onRest: () => {
-                onRetry?.();
-              },
-            });
+            router.refresh();
           }}
           className='border min-w-fit w-[45%] hover:scale-105 transition text-2xl p-2 bg-gradient-to-b from-green-500 to-green-600 rounded-md'
         >
