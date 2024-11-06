@@ -10,6 +10,31 @@
 Cock Down Shooter is a simple game where your
 goal is to shoot down as many chickens as possible in a minute. Your score will be saved into a database if logged in.
 
+### Developers
+
+<table>
+<tr>
+<td><img width=40 src="https://github.com/MalkiNcz.png?size=40"></td>
+<td><strong>MalkiNcz</strong></td>
+<td><strong>malekj.07@spst.eu</strong> (Lead dev)</td>
+</tr>
+<tr>
+<td><img width=40 src="https://github.com/koblizekXD.png?size=40"></td>
+<td><strong>AA55h</strong></td>
+<td><strong>prokupekj.07@spst.eu</strong></td>
+</tr>
+<tr>
+<td><img width=40 src="https://github.com/kebabobama.png?size=40"></td>
+<td><strong>Kebab Obama</strong></td>
+<td><strong>chybal.06@spst.eu</strong></td>
+</tr>
+<tr>
+<td><img width=40 src="https://github.com/sogba.png?size=40"></td>
+<td><strong>Sogba</strong></td>
+<td><strong>palatp.06@spst.eu</strong></td>
+</tr>
+</table>
+
 ### Technical Information
 
 This project uses following tech stack:
@@ -19,6 +44,8 @@ This project uses following tech stack:
 
 ## Contributing
 
+Commits to `main` branch are always automatically deployed at
+https://cds.7f454c46.xyz/  
 You're always free to open issue/pr :)
 
 ### How to setup?
