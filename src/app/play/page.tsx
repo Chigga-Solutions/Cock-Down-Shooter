@@ -199,8 +199,7 @@ export default function Play() {
           for (const element of document.getElementsByClassName('cocked')) {
             if (areOverlapped(clientRect, element.getBoundingClientRect())) {
               setScore((prev) => prev + 1);
-              element.classList.add('bg-red-500');
-              // => delete chicken when shoted
+              element.classList.add('hidden');
             }
           }
       

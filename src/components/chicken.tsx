@@ -10,7 +10,7 @@ interface ChickenProps {
   posStart?: [left: number, down: number];
   posEnd?: [left: number, down: number];
   speed: number;
-  shot?: boolean;
+  
 }
 
 export function Chicken({
@@ -20,7 +20,6 @@ export function Chicken({
   posEnd = [0, 0],
   speed = 0,
 }: ChickenProps) {
-  const [debugState, setDebug] = useState(false);
 
   const [spring, api] = useSpring(
     () => ({
@@ -41,7 +40,6 @@ export function Chicken({
       },
       onRest: (a) => {
         if (a.finished) {
-          setDebug(true);
 
           onFinished?.();
         }
@@ -62,7 +60,7 @@ export function Chicken({
   return (
     <animated.div
       style={spring}
-      className={`absolute cocked rotate-[] ${debugState && 'bg-red-500'}  w-18 h-18`}
+      className={`absolute cocked rotate-[] w-18 h-18`}
     >
       <Image 
       src="/Cocks/1.gif" 
