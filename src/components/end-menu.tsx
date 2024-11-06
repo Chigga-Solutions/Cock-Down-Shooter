@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { luckiestGuy } from './settings-menu';
 import { useSpring, animated } from '@react-spring/web';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+import { Check, Cross } from 'lucide-react';
 
 export interface EndMenuProps {
   score: number;
@@ -11,6 +12,7 @@ export interface EndMenuProps {
 
 export function EndMenu({ score, allChick }: EndMenuProps) {
   const router = useRouter();
+  const [scoreSaved, setScoreSaved] = useState(false);
 
   const [spring, api] = useSpring(
     () => ({
@@ -47,7 +49,7 @@ export function EndMenu({ score, allChick }: EndMenuProps) {
 
         if (resp.error) {
           console.error(resp.error);
-        }
+        } else setScoreSaved(true);
       }
     }
     updateScore();
@@ -56,20 +58,35 @@ export function EndMenu({ score, allChick }: EndMenuProps) {
   return (
     <animated.div
       style={spring}
-      className={`bg-[#BE945A] ${luckiestGuy} z-10 flex text-center flex-col border-2 shadow-xl border-[#997946] rounded-xl absolute w-[20%] h-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2`}
+      className={`bg-[#BE945A] gap-y-16 ${luckiestGuy} z-10 flex text-center flex-col border-2 shadow-xl border-[#997946] rounded-xl absolute w-[40%] p-2 h-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2`}
     >
       <h1
         className={`text-shadow absolute w-full text-5xl left-1/2 -translate-x-1/2 -top-2`}
       >
-        End
+        Game Over
       </h1>
 
-      <div className="text-2xl mt-16 mb-4">
-        Your score: {score} / {allChick};
+      <div className="text-2xl mt-16">
+        Your score: {score}
       </div>
 
-      <div className="text-2xl mt-16 mb-4">
-        
+      <div className="text-2xl">
+        Total chickens: {allChick}<br />
+        You have killed {Math.floor((score / allChick) * 100)}% of chicken
+      </div>
+
+      <div>
+        {scoreSaved ? (
+          <div className="text-2xl text-green-400 flex justify-center gap-x-2">
+            <Check strokeWidth={6} />
+            Your score has been saved!
+          </div>
+        ) : (
+          <div className="text-2xl text-red-500 flex justify-center gap-x-2">
+            <Cross />
+            Score not saved!
+          </div>
+        )}
       </div>
 
       <div className="flex justify-center mt-auto mb-4 gap-4">

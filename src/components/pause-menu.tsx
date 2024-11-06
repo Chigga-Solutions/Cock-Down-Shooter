@@ -38,7 +38,7 @@ export function PauseMenu({ onResume }: PauseMenuProps) {
       </h1>
 
       <div className="text-2xl mt-16 mb-4">
-        idk what put there
+        The game has been paused. Click the button below to resume, or the exit button to leave the game.
       </div>
 
       <div className="flex justify-center mt-auto mb-4 gap-4">

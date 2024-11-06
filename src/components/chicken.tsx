@@ -59,8 +59,11 @@ export function Chicken({
 
   return (
     <animated.div
-      style={spring}
-      className={`absolute cocked rotate-[] w-18 h-18`}
+      style={{
+        ...spring, 
+        ...(posStart[0] > posEnd[0] ? { transform: 'scaleX(-1)' } : {}),
+      }}
+      className={`absolute cocked w-18 h-18`}
     >
       <Image 
       src="/Cocks/1.gif" 
