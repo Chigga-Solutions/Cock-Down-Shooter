@@ -249,7 +249,7 @@ export default function Play() {
         <>
           <div className='pointer-events-all z-10 bg-[#000000d9] fixed top-0 w-full h-full' />
           <EndMenu 
-            onRetry={() => {resetGame}} 
+            onRetry={resetGame} 
             score={score} 
             allChick={chickensSpawned}
           />
