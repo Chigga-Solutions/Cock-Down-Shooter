@@ -1,5 +1,9 @@
 # Cock Down Shooter  
-### Deployed at https://cds.7f454c46.xyz/
+
+![Static Badge](https://img.shields.io/badge/build-passing-brightgreen?style=flat&logoColor=red&link=https%3A%2F%2Fcds.7f454c46.xyz%2F)
+![Coolify Badge](https://img.shields.io/badge/coolify.io-8A2BE2)
+
+#### ^^ Click the badge :3
 
 ## About
 
