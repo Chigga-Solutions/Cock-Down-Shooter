@@ -3,6 +3,7 @@
 import { Chicken } from '@/components/chicken';
 import { PauseButton } from '@/components/pause-button';
 import { PauseMenu } from '@/components/pause-menu';
+import { EndMenu } from '@/components/end-menu';
 import { luckiestGuy } from '@/components/settings-menu';
 import { ReloadSound, ShotSound } from '@/lib/sounds';
 import { areOverlapped, CLICK_RANGE, generateChickenCoords } from '@/lib/utils';
@@ -17,6 +18,7 @@ interface LivingChicken {
 export default function Play() {
   /* Game-global states */
   const [paused, setPaused] = useState(false);
+  const [ended, setEnded] = useState(false);
   const [chicken, setChickens] = useState<LivingChicken[]>([]);
   const [bullets, setBullets] = useState(5);
   const [showRotateMessage, setShowRotateMessage] = useState(false);
@@ -32,12 +34,17 @@ export default function Play() {
     console.log('[Game] Paused');
   }
 
+  function endGame() {
+    setEnded(true);
+    console.log('[Game] Ended');
+  }
+
   function generateSpeed(min: number) {
     return Math.random() > 0.75 ? min + 250 : Math.random() > 0.50 ? min + 500 : Math.random() > 0.25 ? min + 750 : min + 1000;
   }
 
   useEffect(() => {
-    if (paused) {
+    if (paused || ended) {
       setChickens((prev) =>
         prev.map((c) => {
           return {
@@ -62,13 +69,13 @@ export default function Play() {
     }
 
     const interval = setInterval(() => {
-      if (!paused) createSelfDestroyingChicken();
+      if (!paused && !ended) createSelfDestroyingChicken();
     }, difficulty == "easy" ? 1000 : difficulty == "medium" ? 750 : 500);
 
     playStateRef.current = paused;
 
     return () => clearInterval(interval);
-  }, [paused]);
+  }, [paused, ended]);
 
   function createSelfDestroyingChicken() {
     setChickensSpawned((prevCount) => prevCount + 1);
@@ -93,7 +100,7 @@ export default function Play() {
               }}
               posStart={coords[0]}
               posEnd={coords[1]}
-              move={!paused}
+              move={!paused && !ended}
               speed={difficulty == "easy" ? generateSpeed(3000) : difficulty == "medium" ? generateSpeed(2500) : generateSpeed(1500)}
             />
           ),
@@ -190,10 +197,20 @@ export default function Play() {
       <GameStarter 
         onGameReady={() => {
         setTimeout(() => {
-        pauseGame();//add end-menu.tsx(same as pause menu, but show your best score, actual score and buttons exit n restart) and endGame() 
-      }, 60000);
+        endGame();
+      }, 600);
       }} 
       />
+      {ended && !showRotateMessage && ( 
+        <>
+          <div className='pointer-events-all z-10 bg-[#000000d9] fixed top-0 w-full h-full' />
+          <EndMenu 
+            onRetry={() => setEnded(false)} 
+            score={score} 
+            allChick={chickensSpawned}
+          />
+        </>
+      )}
       {paused && !showRotateMessage && ( 
         <>
           <div className='pointer-events-all z-10 bg-[#000000d9] fixed top-0 w-full h-full' />
