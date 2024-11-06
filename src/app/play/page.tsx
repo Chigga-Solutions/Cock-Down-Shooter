@@ -87,7 +87,6 @@ export default function Play() {
               key={id}
               onFinished={() => {
                 
-                //setScore((prev) => prev - 1);decrease only if its shoted
                 setChickens(
                   (prev) => prev.filter((chicken) => chicken.id !== id), // Remove the chicken by id
                 );
@@ -95,7 +94,7 @@ export default function Play() {
               posStart={coords[0]}
               posEnd={coords[1]}
               move={!paused}
-              speed={difficulty == "easy" ? generateSpeed(2500) : difficulty == "medium" ? generateSpeed(2000) : generateSpeed(1000)}
+              speed={difficulty == "easy" ? generateSpeed(3000) : difficulty == "medium" ? generateSpeed(2500) : generateSpeed(1500)}
             />
           ),
         } as LivingChicken,
@@ -150,7 +149,6 @@ export default function Play() {
       
           return prevBullets - 1;
         } else {
-          //console.log('out of ammo');
           return prevBullets;
         }
       });
@@ -158,13 +156,15 @@ export default function Play() {
 
     const keyDown = (e: KeyboardEvent) => {
       if (e.code === 'Space') {
-        ReloadSound().play();
-        const timer = setInterval(() => {
-          setBullets(5);
-          clearInterval(timer);
-        }, 600);
-        
-        
+        setBullets((currentBullets) => {
+          if (currentBullets < 5) {
+            ReloadSound().play();
+            setTimeout(() => {
+              setBullets(5);
+            }, 500);
+          }
+          return currentBullets;
+        });
       } else if (e.code === 'Escape') {
         pauseGame();
       }
