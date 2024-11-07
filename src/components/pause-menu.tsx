@@ -29,7 +29,7 @@ export function PauseMenu({ onResume }: PauseMenuProps) {
   return (
     <animated.div
       style={spring}
-      className={`bg-[#BE945A] ${luckiestGuy} z-10 flex text-center flex-col border-2 shadow-xl border-[#997946] rounded-xl absolute w-[20%] h-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2`}
+      className={`bg-[#BE945A] ${luckiestGuy} p-2 z-10 flex text-center flex-col border-2 shadow-xl border-[#997946] rounded-xl absolute w-[40%] h-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2`}
     >
       <h1
         className={`text-shadow absolute w-full text-5xl left-1/2 -translate-x-1/2 -top-2`}

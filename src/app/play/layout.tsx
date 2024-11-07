@@ -1,5 +1,7 @@
 import { Metadata, Viewport } from 'next';
 import Play from './page';
+import { Suspense } from 'react';
+import { luckiestGuy } from '@/components/settings-menu';
 
 export const metadata: Metadata = {
   title: 'Cock Down Shooter 🐓',
@@ -14,5 +16,13 @@ export const viewport: Viewport = {
 };
 
 export default function PlayLayout() {
-  return <Play />;
+  return (
+    <Suspense fallback={
+      <main className={`w-screen ${luckiestGuy} h-screen flex justify-center bg-indigo-600 items-center`}>
+        <h1 className='font-bold text-6xl'>Loading...</h1>
+      </main>
+    }>
+      <Play />
+    </Suspense>
+  );
 }

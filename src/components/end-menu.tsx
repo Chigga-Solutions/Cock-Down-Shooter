@@ -98,6 +98,14 @@ export function EndMenu({ score, allChick }: EndMenuProps) {
         >
           Exit
         </button>
+        <button
+          onClick={() => {
+            router.push('/leaderboards');
+          }}
+          className='border min-w-fit w-[45%] hover:scale-105 transition text-2xl p-2 bg-gradient-to-b from-red-500 to-red-600 rounded-md'
+        >
+          Leaderboard
+        </button>
         {/* Fuck it we ball */}
         <form className='min-w-fit justify-center items-center flex w-[45%]' action={'/play'} method='GET'>
           <button
