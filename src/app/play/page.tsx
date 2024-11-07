@@ -218,10 +218,10 @@ export default function Play() {
         pauseGame();
       }
       else if (e.code === 'a' || e.code === 'A') {
-        return prevIndex > 0 ? prevIndex - 1 : backgrounds.length - 1;
+        setCurrentBackgroundIndex((prevIndex) => prevIndex > 0 ? prevIndex - 1 : backgrounds.length - 1 )
       }
       else if (e.code === 'd' || e.code === 'D') {
-        return prevIndex < backgrounds.length - 1 ? prevIndex + 1 : 0;
+        setCurrentBackgroundIndex((prevIndex) => prevIndex < backgrounds.length - 1 ? prevIndex + 1 : 0 )
       }
     };
 
