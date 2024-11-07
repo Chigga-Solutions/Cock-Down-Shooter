@@ -14,5 +14,7 @@ export const viewport: Viewport = {
 };
 
 export default function PlayLayout() {
-  return <Play />;
+  return (
+    <Play />
+  );
 }

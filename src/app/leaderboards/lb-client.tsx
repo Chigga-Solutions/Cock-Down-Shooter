@@ -83,7 +83,7 @@ export function LbClient({ entries = [] }: { entries?: LeaderboardEntry[] }) {
 
   return (
     <main
-      className={`h-screen ${luckiestGuy} flex justify-center items-center w-screen`}
+      className={`h-screen bg-no-repeat bg-cover bg-[url(/title_screen.png)] ${luckiestGuy} flex justify-center items-center w-screen`}
     >
       <div className='w-[50vw] min-h-[60vh] max-h-fit gap-y-4 flex flex-col rounded border-[#7F5B3B] border-2 from-[#BF945A] to-[#B48145] bg-gradient-to-b'>
         <h1

@@ -9,6 +9,7 @@ import { ReloadSound, ShotSound } from '@/lib/sounds';
 import { areOverlapped, CLICK_RANGE, generateChickenCoords } from '@/lib/utils';
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { GameStarter } from '@/components/game-starter';
+import Image from 'next/image';
 
 
 interface LivingChicken {
@@ -30,7 +31,18 @@ export default function Play() {
   const [timer, setTimer] = useState(process.env.NODE_ENV === 'development' ? 10 : 60);
   const [timerRunning, setTimerRunning] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
+  const [imageOffset, setImageOffset] = useState(0);
  
+  function offsetBackground(amount: number, direction: "left" | "right") {
+    if (direction === "left") {
+      if (imageOffset === 0) return;
+      setImageOffset(imageOffset + amount);
+    } else {
+      if (imageOffset === -2000) return;
+      setImageOffset(imageOffset - amount);
+    }
+
+  }
   
   function pauseGame() {
     if (ended) return;
@@ -233,7 +245,20 @@ export default function Play() {
   }, []);
 
   return (
-    <main className={`${luckiestGuy} select-none cursor-cross h-screen bg-[url(/background.webp)] bg-cover`}>
+    <main style={{
+      backgroundPositionX: `${imageOffset}px`,
+    }} className={`${luckiestGuy} w-screen h-screen overflow-x-scroll bg-no-repeat bg-[length:auto_100%] select-none cursor-cross`}>
+      <div className="absolute select-none h-full overflow-x-auto w-max top-0 left-0">
+        <Image
+          className='h-full select-none'
+          src="/background.webp" 
+          alt="Background"
+          width={5760}
+          height={1080}
+          objectFit='cover'
+          priority 
+        />
+      </div>
       <GameStarter/>
       {ended && !showRotateMessage && ( 
         <>
@@ -260,12 +285,12 @@ export default function Play() {
           <h2 className='text-center'>Rotate your display to continue playing</h2>
         </div>
       )}
-      <PauseButton onClick={() => pauseGame()} />
-      <div className='pl-2'>
+      {chicken.map((c) => c.chicken)}
+      <div className='pl-2 fixed'>
+        <PauseButton onClick={() => pauseGame()} />
         <h1 className='text-2xl text-red-600'>Score: {score}</h1>
         <h1 className='text-2xl text-red-600'>Time Remaining: {timer}s</h1>
       </div>
-      {chicken.map((c) => c.chicken)}
       <div className='fixed top-6 right-6 w-full flex justify-end'>
         <div className='flex space-x-2'>
           {Array.from({ length: bullets }).map((_, index) => (
