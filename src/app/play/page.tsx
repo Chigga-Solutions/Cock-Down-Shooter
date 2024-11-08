@@ -152,7 +152,7 @@ export default function Play() {
   }
 
   useEffect(() => {
-    setDifficulty(localStorage.getItem('difficulty'));
+    setDifficulty(localStorage.getItem('difficulty') || 'easy');
 
     const resizeEvent = () => {
       if (window.innerWidth < window.innerHeight) {
