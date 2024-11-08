@@ -30,8 +30,9 @@ export default function Play() {
   const [timer, setTimer] = useState(process.env.NODE_ENV === 'development' ? 10 : 60);
   const [timerRunning, setTimerRunning] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
- 
-  
+  const backgrounds = ['url(/backgrounds/background_1.webp)', 'url(/backgrounds/background_2.webp)', 'url(/backgrounds/background_3.webp)'];
+  const [currentBackgroundIndex, setCurrentBackgroundIndex] = useState(0);
+
   function pauseGame() {
     if (ended) return;
     setPaused(true);
@@ -212,8 +213,15 @@ export default function Play() {
           }
           return currentBullets;
         });
-      } else if (e.code === 'Escape') {
-      pauseGame();
+      } 
+      else if (e.code === 'Escape') {
+        pauseGame();
+      }
+      else if (e.code === 'a' || e.code === 'A') {
+        setCurrentBackgroundIndex((prevIndex) => prevIndex > 0 ? prevIndex - 1 : backgrounds.length - 1 )
+      }
+      else if (e.code === 'd' || e.code === 'D') {
+        setCurrentBackgroundIndex((prevIndex) => prevIndex < backgrounds.length - 1 ? prevIndex + 1 : 0 )
       }
     };
 
@@ -233,7 +241,7 @@ export default function Play() {
   }, []);
 
   return (
-    <main className={`${luckiestGuy} select-none cursor-cross h-screen bg-[url(/background.webp)] bg-cover`}>
+    <main className={`${luckiestGuy} select-none cursor-cross h-screen bg-[${backgrounds[currentBackgroundIndex]}] bg-cover`}>
       <GameStarter/>
       {ended && !showRotateMessage && ( 
         <>
