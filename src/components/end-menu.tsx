@@ -72,7 +72,7 @@ export function EndMenu({ score, allChick, difficulty = 'easy' }: EndMenuProps) 
   return (
     <animated.div
       style={spring}
-      className={`bg-[#BE945A] gap-y-16 ${luckiestGuy} z-10 flex text-center flex-col border-2 shadow-xl border-[#997946] rounded-xl absolute w-[40%] p-2 h-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2`}
+      className={`bg-[#BE945A] gap-y-16 ${luckiestGuy} z-10 flex text-center flex-col cursor-default border-2 shadow-xl border-[#997946] rounded-xl absolute w-[40%] p-2 h-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2`}
     >
       <h1
         className={`text-shadow absolute w-full text-5xl left-1/2 -translate-x-1/2 -top-2`}

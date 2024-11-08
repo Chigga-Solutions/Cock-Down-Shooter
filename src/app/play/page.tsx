@@ -9,7 +9,7 @@ import { ReloadSound, ShotSound } from '@/lib/sounds';
 import { areOverlapped, CLICK_RANGE, generateChickenCoords } from '@/lib/utils';
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { GameStarter } from '@/components/game-starter';
-
+import '../globals.css';
 
 interface LivingChicken {
   id: string;
