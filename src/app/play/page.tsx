@@ -24,12 +24,18 @@ export default function Play() {
   const [bullets, setBullets] = useState(5);
   const [showRotateMessage, setShowRotateMessage] = useState(false);
   const [score, setScore] = useState(0);
+  const [shotBullets, setShotBullets] = useState(0);
   const playStateRef = useRef(paused);
   const [difficulty, setDifficulty] = useState<string | null>(null);
   const [chickensSpawned, setChickensSpawned] = useState(0);
   const [timer, setTimer] = useState(process.env.NODE_ENV === 'development' ? 10 : 60);
   const [timerRunning, setTimerRunning] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
+  const timerRunningRef = useRef(timerRunning);
+
+  useEffect(() => {
+    timerRunningRef.current = timerRunning;
+  }, [timerRunning]);
  
   
   function pauseGame() {
@@ -176,59 +182,73 @@ export default function Play() {
     };
 
     const clickEvent = (e: MouseEvent) => {
-      setBullets((prevBullets) => {
-        if (prevBullets > 0 && playStateRef.current === false) {
-          const clientRect = new DOMRect(
-            e.clientX - CLICK_RANGE / 2,
-            e.clientY - CLICK_RANGE / 2,
-            CLICK_RANGE,
-            CLICK_RANGE,
-          );
-          
-          ShotSound().play();
-
-          for (const element of document.getElementsByClassName('cocked')) {
-            if (areOverlapped(clientRect, element.getBoundingClientRect())) {
-              setScore((prev) => prev + 1);
-              element.classList.add('hidden');
+      if(!paused && timerRunningRef.current && !ended) {
+        setBullets((prevBullets) => {
+          if (prevBullets > 0 && playStateRef.current === false) {
+            const clientRect = new DOMRect(
+              e.clientX - CLICK_RANGE / 2,
+              e.clientY - CLICK_RANGE / 2,
+              CLICK_RANGE,
+              CLICK_RANGE,
+            );
+            //in dev, shot is registered twice
+            ShotSound().play();
+            setShotBullets((prev) => prev + 1);
+            for (const element of document.getElementsByClassName('cocked')) {
+              if (areOverlapped(clientRect, element.getBoundingClientRect())) {
+                setScore((prev) => prev + 1);
+                element.classList.add('hidden');
+              }
             }
+        
+            return prevBullets - 1;
+          } else {
+            return prevBullets;
           }
-      
-          return prevBullets - 1;
-        } else {
-          return prevBullets;
-        }
-      });
+        });     
+      }     
     };
 
-    const keyDown = (e: KeyboardEvent) => {
-      if (e.code === 'Space') {
-        setBullets((currentBullets) => {
-          if (currentBullets < 5) {
-            ReloadSound().play();
-            setTimeout(() => {
-              setBullets(5);
-            }, 500);
-          }
-          return currentBullets;
-        });
-      } else if (e.code === 'Escape') {
-      pauseGame();
+    const keyDown = (e: KeyboardEvent | MouseEvent) => {
+      if (e instanceof KeyboardEvent && e.code === 'Space') {
+        reloadBullets();
+      } else if (e instanceof MouseEvent && e.button === 2) {
+        reloadBullets();
       }
     };
+
+    const preventContextMenu = (e: MouseEvent) => {
+      e.preventDefault();
+    };
+
+    function reloadBullets() {
+      setBullets((currentBullets) => {
+        if (currentBullets < 5) {
+          ReloadSound().play();
+          setTimeout(() => {
+            setBullets(5);
+          }, 500);
+        }
+        return currentBullets;
+      });
+    }
 
     document.addEventListener('click', clickEvent);
     window.addEventListener('resize', resizeEvent);
     document.addEventListener('keydown', keyDown);
+    document.addEventListener('mousedown', keyDown);
     document.addEventListener('visibilitychange', visibilityChange);
     window.addEventListener('blur', blurEvent);
+    document.addEventListener('contextmenu', preventContextMenu);
 
     return () => {
       window.removeEventListener('resize', resizeEvent);
       document.removeEventListener('visibilitychange', visibilityChange);
       document.removeEventListener('click', clickEvent);
-      document.removeEventListener('keydown', keyDown);
+      document.addEventListener('keydown', keyDown);
+      document.addEventListener('mousedown', keyDown);
       window.removeEventListener('blur', blurEvent);
+      document.addEventListener('contextmenu', preventContextMenu);
     };
   }, []);
 
@@ -242,6 +262,7 @@ export default function Play() {
             difficulty={difficulty || 'easy'} 
             score={score} 
             allChick={chickensSpawned}
+            shotBullets={shotBullets}
           />
         </>
       )}

@@ -9,6 +9,7 @@ export interface EndMenuProps {
   score: number;
   difficulty?: string;
   allChick: number;
+  shotBullets: number;
 }
 
 function calculateScore(score: number, difficulty: string) {
@@ -24,7 +25,11 @@ function calculateScore(score: number, difficulty: string) {
   }
 }
 
-export function EndMenu({ score, allChick, difficulty = 'easy' }: EndMenuProps) {
+function calculateAccuracy(score: number, shotBullets: number) {
+  return Math.round((score / shotBullets) * 100);
+}
+
+export function EndMenu({ score, allChick, difficulty = 'easy', shotBullets }: EndMenuProps) {
   const router = useRouter();
   const [scoreSaved, setScoreSaved] = useState(false);
 
@@ -72,7 +77,7 @@ export function EndMenu({ score, allChick, difficulty = 'easy' }: EndMenuProps) 
   return (
     <animated.div
       style={spring}
-      className={`bg-[#BE945A] gap-y-16 ${luckiestGuy} z-10 flex text-center flex-col cursor-default border-2 shadow-xl border-[#997946] rounded-xl absolute w-[40%] p-2 h-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2`}
+      className={`bg-[#BE945A] gap-y-8 ${luckiestGuy} z-10 flex text-center flex-col cursor-default border-2 shadow-xl border-[#997946] rounded-xl absolute w-[40%] p-2 h-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2`}
     >
       <h1
         className={`text-shadow absolute w-full text-5xl left-1/2 -translate-x-1/2 -top-2`}
@@ -83,6 +88,10 @@ export function EndMenu({ score, allChick, difficulty = 'easy' }: EndMenuProps) 
       <div className="text-2xl mt-16 flex justify-center items-center">
         Your score: {calculateScore(score, difficulty)}
         {difficulty != 'easy' ? `(${difficulty} multiplier)` : ''}
+      </div>
+
+      <div className="text-2xl mt-0 flex justify-center items-center">
+        Your accuracy: {calculateAccuracy(score, shotBullets)}%
       </div>
 
       <div className="text-2xl">
