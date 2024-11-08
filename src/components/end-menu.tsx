@@ -26,7 +26,10 @@ function calculateScore(score: number, difficulty: string) {
 }
 
 function calculateAccuracy(score: number, shotBullets: number) {
-  return Math.round((score / shotBullets) * 100);
+  if(shotBullets == 0) {
+    return 0;
+  }
+  else return Math.round((score / shotBullets) * 100);
 }
 
 export function EndMenu({ score, allChick, difficulty = 'easy', shotBullets }: EndMenuProps) {
