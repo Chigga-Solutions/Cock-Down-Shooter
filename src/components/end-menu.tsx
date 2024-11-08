@@ -3,7 +3,7 @@ import { luckiestGuy } from './settings-menu';
 import { useSpring, animated } from '@react-spring/web';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { Check, Cross, X } from 'lucide-react';
+import { Check, X } from 'lucide-react';
 
 export interface EndMenuProps {
   score: number;
