@@ -3,14 +3,28 @@ import { luckiestGuy } from './settings-menu';
 import { useSpring, animated } from '@react-spring/web';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { Check, Cross } from 'lucide-react';
+import { Check, Cross, X } from 'lucide-react';
 
 export interface EndMenuProps {
   score: number;
+  difficulty?: string;
   allChick: number;
 }
 
-export function EndMenu({ score, allChick }: EndMenuProps) {
+function calculateScore(score: number, difficulty: string) {
+  switch (difficulty) {
+    case 'easy':
+      return score * 1;
+    case 'medium':
+      return score * 1.5;
+    case 'hard':
+      return score * 2;
+    default:
+      return score * 1;
+  }
+}
+
+export function EndMenu({ score, allChick, difficulty = 'easy' }: EndMenuProps) {
   const router = useRouter();
   const [scoreSaved, setScoreSaved] = useState(false);
 
@@ -43,7 +57,7 @@ export function EndMenu({ score, allChick }: EndMenuProps) {
         console.log('[CDS] User found:', user.data.user.id);
         
         const resp = await supabase.from('leadeboard').insert({
-          "score": score,
+          "score": calculateScore(score, difficulty),
           "user_id": user.data.user?.id,
         }).select();
 
@@ -66,8 +80,9 @@ export function EndMenu({ score, allChick }: EndMenuProps) {
         Game Over
       </h1>
 
-      <div className="text-2xl mt-16">
-        Your score: {score}
+      <div className="text-2xl mt-16 flex justify-center items-center">
+        Your score: {calculateScore(score, difficulty)}
+        {difficulty != 'easy' ? `(${difficulty} multiplier)` : ''}
       </div>
 
       <div className="text-2xl">
@@ -77,13 +92,13 @@ export function EndMenu({ score, allChick }: EndMenuProps) {
 
       <div>
         {scoreSaved ? (
-          <div className="text-2xl text-green-400 flex justify-center gap-x-2">
+          <div className="text-2xl text-green-400 flex items-center justify-center gap-x-2">
             <Check strokeWidth={6} />
             Your score has been saved!
           </div>
         ) : (
-          <div className="text-2xl text-red-500 flex justify-center gap-x-2">
-            <Cross />
+          <div className="text-2xl text-red-500 flex items-center justify-center gap-x-2">
+            <X />
             Score not saved!
           </div>
         )}

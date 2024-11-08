@@ -233,12 +233,13 @@ export default function Play() {
   }, []);
 
   return (
-    <main className={`${luckiestGuy} select-none cursor-cross h-screen bg-[url(/background.webp)] bg-cover`}>
+    <main className={`${luckiestGuy} select-none cursor-cross text-white h-screen bg-[url(/background.webp)] bg-cover`}>
       <GameStarter/>
       {ended && !showRotateMessage && ( 
         <>
           <div className='pointer-events-all z-10 bg-[#000000d9] fixed top-0 w-full h-full' />
-          <EndMenu 
+          <EndMenu
+            difficulty={difficulty || 'easy'} 
             score={score} 
             allChick={chickensSpawned}
           />

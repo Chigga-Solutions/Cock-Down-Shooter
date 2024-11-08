@@ -46,7 +46,7 @@ export default function Home({ user }: { user: User | null }) {
   }, [user, fetchProfile]);
 
   return (
-    <main className={`${luckiestGuy} text-shadow bg-[url(/background.webp)] bg-cover`}>
+    <main className={`${luckiestGuy} text-white text-shadow bg-[url(/background.webp)] bg-cover`}>
       {(isSettingsOpened || isLoginPageOpened || isSignupPageOpened) && (
         <div className='pointer-events-all z-10 bg-[#0000006b] fixed top-0 w-full h-full' />
       )}
