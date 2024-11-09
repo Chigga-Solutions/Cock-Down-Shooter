@@ -29,7 +29,7 @@ function calculateAccuracy(score: number, shotBullets: number) {
   if(shotBullets == 0) {
     return 0;
   }
-  else return Math.round((score / shotBullets) * 100);
+  else return ((score / shotBullets) * 100) > 100 ? 100 : Math.round((score / shotBullets) * 100);
 }
 
 export function EndMenu({ score, allChick, difficulty = 'easy', shotBullets }: EndMenuProps) {
