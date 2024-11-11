@@ -13,6 +13,10 @@ export interface EndMenuProps {
 }
 
 function calculateScore(score: number, difficulty: string, accuracy: number) {
+  return Math.floor(calculateScore0(score, difficulty, accuracy));
+}
+
+function calculateScore0(score: number, difficulty: string, accuracy: number) {
   switch (difficulty) {
     case 'easy':
       return score * 1 * (accuracy / 100);
