@@ -71,7 +71,7 @@ export function LbClient({ entries = [] }: { entries?: LeaderboardEntry[] }) {
   const chunked = chunkionize(entries);
 
   const incrementPage = () => {
-    if (currentPage < chunked.length - 1) {
+    if (currentPage < reorderUnique(chunked, uniqueOnly).length - 1) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -137,7 +137,7 @@ export function LbClient({ entries = [] }: { entries?: LeaderboardEntry[] }) {
                 </tr>
               </thead>
               <tbody className={'gap-y-2'}>
-                {uniqueByField(chunked[currentPage]).map((entry, i) => (
+                {reorderUnique(chunked, uniqueOnly)[currentPage].map((entry, i) => (
                   <EntryWrapped
                     key={i}
                     lbEntry={entry}
@@ -159,9 +159,9 @@ export function LbClient({ entries = [] }: { entries?: LeaderboardEntry[] }) {
             Previous
           </button>
           <button
-            disabled={currentPage >= chunked.length - 1}
+            disabled={currentPage >= reorderUnique(chunked, uniqueOnly).length - 1}
             onClick={() => incrementPage()}
-            className={`hover:scale-105 p-2 transition-transform bg-gradient-to-br from-blue-500 border-blue-600 border rounded to-blue-600 ${currentPage >= chunked.length - 1 && 'opacity-80'}`}
+            className={`hover:scale-105 p-2 transition-transform bg-gradient-to-br from-blue-500 border-blue-600 border rounded to-blue-600 ${currentPage >= reorderUnique(chunked, uniqueOnly).length - 1 && 'opacity-80'}`}
           >
             Next page
           </button>
@@ -180,4 +180,18 @@ function chunkionize(
     result.push(arr.slice(i, i + chunkSize));
   }
   return result;
+}
+
+function reorderUnique(leaderboard: LeaderboardEntry[][], unique: boolean = false): LeaderboardEntry[][] {
+  if (!unique) return leaderboard;
+
+  const seen = new Set();
+
+  const dupRemoved = leaderboard.flatMap(entry => entry).filter((item) => {
+    if (!seen.has(item['name'])) {
+      seen.add(item['name']);
+      return true;
+    } else return false;
+  });
+  return chunkionize(dupRemoved);
 }
