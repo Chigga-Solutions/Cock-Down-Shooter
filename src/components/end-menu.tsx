@@ -30,13 +30,20 @@ function calculateScore0(score: number, difficulty: string, accuracy: number) {
 }
 
 function calculateAccuracy(score: number, shotBullets: number) {
-  if(shotBullets == 0) {
+  if (shotBullets == 0) {
     return 0;
-  }
-  else return ((score / shotBullets) * 100) > 100 ? 100 : Math.round((score / shotBullets) * 100);
+  } else
+    return (score / shotBullets) * 100 > 100
+      ? 100
+      : Math.round((score / shotBullets) * 100);
 }
 
-export function EndMenu({ score, allChick, difficulty = 'easy', shotBullets }: EndMenuProps) {
+export function EndMenu({
+  score,
+  allChick,
+  difficulty = 'easy',
+  shotBullets,
+}: EndMenuProps) {
   const router = useRouter();
   const [scoreSaved, setScoreSaved] = useState(false);
 
@@ -62,16 +69,23 @@ export function EndMenu({ score, allChick, difficulty = 'easy', shotBullets }: E
 
     async function updateScore() {
       console.log('[CDS] Updating score...');
-      
+
       const user = await supabase.auth.getUser();
 
       if (user.data.user) {
         console.log('[CDS] User found:', user.data.user.id);
-        
-        const resp = await supabase.from('leadeboard').insert({
-          "score": calculateScore(score, difficulty, calculateAccuracy(score, shotBullets)),
-          "user_id": user.data.user?.id,
-        }).select();
+
+        const resp = await supabase
+          .from('leadeboard')
+          .insert({
+            score: calculateScore(
+              score,
+              difficulty,
+              calculateAccuracy(score, shotBullets),
+            ),
+            user_id: user.data.user?.id,
+          })
+          .select();
 
         if (resp.error) {
           console.error(resp.error);
@@ -92,35 +106,41 @@ export function EndMenu({ score, allChick, difficulty = 'easy', shotBullets }: E
         Game Over
       </h1>
 
-      <div className="text-2xl mt-16 flex justify-center items-center">
-        Your score: {calculateScore(score, difficulty, calculateAccuracy(score, shotBullets))}
+      <div className='text-2xl mt-16 flex justify-center items-center'>
+        Your score:{' '}
+        {calculateScore(
+          score,
+          difficulty,
+          calculateAccuracy(score, shotBullets),
+        )}
         {difficulty != 'easy' ? `(${difficulty} multiplier)` : ''}
       </div>
 
-      <div className="text-2xl mt-0 flex justify-center items-center">
+      <div className='text-2xl mt-0 flex justify-center items-center'>
         Your accuracy: {calculateAccuracy(score, shotBullets)}%
       </div>
 
-      <div className="text-2xl">
-        Total chickens: {allChick}<br />
+      <div className='text-2xl'>
+        Total chickens: {allChick}
+        <br />
         You have killed {Math.floor((score / allChick) * 100)}% of chicken
       </div>
 
       <div>
         {scoreSaved ? (
-          <div className="text-2xl text-green-400 flex items-center justify-center gap-x-2">
+          <div className='text-2xl text-green-400 flex items-center justify-center gap-x-2'>
             <Check strokeWidth={6} />
             Your score has been saved!
           </div>
         ) : (
-          <div className="text-2xl text-red-500 flex items-center justify-center gap-x-2">
+          <div className='text-2xl text-red-500 flex items-center justify-center gap-x-2'>
             <X />
             Score not saved!
           </div>
         )}
       </div>
 
-      <div className="flex justify-center mt-auto mb-4 gap-4">
+      <div className='flex justify-center mt-auto mb-4 gap-4'>
         <button
           onClick={() => {
             router.push('/');
@@ -138,7 +158,11 @@ export function EndMenu({ score, allChick, difficulty = 'easy', shotBullets }: E
           Leaderboard
         </button>
         {/* Fuck it we ball */}
-        <form className='min-w-fit justify-center items-center flex w-[45%]' action={'/play'} method='GET'>
+        <form
+          className='min-w-fit justify-center items-center flex w-[45%]'
+          action={'/play'}
+          method='GET'
+        >
           <button
             type='submit'
             className='border hover:scale-105 flex-1 h-full transition text-2xl bg-gradient-to-b from-green-500 to-green-600 rounded-md'

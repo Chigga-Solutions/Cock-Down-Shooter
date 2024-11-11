@@ -37,11 +37,12 @@ export function PauseMenu({ onResume }: PauseMenuProps) {
         Pause Menu
       </h1>
 
-      <div className="text-2xl mt-16 mb-4">
-        The game has been paused. Click the button below to resume, or the exit button to leave the game.
+      <div className='text-2xl mt-16 mb-4'>
+        The game has been paused. Click the button below to resume, or the exit
+        button to leave the game.
       </div>
 
-      <div className="flex justify-center mt-auto mb-4 gap-4">
+      <div className='flex justify-center mt-auto mb-4 gap-4'>
         <button
           onClick={() => {
             router.push('../');
@@ -52,7 +53,10 @@ export function PauseMenu({ onResume }: PauseMenuProps) {
         </button>
 
         <form action={'/play'}>
-          <button className='border min-w-fit w-[45%] hover:scale-105 transition text-2xl p-2 bg-gradient-to-b from-red-500 to-red-600 rounded-md' type='submit'>
+          <button
+            className='border min-w-fit w-[45%] hover:scale-105 transition text-2xl p-2 bg-gradient-to-b from-red-500 to-red-600 rounded-md'
+            type='submit'
+          >
             Restart
           </button>
         </form>

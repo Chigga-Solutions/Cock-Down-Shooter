@@ -11,7 +11,6 @@ import { createClient } from '@/lib/supabase/client';
 import { SignUpFrame } from '@/components/signup-menu';
 import { User } from '@supabase/supabase-js';
 
-
 export default function Home({ user }: { user: User | null }) {
   const router = useRouter();
   const supabase = createClient();
@@ -19,8 +18,6 @@ export default function Home({ user }: { user: User | null }) {
   const [isLoginPageOpened, setLoginPageOpened] = useState(false);
   const [isSignupPageOpened, setSignupPageOpened] = useState(false);
   const [username, setUsername] = useState<string | null>(null);
-  
-  
 
   const handleClick = () => {
     setSettingsOpened(true);
@@ -46,7 +43,9 @@ export default function Home({ user }: { user: User | null }) {
   }, [user, fetchProfile]);
 
   return (
-    <main className={`${luckiestGuy} text-white text-shadow bg-[url(/background.webp)] bg-cover`}>
+    <main
+      className={`${luckiestGuy} text-white text-shadow bg-[url(/background.webp)] bg-cover`}
+    >
       {(isSettingsOpened || isLoginPageOpened || isSignupPageOpened) && (
         <div className='pointer-events-all z-10 bg-[#0000006b] fixed top-0 w-full h-full' />
       )}

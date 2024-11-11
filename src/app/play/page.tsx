@@ -28,7 +28,9 @@ export default function Play() {
   const playStateRef = useRef(paused);
   const [difficulty, setDifficulty] = useState<string | null>(null);
   const [chickensSpawned, setChickensSpawned] = useState(0);
-  const [timer, setTimer] = useState(process.env.NODE_ENV === 'development' ? 10 : 60);
+  const [timer, setTimer] = useState(
+    process.env.NODE_ENV === 'development' ? 10 : 60,
+  );
   const [timerRunning, setTimerRunning] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
   const timerRunningRef = useRef(timerRunning);
@@ -36,8 +38,7 @@ export default function Play() {
   useEffect(() => {
     timerRunningRef.current = timerRunning;
   }, [timerRunning]);
- 
-  
+
   function pauseGame() {
     if (ended) return;
     setPaused(true);
@@ -47,18 +48,24 @@ export default function Play() {
 
   function endGame() {
     setTimerRunning(false);
-      setEnded(true);
+    setEnded(true);
     console.log('[Game] Ended');
   }
 
   function startGame() {
     setGameStarted(true);
-    setTimerRunning(true); 
+    setTimerRunning(true);
     console.log('[Game] Started');
   }
 
   function generateSpeed(min: number) {
-    return Math.random() > 0.75 ? min + 250 : Math.random() > 0.50 ? min + 500 : Math.random() > 0.25 ? min + 750 : min + 1000;
+    return Math.random() > 0.75
+      ? min + 250
+      : Math.random() > 0.5
+        ? min + 500
+        : Math.random() > 0.25
+          ? min + 750
+          : min + 1000;
   }
 
   useEffect(() => {
@@ -86,12 +93,15 @@ export default function Play() {
       );
     }
 
-    const interval = setInterval(() => {
-      if (!paused && !ended && gameStarted) {
-        setChickensSpawned((prevCount) => prevCount + 1);
-        createSelfDestroyingChicken();
-      } 
-    }, difficulty == "easy" ? 1000 : difficulty == "medium" ? 750 : 500);
+    const interval = setInterval(
+      () => {
+        if (!paused && !ended && gameStarted) {
+          setChickensSpawned((prevCount) => prevCount + 1);
+          createSelfDestroyingChicken();
+        }
+      },
+      difficulty == 'easy' ? 1000 : difficulty == 'medium' ? 750 : 500,
+    );
 
     playStateRef.current = paused;
 
@@ -101,7 +111,7 @@ export default function Play() {
   useEffect(() => {
     const gameStartTimeout = setTimeout(() => {
       startGame();
-    }, 4000); 
+    }, 4000);
 
     return () => {
       clearTimeout(gameStartTimeout);
@@ -120,13 +130,11 @@ export default function Play() {
           return prevTimer - 1;
         });
       }, 1000);
-      return () => clearInterval(countdown); 
+      return () => clearInterval(countdown);
     }
   }, [timerRunning, paused, ended]);
 
-
   function createSelfDestroyingChicken() {
-    
     // DO NOT TOUCH THIS
     setChickens((prev) => {
       // Create a unique id for the chicken
@@ -148,7 +156,13 @@ export default function Play() {
               posStart={coords[0]}
               posEnd={coords[1]}
               move={!paused && !ended}
-              speed={difficulty == "easy" ? generateSpeed(4000) : difficulty == "medium" ? generateSpeed(3000) : generateSpeed(2000)}
+              speed={
+                difficulty == 'easy'
+                  ? generateSpeed(4000)
+                  : difficulty == 'medium'
+                    ? generateSpeed(3000)
+                    : generateSpeed(2000)
+              }
             />
           ),
         } as LivingChicken,
@@ -161,8 +175,8 @@ export default function Play() {
 
     const resizeEvent = () => {
       if (window.innerWidth < window.innerHeight) {
-        setShowRotateMessage(true); 
-        pauseGame(); 
+        setShowRotateMessage(true);
+        pauseGame();
         setChickens([]);
       } else {
         setShowRotateMessage(false);
@@ -181,7 +195,7 @@ export default function Play() {
     };
 
     const clickEvent = (e: MouseEvent) => {
-      if(!paused && timerRunningRef.current && !ended) {
+      if (!paused && timerRunningRef.current && !ended) {
         setBullets((prevBullets) => {
           if (prevBullets > 0 && playStateRef.current === false) {
             const clientRect = new DOMRect(
@@ -199,19 +213,18 @@ export default function Play() {
                 element.classList.add('hidden');
               }
             }
-        
+
             return prevBullets - 1;
           } else {
             return prevBullets;
           }
-        });     
-      }     
+        });
+      }
     };
 
     const keyDown = (e: KeyboardEvent | MouseEvent) => {
       if (e instanceof KeyboardEvent) {
-        if (e.code === 'Space')
-          reloadBullets();
+        if (e.code === 'Space') reloadBullets();
         else if (e.code === 'Escape') {
           pauseGame();
         }
@@ -256,33 +269,37 @@ export default function Play() {
   }, []);
 
   return (
-    <main className={`${luckiestGuy} select-none cursor-cross text-white h-screen bg-[url(/background.webp)] bg-cover`}>
-      <GameStarter/>
-      {ended && !showRotateMessage && ( 
+    <main
+      className={`${luckiestGuy} select-none cursor-cross text-white h-screen bg-[url(/background.webp)] bg-cover`}
+    >
+      <GameStarter />
+      {ended && !showRotateMessage && (
         <>
           <div className='pointer-events-all z-10 bg-[#000000d9] fixed top-0 w-full h-full' />
           <EndMenu
-            difficulty={difficulty || 'easy'} 
-            score={score} 
+            difficulty={difficulty || 'easy'}
+            score={score}
             allChick={chickensSpawned}
             shotBullets={shotBullets}
           />
         </>
       )}
-      {paused && !showRotateMessage && !ended && ( 
+      {paused && !showRotateMessage && !ended && (
         <>
           <div className='pointer-events-all z-10 bg-[#000000d9] fixed top-0 w-full h-full' />
           <PauseMenu
             onResume={() => {
               setPaused(false);
-              setTimerRunning(true); 
+              setTimerRunning(true);
             }}
           />
         </>
       )}
-      {showRotateMessage && ( 
+      {showRotateMessage && (
         <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 bg-black p-4 rounded shadow-lg text-2xl'>
-          <h2 className='text-center'>Rotate your display to continue playing</h2>
+          <h2 className='text-center'>
+            Rotate your display to continue playing
+          </h2>
         </div>
       )}
       <PauseButton onClick={() => pauseGame()} />

@@ -37,7 +37,7 @@ export function SettingsMenu({ onDone }: SettingsMenuProps) {
 
   const [volume, setVolume] = useState(() => {
     const savedVolume = localStorage.getItem('volume');
-    return savedVolume ? (parseFloat(savedVolume)) : 0.5;
+    return savedVolume ? parseFloat(savedVolume) : 0.5;
   });
 
   const handleDifficultyChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -52,13 +52,10 @@ export function SettingsMenu({ onDone }: SettingsMenuProps) {
     AudioConfiguration.volume = parseFloat(newVolume) / 100;
     localStorage.setItem('volume', newVolume);
   };
- 
 
   useEffect(() => {
     api.start({ top: '50%' });
   }, [api]);
-
-  
 
   return (
     <animated.div
@@ -71,44 +68,46 @@ export function SettingsMenu({ onDone }: SettingsMenuProps) {
         Settings
       </h1>
 
-      <div className="flex flex-col items-center mt-20 mb-4">
-        <label htmlFor="volume" className="text-2xl mb-2">Volume</label>
+      <div className='flex flex-col items-center mt-20 mb-4'>
+        <label htmlFor='volume' className='text-2xl mb-2'>
+          Volume
+        </label>
         <input
-          id="volume"
-          type="range"
-          min="0"
-          max="100"
+          id='volume'
+          type='range'
+          min='0'
+          max='100'
           value={volume}
           onChange={handleVolumeChange}
-          className="w-[80%] accent-[#59ff00]"
+          className='w-[80%] accent-[#59ff00]'
         />
       </div>
 
-      <div className="flex flex-col items-center mt-8 mb-4">
-        <label className="text-2xl mb-2">Difficulty</label>
+      <div className='flex flex-col items-center mt-8 mb-4'>
+        <label className='text-2xl mb-2'>Difficulty</label>
         <div>
-          <label className="block mb-2">
+          <label className='block mb-2'>
             <input
-              type="radio"
-              value="easy"
+              type='radio'
+              value='easy'
               checked={difficulty === 'easy'}
               onChange={handleDifficultyChange}
             />
             Easy
           </label>
-          <label className="block mb-2">
+          <label className='block mb-2'>
             <input
-              type="radio"
-              value="medium"
+              type='radio'
+              value='medium'
               checked={difficulty === 'medium'}
               onChange={handleDifficultyChange}
             />
             Medium
           </label>
-          <label className="block mb-2">
+          <label className='block mb-2'>
             <input
-              type="radio"
-              value="hard"
+              type='radio'
+              value='hard'
               checked={difficulty === 'hard'}
               onChange={handleDifficultyChange}
             />

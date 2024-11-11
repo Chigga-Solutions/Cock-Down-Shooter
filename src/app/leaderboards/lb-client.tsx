@@ -80,7 +80,7 @@ export function LbClient({ entries = [] }: { entries?: LeaderboardEntry[] }) {
     if (!uniqueOnly) return arr;
 
     const seen = new Set();
-    return arr.filter(item => {
+    return arr.filter((item) => {
       if (!seen.has(item['name'])) {
         seen.add(item['name']);
         return true;
@@ -114,10 +114,14 @@ export function LbClient({ entries = [] }: { entries?: LeaderboardEntry[] }) {
           <LogOut size={32} strokeWidth={3} />
         </button>
         <label className='ml-3'>
-          Show unique only: 
-          <input onChange={e => {
-            setUniqueOnly(e.currentTarget.checked)
-          }} className='ml-4' type='checkbox' />
+          Show unique only:
+          <input
+            onChange={(e) => {
+              setUniqueOnly(e.currentTarget.checked);
+            }}
+            className='ml-4'
+            type='checkbox'
+          />
         </label>
         <div className='flex-1 justify-center items-center flex'>
           {entries.length > 0 ? (
@@ -134,7 +138,11 @@ export function LbClient({ entries = [] }: { entries?: LeaderboardEntry[] }) {
               </thead>
               <tbody className={'gap-y-2'}>
                 {uniqueByField(chunked[currentPage]).map((entry, i) => (
-                  <EntryWrapped key={i} lbEntry={entry} position={currentPage * 10 + i} />
+                  <EntryWrapped
+                    key={i}
+                    lbEntry={entry}
+                    position={currentPage * 10 + i}
+                  />
                 ))}
               </tbody>
             </table>

@@ -10,7 +10,6 @@ interface ChickenProps {
   posStart?: [left: number, down: number];
   posEnd?: [left: number, down: number];
   speed: number;
-  
 }
 
 export function Chicken({
@@ -20,7 +19,6 @@ export function Chicken({
   posEnd = [0, 0],
   speed = 0,
 }: ChickenProps) {
-
   const [spring, api] = useSpring(
     () => ({
       from: {
@@ -40,7 +38,6 @@ export function Chicken({
       },
       onRest: (a) => {
         if (a.finished) {
-
           onFinished?.();
         }
       },
@@ -60,20 +57,20 @@ export function Chicken({
   return (
     <animated.div
       style={{
-        ...spring, 
+        ...spring,
         ...(posStart[0] > posEnd[0] ? { transform: 'scaleX(-1)' } : {}),
       }}
       className={`absolute cocked w-18 h-18`}
     >
-      <Image 
-      src="/Cocks/1.gif" 
-      alt="chicken" 
-      className=""
-      width={'128'}
-      height={'128'}
-      draggable="false"
-      unoptimized
-    />
+      <Image
+        src='/Cocks/1.gif'
+        alt='chicken'
+        className=''
+        width={'128'}
+        height={'128'}
+        draggable='false'
+        unoptimized
+      />
     </animated.div>
   );
 }
