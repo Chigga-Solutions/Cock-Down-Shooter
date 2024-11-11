@@ -14,8 +14,7 @@ export default async function LeaderboardPage() {
     )
     `,
     )
-    .order('score', { ascending: false })
-    .range(0, 9);
+    .order('score', { ascending: false });
 
   if (entries.data) {
     return (

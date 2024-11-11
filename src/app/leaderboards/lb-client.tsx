@@ -66,6 +66,7 @@ const EntryWrapped = ({
 export function LbClient({ entries = [] }: { entries?: LeaderboardEntry[] }) {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(0);
+  const [uniqueOnly, setUniqueOnly] = useState(false);
 
   const chunked = chunkionize(entries);
 
@@ -73,6 +74,18 @@ export function LbClient({ entries = [] }: { entries?: LeaderboardEntry[] }) {
     if (currentPage < chunked.length - 1) {
       setCurrentPage(currentPage + 1);
     }
+  };
+
+  const uniqueByField = (arr: LeaderboardEntry[]) => {
+    if (!uniqueOnly) return arr;
+
+    const seen = new Set();
+    return arr.filter(item => {
+      if (!seen.has(item['name'])) {
+        seen.add(item['name']);
+        return true;
+      } else return false;
+    });
   };
 
   const decrementPage = () => {
@@ -100,6 +113,12 @@ export function LbClient({ entries = [] }: { entries?: LeaderboardEntry[] }) {
         >
           <LogOut size={32} strokeWidth={3} />
         </button>
+        <label className='ml-3'>
+          Show unique only: 
+          <input onChange={e => {
+            setUniqueOnly(e.currentTarget.checked)
+          }} className='ml-4' type='checkbox' />
+        </label>
         <div className='flex-1 justify-center items-center flex'>
           {entries.length > 0 ? (
             <table
@@ -114,8 +133,8 @@ export function LbClient({ entries = [] }: { entries?: LeaderboardEntry[] }) {
                 </tr>
               </thead>
               <tbody className={'gap-y-2'}>
-                {chunked[currentPage].map((entry, i) => (
-                  <EntryWrapped key={i} lbEntry={entry} position={i} />
+                {uniqueByField(chunked[currentPage]).map((entry, i) => (
+                  <EntryWrapped key={i} lbEntry={entry} position={currentPage * 10 + i} />
                 ))}
               </tbody>
             </table>

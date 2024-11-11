@@ -12,16 +12,16 @@ export interface EndMenuProps {
   shotBullets: number;
 }
 
-function calculateScore(score: number, difficulty: string) {
+function calculateScore(score: number, difficulty: string, accuracy: number) {
   switch (difficulty) {
     case 'easy':
-      return score * 1;
+      return score * 1 * (accuracy / 100);
     case 'medium':
-      return score * 1.5;
+      return score * 1.5 * (accuracy / 100);
     case 'hard':
-      return score * 2;
+      return score * 2 * (accuracy / 100);
     default:
-      return score * 1;
+      return score * 1 * (accuracy / 100);
   }
 }
 
@@ -65,7 +65,7 @@ export function EndMenu({ score, allChick, difficulty = 'easy', shotBullets }: E
         console.log('[CDS] User found:', user.data.user.id);
         
         const resp = await supabase.from('leadeboard').insert({
-          "score": calculateScore(score, difficulty),
+          "score": calculateScore(score, difficulty, Math.floor((score / allChick) * 100)),
           "user_id": user.data.user?.id,
         }).select();
 
@@ -89,7 +89,7 @@ export function EndMenu({ score, allChick, difficulty = 'easy', shotBullets }: E
       </h1>
 
       <div className="text-2xl mt-16 flex justify-center items-center">
-        Your score: {calculateScore(score, difficulty)}
+        Your score: {calculateScore(score, difficulty, Math.floor((score / allChick) * 100))}
         {difficulty != 'easy' ? `(${difficulty} multiplier)` : ''}
       </div>
 
