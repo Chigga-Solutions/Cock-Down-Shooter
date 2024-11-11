@@ -51,6 +51,12 @@ export function PauseMenu({ onResume }: PauseMenuProps) {
           Exit
         </button>
 
+        <form action={'/play'}>
+          <button className='border min-w-fit w-[45%] hover:scale-105 transition text-2xl p-2 bg-gradient-to-b from-red-500 to-red-600 rounded-md' type='submit'>
+            Restart
+          </button>
+        </form>
+
         <button
           onClick={() => {
             api.start({

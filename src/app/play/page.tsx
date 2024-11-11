@@ -141,7 +141,6 @@ export default function Play() {
             <Chicken
               key={id}
               onFinished={() => {
-                
                 setChickens(
                   (prev) => prev.filter((chicken) => chicken.id !== id), // Remove the chicken by id
                 );
@@ -210,8 +209,12 @@ export default function Play() {
     };
 
     const keyDown = (e: KeyboardEvent | MouseEvent) => {
-      if (e instanceof KeyboardEvent && e.code === 'Space') {
-        reloadBullets();
+      if (e instanceof KeyboardEvent) {
+        if (e.code === 'Space')
+          reloadBullets();
+        else if (e.code === 'Escape') {
+          pauseGame();
+        }
       } else if (e instanceof MouseEvent && e.button === 2) {
         reloadBullets();
       }
