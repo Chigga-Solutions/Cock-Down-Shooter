@@ -18,14 +18,18 @@ function calculateScore(score: number, difficulty: string, accuracy: number) {
 
 function calculateScore0(score: number, difficulty: string, accuracy: number) {
   switch (difficulty) {
+    case 'peacefull':
+      return score * 1;
     case 'easy':
-      return score * 1 * (accuracy / 100);
+      return score * 1;
     case 'medium':
       return score * 1.5 * (accuracy / 100);
     case 'hard':
       return score * 2 * (accuracy / 100);
+    case 'hardcore':
+      return score * 3 * (accuracy / 100);
     default:
-      return score * 1 * (accuracy / 100);
+      return score * 1;
   }
 }
 
