@@ -89,6 +89,15 @@ export function SettingsMenu({ onDone }: SettingsMenuProps) {
           <label className='block mb-2'>
             <input
               type='radio'
+              value='peacefull'
+              checked={difficulty === 'peacefull'}
+              onChange={handleDifficultyChange}
+            />
+            Peacefull
+          </label>
+          <label className='block mb-2'>
+            <input
+              type='radio'
               value='easy'
               checked={difficulty === 'easy'}
               onChange={handleDifficultyChange}
@@ -112,6 +121,15 @@ export function SettingsMenu({ onDone }: SettingsMenuProps) {
               onChange={handleDifficultyChange}
             />
             Hard
+          </label>
+          <label className='block mb-2'>
+            <input
+              type='radio'
+              value='hardcore'
+              checked={difficulty === 'hardcore'}
+              onChange={handleDifficultyChange}
+            />
+            Hardcore
           </label>
         </div>
       </div>
