@@ -47,14 +47,14 @@ export function PauseMenu({ onResume }: PauseMenuProps) {
           onClick={() => {
             router.push('../');
           }}
-          className='border min-w-fit w-[45%] hover:scale-105 transition text-2xl p-2 bg-gradient-to-b from-red-500 to-red-600 rounded-md'
+          className='border min-w-fit w-[33%] hover:scale-105 transition text-2xl p-2 bg-gradient-to-b from-red-500 to-red-600 rounded-md'
         >
           Exit
         </button>
 
-        <form action={'/play'}>
+        <form action={'/play'} className='w-[33%]'>
           <button
-            className='border min-w-fit w-[45%] hover:scale-105 transition text-2xl p-2 bg-gradient-to-b from-red-500 to-red-600 rounded-md'
+            className='border min-w-fit w-[100%] hover:scale-105 transition text-2xl p-2 bg-gradient-to-b from-orange-500 to-orange-600 rounded-md'
             type='submit'
           >
             Restart
@@ -74,7 +74,7 @@ export function PauseMenu({ onResume }: PauseMenuProps) {
               },
             });
           }}
-          className='border min-w-fit w-[45%] hover:scale-105 transition text-2xl p-2 bg-gradient-to-b from-green-500 to-green-600 rounded-md'
+          className='border min-w-fit w-[33%] hover:scale-105 transition text-2xl p-2 bg-gradient-to-b from-green-500 to-green-600 rounded-md'
         >
           Resume
         </button>
