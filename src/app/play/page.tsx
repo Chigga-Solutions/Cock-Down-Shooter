@@ -21,7 +21,7 @@ export default function Play() {
   const [paused, setPaused] = useState(false);
   const [ended, setEnded] = useState(false);
   const [chicken, setChickens] = useState<LivingChicken[]>([]);
-  const [bullets, setBullets] = useState(5);
+  const [bullets, setBullets] = useState(10);
   const [showRotateMessage, setShowRotateMessage] = useState(false);
   const [score, setScore] = useState(0);
   const [shotBullets, setShotBullets] = useState(0);
@@ -225,11 +225,9 @@ export default function Play() {
 
     function reloadBullets() {
       setBullets((currentBullets) => {
-        if (currentBullets < 5) {
+        if (currentBullets < 10) {
           ReloadSound().play();
-          setTimeout(() => {
-            setBullets(5);
-          }, 500);
+            setBullets(10);
         }
         return currentBullets;
       });
@@ -294,16 +292,17 @@ export default function Play() {
         <h1 className='text-2xl text-red-600'>Time Remaining: {timer}s</h1>
       </div>
       {chicken.map((c) => c.chicken)}
-      <div className='fixed top-6 right-6 w-50% flex justify-end'>
-        <div className='flex space-x-2'>
-          {Array.from({ length: bullets }).map((_, index) => (
-            <div
-              key={`filled-${index}`}
-              className="w-12 h-12 bg-[url('/bullet.png')] bg-cover"
-            />
-          ))}
-        </div>
-      </div>
+      <div className='fixed bottom-6 left-1/2 transform -translate-x-1/2 w-full flex justify-center'>
+  <div className='flex space-x-2'>
+    {Array.from({ length: bullets }).map((_, index) => (
+      <div
+        key={`filled-${index}`}
+        className="w-14 h-14 bg-[url('/bullet.png')] bg-cover"
+      />
+    ))}
+  </div>
+</div>
+
     </main>
   );
 }
