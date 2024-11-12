@@ -101,15 +101,17 @@ export function LbClient({ entries = [] }: { entries?: LeaderboardEntry[] }) {
         >
           <LogOut size={32} strokeWidth={3} />
         </button>
-        <label className='ml-3'>
-          Show unique only:
-          <input
-            onChange={(e) => {
-              setUniqueOnly(e.currentTarget.checked);
-            }}
-            className='ml-4'
-            type='checkbox'
-          />
+        <label className="ml-3 flex items-center cursor-pointer w-[20%]">
+        <span className="mr-3">Show unique only:</span>
+        <div className="relative flex items-center">
+        <input
+          type="checkbox"
+          onChange={(e) => setUniqueOnly(e.currentTarget.checked)}
+          className="sr-only peer w-10 h-6 rounded-full"
+        />
+        <div className="w-10 h-6 bg-gray-200 rounded-full peer-checked:bg-blue-600 peer-focus:ring-2 peer-focus:ring-blue-400 transition-all"></div>
+        <div className="absolute w-4 h-4 bg-white rounded-full shadow transform transition-transform duration-200 translate-x-1 peer-checked:translate-x-5"></div>
+        </div>
         </label>
         <div className='flex-1 justify-center items-center flex'>
           {entries.length > 0 ? (
