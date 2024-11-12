@@ -76,18 +76,6 @@ export function LbClient({ entries = [] }: { entries?: LeaderboardEntry[] }) {
     }
   };
 
-  const uniqueByField = (arr: LeaderboardEntry[]) => {
-    if (!uniqueOnly) return arr;
-
-    const seen = new Set();
-    return arr.filter((item) => {
-      if (!seen.has(item['name'])) {
-        seen.add(item['name']);
-        return true;
-      } else return false;
-    });
-  };
-
   const decrementPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
