@@ -270,7 +270,7 @@ export default function Play() {
 
   return (
     <main
-      className={`${luckiestGuy} select-none cursor-cross text-white h-screen bg-[url(/background.webp)] bg-cover`}
+      className={`${luckiestGuy} select-none  text-white h-screen bg-[url(/background.webp)] bg-cover`}
     >
       <GameStarter />
       {ended && !showRotateMessage && (
@@ -303,12 +303,12 @@ export default function Play() {
         </div>
       )}
       <PauseButton onClick={() => pauseGame()} />
-      <div className='pl-2'>
+      <div className='p-2'>
         <h1 className='text-2xl text-red-600'>Score: {score}</h1>
         <h1 className='text-2xl text-red-600'>Time Remaining: {timer}s</h1>
       </div>
       {chicken.map((c) => c.chicken)}
-      <div className='fixed top-6 right-6 w-full flex justify-end'>
+      <div className='fixed top-6 right-6 w-50% flex justify-end'>
         <div className='flex space-x-2'>
           {Array.from({ length: bullets }).map((_, index) => (
             <div
