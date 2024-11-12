@@ -6,7 +6,7 @@ import { PauseMenu } from '@/components/pause-menu';
 import { EndMenu } from '@/components/end-menu';
 import { luckiestGuy } from '@/components/settings-menu';
 import { ReloadSound, ShotSound } from '@/lib/sounds';
-import { areOverlapped, CLICK_RANGE, generateChickenCoords } from '@/lib/utils';
+import { areOverlapped, CLICK_RANGE, generateChickenCoords, genSpeed, genInterval } from '@/lib/utils';
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { GameStarter } from '@/components/game-starter';
 import '../globals.css';
@@ -58,15 +58,7 @@ export default function Play() {
     console.log('[Game] Started');
   }
 
-  function generateSpeed(min: number) {
-    return Math.random() > 0.75
-      ? min + 250
-      : Math.random() > 0.5
-        ? min + 500
-        : Math.random() > 0.25
-          ? min + 750
-          : min + 1000;
-  }
+  
 
   useEffect(() => {
     if (paused || ended) {
@@ -100,7 +92,7 @@ export default function Play() {
           createSelfDestroyingChicken();
         }
       },
-      difficulty == 'easy' ? 1000 : difficulty == 'medium' ? 750 : 500,
+      genInterval(difficulty || 'easy'),
     );
 
     playStateRef.current = paused;
@@ -156,13 +148,7 @@ export default function Play() {
               posStart={coords[0]}
               posEnd={coords[1]}
               move={!paused && !ended}
-              speed={
-                difficulty == 'easy'
-                  ? generateSpeed(4000)
-                  : difficulty == 'medium'
-                    ? generateSpeed(3000)
-                    : generateSpeed(2000)
-              }
+              speed={genSpeed(difficulty || 'easy')}
             />
           ),
         } as LivingChicken,
@@ -270,7 +256,7 @@ export default function Play() {
 
   return (
     <main
-      className={`${luckiestGuy} select-none  text-white h-screen bg-[url(/background.webp)] bg-cover`}
+      className={`${luckiestGuy} select-none cursor-cross text-white h-screen bg-[url(/background.webp)] bg-cover`}
     >
       <GameStarter />
       {ended && !showRotateMessage && (

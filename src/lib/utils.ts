@@ -111,3 +111,80 @@ export function areOverlapped(rect1: DOMRect, rect2: DOMRect): boolean {
 }
 
 export const CLICK_RANGE = 50;
+
+export function genSpeed(difficulty: string) {
+    
+  switch(difficulty) {
+    case 'peacefull': {
+      const min = 5000;
+      return Math.random() > 0.75
+        ? min + 250
+        : Math.random() > 0.5
+          ? min + 500
+          : Math.random() > 0.25
+            ? min + 750
+            : min + 1000;
+    }break;
+    case 'easy': {
+      const min = 4000;
+      return Math.random() > 0.75
+        ? min + 250
+        : Math.random() > 0.5
+          ? min + 500
+          : Math.random() > 0.25
+            ? min + 750
+            : min + 1000;
+    }break;
+    case 'medium': {
+      const min = 3000;
+      return Math.random() > 0.75
+        ? min + 250
+        : Math.random() > 0.5
+          ? min + 500
+          : Math.random() > 0.25
+            ? min + 750
+            : min + 1000;
+    }break;
+    case 'hard': {
+      const min = 2500;
+      return Math.random() > 0.75
+        ? min + 250
+        : Math.random() > 0.5
+          ? min + 500
+          : Math.random() > 0.25
+            ? min + 750
+            : min + 1000;
+    }break;
+    case 'hardcore': {
+      const min = 2000;
+      return Math.random() > 0.75
+        ? min + 250
+        : Math.random() > 0.5
+          ? min + 500
+          : Math.random() > 0.25
+            ? min + 750
+            : min + 1000;
+    }break; 
+    default: {
+      const min = 4000;
+      return Math.random() > 0.75
+        ? min + 250
+        : Math.random() > 0.5
+          ? min + 500
+          : Math.random() > 0.25
+            ? min + 750
+            : min + 1000;
+    }break;
+  }
+}
+
+export function genInterval(difficulty: string) {
+  switch(difficulty) {
+    case 'peacefull': return 1500; break;
+    case 'easy': return 1250; break;
+    case 'medium': return 1000; break;
+    case 'hard': return 550; break;
+    case 'hardcore': return 350; break;
+    default: return 1000; break;
+  }
+}
