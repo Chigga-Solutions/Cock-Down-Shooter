@@ -7,7 +7,7 @@ import { EndMenu } from '@/components/end-menu';
 import { luckiestGuy } from '@/components/settings-menu';
 import { ReloadSound, ShotSound } from '@/lib/sounds';
 import { areOverlapped, CLICK_RANGE, generateChickenCoords, genSpeed, genInterval } from '@/lib/utils';
-import React, { ReactElement, useEffect, useRef, useState } from 'react';
+import React, { ReactElement, useEffect, useRef, useState} from 'react';
 import { GameStarter } from '@/components/game-starter';
 import '../globals.css';
 
@@ -34,6 +34,13 @@ export default function Play() {
   const [timerRunning, setTimerRunning] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
   const timerRunningRef = useRef(timerRunning);
+  const [bgImg, setBgImg] = useState('');
+
+  useEffect(() => {
+    const random = Math.random();
+    const selectedImg = random > 0.66 ? '1.webp' : random > 0.33 ? '2.webp' : '3.webp';
+    setBgImg(selectedImg);
+  }, []);
 
   useEffect(() => {
     timerRunningRef.current = timerRunning;
@@ -58,7 +65,6 @@ export default function Play() {
     console.log('[Game] Started');
   }
 
-  
 
   useEffect(() => {
     if (paused || ended) {
@@ -254,7 +260,8 @@ export default function Play() {
 
   return (
     <main
-      className={`${luckiestGuy} select-none cursor-cross text-white h-screen bg-[url(/background.webp)] bg-cover`}
+      className={`${luckiestGuy} select-none cursor-cross text-white h-screen bg-cover`}
+      style={{ backgroundImage: `url('/${bgImg}')` }}
     >
       <GameStarter />
       {ended && !showRotateMessage && (
