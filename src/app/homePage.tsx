@@ -64,7 +64,7 @@ export default function Home({ user }: { user: User | null }) {
       {isSignupPageOpened && (
         <SignUpFrame onDone={() => setSignupPageOpened(false)} />
       )}
-      <div className='gap-x-4 flex justify-center items-center p-8'>
+      <div className='gap-x-4 flex justify-center items-center p-8 select-none'>
         {!user ? (
           <button
             onClick={() => setLoginPageOpened(true)}
@@ -96,7 +96,7 @@ export default function Home({ user }: { user: User | null }) {
           )}
         </div>
       </div>
-      <div className='flex justify-center items-center h-screen flex-col'>
+      <div className='flex justify-center items-center h-screen flex-col select-none'>
         <h1
           className={`${luckiestGuy} text-shadow-main-menu mb-32 font-bold text-[5vw]`}
         >
