@@ -261,7 +261,7 @@ export default function Play() {
   return (
     <main
       className={`${luckiestGuy} select-none cursor-cross text-white h-screen bg-cover`}
-      style={{ backgroundImage: `url('/${bgImg}')` }}
+      style={{ backgroundImage: `url('/Backgrounds/${bgImg}')` }}
     >
       <GameStarter />
       {ended && !showRotateMessage && (
