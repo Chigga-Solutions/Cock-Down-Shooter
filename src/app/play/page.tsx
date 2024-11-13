@@ -7,7 +7,7 @@ import { EndMenu } from '@/components/end-menu';
 import { luckiestGuy } from '@/components/settings-menu';
 import { ReloadSound, ShotSound } from '@/lib/sounds';
 import { areOverlapped, CLICK_RANGE, generateChickenCoords, genSpeed, genInterval } from '@/lib/utils';
-import React, { ReactElement, useEffect, useRef, useState, useMemo } from 'react';
+import React, { ReactElement, useEffect, useRef, useState} from 'react';
 import { GameStarter } from '@/components/game-starter';
 import '../globals.css';
 
