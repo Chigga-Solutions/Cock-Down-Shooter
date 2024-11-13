@@ -106,7 +106,10 @@ export function LbClient({ entries = [] }: { entries?: LeaderboardEntry[] }) {
         <div className="relative flex items-center">
         <input
           type="checkbox"
-          onChange={(e) => setUniqueOnly(e.currentTarget.checked)}
+          onChange={(e) => {
+            setCurrentPage(0);
+            setUniqueOnly(e.currentTarget.checked);
+          }}
           className="sr-only peer w-10 h-6 rounded-full"
         />
         <div className="w-10 h-6 bg-gray-200 rounded-full peer-checked:bg-blue-600 peer-focus:ring-2 peer-focus:ring-blue-400 transition-all"></div>
