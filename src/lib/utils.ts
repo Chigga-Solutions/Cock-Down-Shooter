@@ -115,16 +115,6 @@ export const CLICK_RANGE = 50;
 export function genSpeed(difficulty: string) {
     
   switch(difficulty) {
-    case 'peacefull': {
-      const min = 5000;
-      return Math.random() > 0.75
-        ? min + 250
-        : Math.random() > 0.5
-          ? min + 500
-          : Math.random() > 0.25
-            ? min + 750
-            : min + 1000;
-    }
     case 'easy': {
       const min = 4000;
       return Math.random() > 0.75
@@ -165,8 +155,18 @@ export function genSpeed(difficulty: string) {
             ? min + 750
             : min + 1000;
     }
+    case 'ultrakill': {
+      const min = 1000;
+      return Math.random() > 0.75
+        ? min + 250
+        : Math.random() > 0.5
+          ? min + 500
+          : Math.random() > 0.25
+            ? min + 750
+            : min + 1000;
+    }
     default: {
-      const min = 4000;
+      const min = 3000;
       return Math.random() > 0.75
         ? min + 250
         : Math.random() > 0.5
@@ -179,12 +179,12 @@ export function genSpeed(difficulty: string) {
 }
 
 export function genInterval(difficulty: string) {
-  switch(difficulty) {
-    case 'peacefull': return 1500; 
+  switch(difficulty) { 
     case 'easy': return 1250; 
     case 'medium': return 1000; 
     case 'hard': return 550; 
     case 'hardcore': return 350;
+    case 'ultrakill': return 150;
     default: return 1000;
   }
 }

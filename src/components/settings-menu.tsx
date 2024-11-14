@@ -32,7 +32,7 @@ export function SettingsMenu({ onDone }: SettingsMenuProps) {
 
   const [difficulty, setDifficulty] = useState(() => {
     const savedDifficulty = localStorage.getItem('difficulty');
-    return savedDifficulty ? savedDifficulty : 'easy';
+    return savedDifficulty ? savedDifficulty : 'medium';
   });
 
   const [volume, setVolume] = useState(() => {
@@ -89,15 +89,6 @@ export function SettingsMenu({ onDone }: SettingsMenuProps) {
           <label className='block mb-2'>
             <input
               type='radio'
-              value='peacefull'
-              checked={difficulty === 'peacefull'}
-              onChange={handleDifficultyChange}
-            />
-            Peacefull
-          </label>
-          <label className='block mb-2'>
-            <input
-              type='radio'
               value='easy'
               checked={difficulty === 'easy'}
               onChange={handleDifficultyChange}
@@ -130,6 +121,15 @@ export function SettingsMenu({ onDone }: SettingsMenuProps) {
               onChange={handleDifficultyChange}
             />
             Hardcore
+          </label>
+          <label className='block mb-2'>
+            <input
+              type='radio'
+              value='ultrakill'
+              checked={difficulty === 'ultrakill'}
+              onChange={handleDifficultyChange}
+            />
+            Ultrakill
           </label>
         </div>
       </div>
