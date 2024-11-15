@@ -16,6 +16,7 @@ import {
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { GameStarter } from '@/components/game-starter';
 import '../globals.css';
+import usePreventZoom from '@/lib/use-prevent-zoom';
 
 interface LivingChicken {
   id: string;
@@ -41,6 +42,8 @@ export default function Play() {
   const [gameStarted, setGameStarted] = useState(false);
   const timerRunningRef = useRef(timerRunning);
   const [bgImg, setBgImg] = useState('');
+
+  usePreventZoom();
 
   useEffect(() => {
     const random = Math.random();
