@@ -5,6 +5,7 @@ import '@/app/globals.css';
 import { Crown, LogOut } from 'lucide-react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import usePreventZoom from '@/lib/use-prevent-zoom';
 
 export interface LeaderboardEntry {
   name: string;
@@ -81,6 +82,8 @@ export function LbClient({ entries = [] }: { entries?: LeaderboardEntry[] }) {
       setCurrentPage(currentPage - 1);
     }
   };
+
+  usePreventZoom();
 
   return (
     <main

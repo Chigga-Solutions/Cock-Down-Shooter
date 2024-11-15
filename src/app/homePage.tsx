@@ -10,6 +10,7 @@ import { LoginFrame } from '@/components/login-menu';
 import { createClient } from '@/lib/supabase/client';
 import { SignUpFrame } from '@/components/signup-menu';
 import { User } from '@supabase/supabase-js';
+import usePreventZoom from '@/lib/use-prevent-zoom';
 
 export default function Home({ user }: { user: User | null }) {
   const router = useRouter();
@@ -18,6 +19,8 @@ export default function Home({ user }: { user: User | null }) {
   const [isLoginPageOpened, setLoginPageOpened] = useState(false);
   const [isSignupPageOpened, setSignupPageOpened] = useState(false);
   const [username, setUsername] = useState<string | null>(null);
+
+  usePreventZoom();
 
   const handleClick = () => {
     setSettingsOpened(true);
