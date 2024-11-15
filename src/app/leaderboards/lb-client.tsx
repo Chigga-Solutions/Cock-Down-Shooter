@@ -101,20 +101,20 @@ export function LbClient({ entries = [] }: { entries?: LeaderboardEntry[] }) {
         >
           <LogOut size={32} strokeWidth={3} />
         </button>
-        <label className="ml-3 flex items-center cursor-pointer w-[20%]">
-        <span className="mr-3">Show unique only:</span>
-        <div className="relative flex items-center">
-        <input
-          type="checkbox"
-          onChange={(e) => {
-            setCurrentPage(0);
-            setUniqueOnly(e.currentTarget.checked);
-          }}
-          className="sr-only peer w-10 h-6 rounded-full"
-        />
-        <div className="w-10 h-6 bg-gray-200 rounded-full peer-checked:bg-blue-600 peer-focus:ring-2 peer-focus:ring-blue-400 transition-all"></div>
-        <div className="absolute w-4 h-4 bg-white rounded-full shadow transform transition-transform duration-200 translate-x-1 peer-checked:translate-x-5"></div>
-        </div>
+        <label className='ml-3 flex items-center cursor-pointer w-[20%]'>
+          <span className='mr-3'>Show unique only:</span>
+          <div className='relative flex items-center'>
+            <input
+              type='checkbox'
+              onChange={(e) => {
+                setCurrentPage(0);
+                setUniqueOnly(e.currentTarget.checked);
+              }}
+              className='sr-only peer w-10 h-6 rounded-full'
+            />
+            <div className='w-10 h-6 bg-gray-200 rounded-full peer-checked:bg-blue-600 peer-focus:ring-2 peer-focus:ring-blue-400 transition-all'></div>
+            <div className='absolute w-4 h-4 bg-white rounded-full shadow transform transition-transform duration-200 translate-x-1 peer-checked:translate-x-5'></div>
+          </div>
         </label>
         <div className='flex-1 justify-center items-center flex'>
           {entries.length > 0 ? (
@@ -130,13 +130,15 @@ export function LbClient({ entries = [] }: { entries?: LeaderboardEntry[] }) {
                 </tr>
               </thead>
               <tbody className={'gap-y-2'}>
-                {reorderUnique(chunked, uniqueOnly)[currentPage].map((entry, i) => (
-                  <EntryWrapped
-                    key={i}
-                    lbEntry={entry}
-                    position={currentPage * 10 + i}
-                  />
-                ))}
+                {reorderUnique(chunked, uniqueOnly)[currentPage].map(
+                  (entry, i) => (
+                    <EntryWrapped
+                      key={i}
+                      lbEntry={entry}
+                      position={currentPage * 10 + i}
+                    />
+                  ),
+                )}
               </tbody>
             </table>
           ) : (
@@ -152,7 +154,9 @@ export function LbClient({ entries = [] }: { entries?: LeaderboardEntry[] }) {
             Previous
           </button>
           <button
-            disabled={currentPage >= reorderUnique(chunked, uniqueOnly).length - 1}
+            disabled={
+              currentPage >= reorderUnique(chunked, uniqueOnly).length - 1
+            }
             onClick={() => incrementPage()}
             className={`hover:scale-105 p-2 transition-transform bg-gradient-to-br from-blue-500 border-blue-600 border rounded to-blue-600 ${currentPage >= reorderUnique(chunked, uniqueOnly).length - 1 && 'opacity-80'}`}
           >
@@ -175,16 +179,21 @@ function chunkionize(
   return result;
 }
 
-function reorderUnique(leaderboard: LeaderboardEntry[][], unique: boolean = false): LeaderboardEntry[][] {
+function reorderUnique(
+  leaderboard: LeaderboardEntry[][],
+  unique: boolean = false,
+): LeaderboardEntry[][] {
   if (!unique) return leaderboard;
 
   const seen = new Set();
 
-  const dupRemoved = leaderboard.flatMap(entry => entry).filter((item) => {
-    if (!seen.has(item['name'])) {
-      seen.add(item['name']);
-      return true;
-    } else return false;
-  });
+  const dupRemoved = leaderboard
+    .flatMap((entry) => entry)
+    .filter((item) => {
+      if (!seen.has(item['name'])) {
+        seen.add(item['name']);
+        return true;
+      } else return false;
+    });
   return chunkionize(dupRemoved);
 }

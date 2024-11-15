@@ -113,8 +113,7 @@ export function areOverlapped(rect1: DOMRect, rect2: DOMRect): boolean {
 export const CLICK_RANGE = 50;
 
 export function genSpeed(difficulty: string) {
-    
-  switch(difficulty) {
+  switch (difficulty) {
     case 'easy': {
       const min = 4000;
       return Math.random() > 0.75
@@ -179,12 +178,18 @@ export function genSpeed(difficulty: string) {
 }
 
 export function genInterval(difficulty: string) {
-  switch(difficulty) { 
-    case 'easy': return 1250; 
-    case 'medium': return 1000; 
-    case 'hard': return 550; 
-    case 'hardcore': return 350;
-    case 'ultrakill': return 150;
-    default: return 1000;
+  switch (difficulty) {
+    case 'easy':
+      return 1250;
+    case 'medium':
+      return 1000;
+    case 'hard':
+      return 550;
+    case 'hardcore':
+      return 350;
+    case 'ultrakill':
+      return 150;
+    default:
+      return 1000;
   }
 }

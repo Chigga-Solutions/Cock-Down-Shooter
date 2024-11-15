@@ -6,8 +6,14 @@ import { PauseMenu } from '@/components/pause-menu';
 import { EndMenu } from '@/components/end-menu';
 import { luckiestGuy } from '@/components/settings-menu';
 import { ReloadSound, ShotSound } from '@/lib/sounds';
-import { areOverlapped, CLICK_RANGE, generateChickenCoords, genSpeed, genInterval } from '@/lib/utils';
-import React, { ReactElement, useEffect, useRef, useState} from 'react';
+import {
+  areOverlapped,
+  CLICK_RANGE,
+  generateChickenCoords,
+  genSpeed,
+  genInterval,
+} from '@/lib/utils';
+import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { GameStarter } from '@/components/game-starter';
 import '../globals.css';
 
@@ -38,8 +44,22 @@ export default function Play() {
 
   useEffect(() => {
     const random = Math.random();
-    const selectedImg = random > 0.66 ? '1.webp' : random > 0.33 ? '2.webp' : '3.webp';
-    setBgImg(selectedImg);
+    const selectedImg =
+      random > 0.66 ? '1.webp' : random > 0.33 ? '2.webp' : '3.webp';
+    const image = new Image();
+    image.src = '/Backgrounds/' + selectedImg;
+
+    let gameStartTimeout: NodeJS.Timeout;
+    image.onload = () => {
+      setBgImg(selectedImg);
+      gameStartTimeout = setTimeout(() => {
+        startGame();
+      }, 4000);
+    };
+
+    return () => {
+      clearTimeout(gameStartTimeout);
+    };
   }, []);
 
   useEffect(() => {
@@ -64,7 +84,6 @@ export default function Play() {
     setTimerRunning(true);
     console.log('[Game] Started');
   }
-
 
   useEffect(() => {
     if (paused || ended) {
@@ -105,16 +124,6 @@ export default function Play() {
 
     return () => clearInterval(interval);
   }, [paused, ended, gameStarted]);
-
-  useEffect(() => {
-    const gameStartTimeout = setTimeout(() => {
-      startGame();
-    }, 4000);
-
-    return () => {
-      clearTimeout(gameStartTimeout);
-    };
-  }, []);
 
   useEffect(() => {
     if (timerRunning && !paused && !ended) {
@@ -233,7 +242,7 @@ export default function Play() {
       setBullets((currentBullets) => {
         if (currentBullets < 10) {
           ReloadSound().play();
-            setBullets(10);
+          setBullets(10);
         }
         return currentBullets;
       });
@@ -300,16 +309,15 @@ export default function Play() {
       </div>
       {chicken.map((c) => c.chicken)}
       <div className='fixed bottom-6 left-1/2 transform -translate-x-1/2 w-full flex justify-center'>
-  <div className='flex space-x-2'>
-    {Array.from({ length: bullets }).map((_, index) => (
-      <div
-        key={`filled-${index}`}
-        className="w-14 h-14 bg-[url('/bullet.png')] bg-cover"
-      />
-    ))}
-  </div>
-</div>
-
+        <div className='flex space-x-2'>
+          {Array.from({ length: bullets }).map((_, index) => (
+            <div
+              key={`filled-${index}`}
+              className="w-14 h-14 bg-[url('/bullet.png')] bg-cover"
+            />
+          ))}
+        </div>
+      </div>
     </main>
   );
 }

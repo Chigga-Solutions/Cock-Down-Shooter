@@ -47,5 +47,7 @@ body {
 }
 
 .cursor-cross {
-  cursor: url('../../public/crosshair.png') 32 32, crosshair;
+  cursor:
+    url('../../public/crosshair.png') 32 32,
+    crosshair;
 }
