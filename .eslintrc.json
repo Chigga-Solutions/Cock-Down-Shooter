@@ -16,6 +16,7 @@
         "unusedExports": false,
         "missingExports": true
       }
-    ]
+    ],
+    "no-undef": "off"
   }
 }
